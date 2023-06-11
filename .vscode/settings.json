@@ -1,0 +1,17 @@
+{
+  // Set the default
+  "editor.formatOnSave": true,
+  // Enable per-language
+  "[javascript]": {
+    "editor.formatOnSave": false
+  },
+  "editor.codeActionsOnSave": {
+    // For ESLint
+    "source.fixAll.eslint": true
+  },
+  "prettier.disableLanguages": ["js"],
+  "files.autoSave": "onFocusChange",
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.foldingImportsByDefault": true
+}

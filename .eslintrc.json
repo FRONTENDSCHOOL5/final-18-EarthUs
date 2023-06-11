@@ -1,0 +1,59 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "extends": [
+    "airbnb",
+    "plugin:prettier/recommended",
+    "plugin:import/recommended"
+  ],
+  "rules": {
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/order": [
+      "error",
+      {
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index",
+          "type",
+          "unknown"
+        ],
+        "pathGroups": [
+          {
+            "pattern": "react*",
+            "group": "external",
+            "position": "before"
+          },
+          {
+            "pattern": "@hooks/*",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@pages/*",
+            "group": "internal",
+            "position": "after"
+          },
+          {
+            "pattern": "@components/*",
+            "group": "internal",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["@tanstack*"],
+        "alphabetize": {
+          "order": "asc",
+          "caseInsensitive": true
+        },
+        "newlines-between": "always",
+        "distinctGroup": false
+      }
+    ]
+  }
+}
