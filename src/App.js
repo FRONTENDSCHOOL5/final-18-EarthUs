@@ -1,7 +1,15 @@
-import React from "react";
+import * as React from "react";
+
+import Router from "./routes/Router";
+import GlobalStyle from "./styles/GlobalStyle";
 
 function App() {
-  const test = "hi";
-  return <div>hello world {test}</div>;
+  return (
+    <>
+      <GlobalStyle />
+      <h1>🌎 Earth Us</h1>
+      <Router />
+    </>
+  );
 }
 export default App;
