@@ -1,0 +1,20 @@
+/* https://seed.line.me/index_kr.html */
+@font-face {
+  font-family: 'LINE Seed KR';
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/LINESeedKR-Rg.woff2') format('woff2'),
+    url('../assets/fonts/LINESeedKR-Rg.woff') format('woff'),
+    url('../assets/fonts/LINESeedKR-Rg.otf') format('opentype'),
+}
+
+@font-face {
+  font-family: 'LINE Seed KR';
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url('../assets/fonts/LINESeedKR-Bd.woff2') format('woff2'),
+    url('../assets/fonts/LINESeedKR-Bd.woff') format('woff'),
+    url('../assets/fonts/LINESeedKR-Bd.otf') format('opentype'),
+}
