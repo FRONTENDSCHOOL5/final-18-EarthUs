@@ -16,31 +16,31 @@ export default function TabBar() {
         <MenuList>
           <TabMenu>
             <Links to="/home">
-              <img src={iconHome} alt="" />
+              <img src={iconHome} alt="홈" />
               <div>홈</div>
             </Links>
           </TabMenu>
           <TabMenu>
             <Links to="/chat/list">
-              <img src={iconChat} alt="" />
+              <img src={iconChat} alt="채팅" />
               <div>채팅</div>
             </Links>
           </TabMenu>
           <TabMenu>
             <Links to="/newsletter">
-              <img src={iconNewsletter} alt="" />
+              <img src={iconNewsletter} alt="뉴스레터" />
               <div>뉴스레터</div>
             </Links>
           </TabMenu>
           <TabMenu>
             <Links to="post/upload">
-              <img src={iconEdit} alt="" />
+              <img src={iconEdit} alt="게시물 작성" />
               <div>게시물 작성</div>
             </Links>
           </TabMenu>
           <TabMenu>
             <Links to="profile/">
-              <img src={iconUser} alt="" />
+              <img src={iconUser} alt="프로필" />
               <div>프로필</div>
             </Links>
           </TabMenu>
