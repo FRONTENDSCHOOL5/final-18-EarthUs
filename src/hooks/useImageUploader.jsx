@@ -24,6 +24,11 @@ export default function useImageUploader(apiUrl) {
     onSuccess: data => {
       console.log("이미지 등록에 성공했습니다.");
       console.table(data);
+      console.table(data.filename);
+
+      // 이미지 주소가 undefined일 경우에는 api 실행하지 않고 종료
+      if (!data.filename) return;
+
       // 이미지 주소를 저장
       const apiImg = `${BASE_URL}/${data.filename}`;
       setImage(apiImg);
@@ -34,18 +39,17 @@ export default function useImageUploader(apiUrl) {
 }
 
 // ✅ Usage
-// 1. 사용 시 이미지 미리보기 구현을 위해 setImageFile useState 추가.
-// 2. 사용 시 'uploadSampleImage' 네이밍은 용도에 맞도록 변경해서 사용.
-
-// const [imageFile, setImageFile] = useState(null);
-
+// 1. 'uploadSampleImage' 네이밍은 용도에 맞도록 변경해서 사용.
 // const { mutation: uploadSampleImage, image } =
 //   useImgMutationHook(
-// "/image/sample"    // API 주소
+// "/image/sample"    // API 주소 용도에 맞게 변경
 // );
+
+// 2. img 태그에 조건부 랜더링
+// <img src={image || null} alt="이미지 설명"/>
+
+// 3. input 태그에 onChange 이벤트 추가
 // const handleImgChange = e => {
 //   const uploadImageFile = e.target.files[0];
-//   setImageFile(uploadImageFile);
-
 //   uploadSampleImage.mutate(uploadImageFile);
 // };
