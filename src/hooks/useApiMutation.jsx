@@ -6,8 +6,8 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 
-import BASE_URL from "../config";
 import userDataAtom from "../recoil/userDataAtom";
+import BASE_URL from "../utils/config";
 
 export default function useApiMutation(
   apiUrl,
@@ -15,15 +15,15 @@ export default function useApiMutation(
   data = null,
   options = {},
 ) {
+  // token을 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
   const token = userData && userData.token ? userData.token : "";
-  // const { token } = userData;
-  console.log("Token: ", token);
 
   const executeMutation = async () => {
     const headers = {
       "Content-type": "application/json",
     };
+    // token이 있으면 headers에 추가
     token && (headers.Authorization = `Bearer ${token}`);
 
     const res = await axios({
@@ -32,6 +32,7 @@ export default function useApiMutation(
       headers,
       data,
     });
+
     console.warn("요청에 성공했습니다.");
     console.table(res.data);
     return res.data;

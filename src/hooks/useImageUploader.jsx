@@ -3,11 +3,11 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
-import BASE_URL from "../config";
+import BASE_URL from "../utils/config";
 
 export default function useImageUploader(apiUrl) {
-  // eslint-disable-next-line no-unused-vars
-  const [image, setImage] = useState(""); // create a local state
+  // image 주소를 저장할 state
+  const [image, setImage] = useState("");
 
   const executeImageUpload = async file => {
     const formData = new FormData();
@@ -24,12 +24,13 @@ export default function useImageUploader(apiUrl) {
     onSuccess: data => {
       console.log("이미지 등록에 성공했습니다.");
       console.table(data);
-      const apiImg = `${BASE_URL}/${data.filename}`; // get the image URL from the response
-      setImage(apiImg); // update the image state with the new URL
+      // 이미지 주소를 저장
+      const apiImg = `${BASE_URL}/${data.filename}`;
+      setImage(apiImg);
     },
   });
 
-  return { mutation, image }; // return the image state alongside the mutation
+  return { mutation, image };
 }
 
 // ✅ Usage
