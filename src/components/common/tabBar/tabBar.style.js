@@ -6,6 +6,7 @@ const Nav = styled.nav`
   bottom: 0;
   max-width: var(--size-max-width);
   width: 100%;
+  margin-left: -16px;
   background-color: var(--color-white);
 `;
 
