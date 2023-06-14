@@ -27,7 +27,7 @@ ${normalize}
   /* Border & Background Color */
   --color-dark: #b1b1b1;
   --color-light: #D5D5D5;
-  --color-bg: #f8f8f8;
+  --color-bg: #efefef;
 
   /* font-size */
   --font-size-micro: clamp(10px, 1vw, 12px);
@@ -38,7 +38,11 @@ ${normalize}
   --font-size-xl: clamp(18px, 2vw, 20px);
   --font-size-xxl: clamp(22px, 2.5vw, 26px);
   --font-size-title: clamp(32px, 3vw, 36px);
+
+  /* size */
+  --size-max-width: 520px;
   }
+
 
   * {
     box-sizing: border-box;
@@ -46,12 +50,17 @@ ${normalize}
 
   /* test */
   body {
-    max-width:520px;
+    width: min(100%, var(--size-max-width));
     margin: auto;
-    padding: 0 16px;
-    font-family: 'LINE Seed KR' sans-serif;
     line-height:1.5;
     letter-spacing: -0.015rem;
+    background-color: var(--color-bg);
+    #root {
+      background-color: #fff;
+      min-height: 100vh;
+      padding: 0 16px;
+      position: relative;
+    }
   }
 
   a {
@@ -59,9 +68,18 @@ ${normalize}
   text-decoration: none;
   }
 
-  h1 {
-      margin: 0;
-  }
+h1,
+h2,
+h3,
+p,
+input,
+button,
+fieldset,
+input,
+ul {
+  margin: 0;
+  padding: 0;
+}
 
   input, button {
     background-color: transparent;

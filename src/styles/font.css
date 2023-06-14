@@ -18,3 +18,8 @@
     url('../assets/fonts/LINESeedKR-Bd.woff') format('woff'),
     url('../assets/fonts/LINESeedKR-Bd.otf') format('opentype'),
 }
+
+html,
+body {
+  font-family: "LINE Seed KR", sans-serif;
+}
