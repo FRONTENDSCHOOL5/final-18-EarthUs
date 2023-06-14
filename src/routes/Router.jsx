@@ -25,7 +25,7 @@ export default function Router() {
         <Route path="/post/*" element={<Outlet />}>
           <Route path="upload" />
         </Route>
-        <Route path="product/upload" element={<ProductUpload />} />
+        <Route path="/product/upload" element={<ProductUpload />} />
         <Route path="/chat/*" element={<Outlet />}>
           <Route element={<TabBar />}>
             <Route path="list" />
@@ -34,8 +34,14 @@ export default function Router() {
         </Route>
       </Route>
       <Route path="/profile/*">
-        <Route path=":account" element={<HeaderProfile />} />
-        <Route path=":account/profile-upload" element={<Header />} />
+        <Route element={<HeaderProfile />}>
+          <Route element={<TabBar />}>
+            <Route path=":account" />
+          </Route>
+        </Route>
+        <Route element={<Header />}>
+          <Route path=":account/profile-upload" />
+        </Route>
       </Route>
     </Routes>
   );
