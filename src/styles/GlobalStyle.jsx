@@ -58,7 +58,7 @@ ${normalize}
     #root {
       background-color: #fff;
       min-height: 100vh;
-      padding: 0 16px;
+      padding: 64px 16px 0;
       position: relative;
     }
   }
