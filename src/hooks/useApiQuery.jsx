@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 
@@ -10,7 +10,6 @@ export default function useApiQuery(apiUrl, method, body = null) {
   // token을 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
   const { token } = userData;
-  const queryClient = useQueryClient();
 
   const executeQuery = async () => {
     const headers = {
@@ -33,21 +32,18 @@ export default function useApiQuery(apiUrl, method, body = null) {
     [apiUrl, method, body],
     executeQuery,
   );
-
   if (isLoading) {
-    console.warn("Console warning.");
+    console.warn("요청 실행 중...");
   }
   if (error) {
-    console.error("Console error.");
+    console.error("요청에 실패했습니다.");
   }
 
-  // 쿼리 캐시 삭제
-  queryClient.invalidateQueries([apiUrl, method]);
   return { isLoading, error, data };
 }
 
 // ✅ Usage
-// const { data } = useApi(
+// const { data } = useApiQuery(
 //   '/url',        // API 주소
 //   'get',         // get ...
 // );
