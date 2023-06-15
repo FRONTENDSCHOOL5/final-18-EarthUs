@@ -1,9 +1,9 @@
 import React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
-import { Header, HeaderProfile } from "../components/common/header/Header";
+import Header from "../components/common/header/Header";
 import TabBar from "../components/common/tabBar/TabBar";
-import ProductUpload from "../pages/product/productUpload/ProductUpload";
+import Follow from "../pages/follow/Follow";
 import SignIn from "../pages/SignIn";
 
 export default function Router() {
@@ -17,30 +17,24 @@ export default function Router() {
           <Route path="/home" />
           <Route path="/search" />
           <Route path="/newsletter" />
-          <Route path="/follow/*" element={<Outlet />}>
-            <Route path="following" />
-            <Route path="follower" />
-          </Route>
         </Route>
         <Route path="/post/*" element={<Outlet />}>
           <Route path="upload" />
         </Route>
-        <Route path="/product/upload" element={<ProductUpload />} />
+        <Route path="/product/upload" />
         <Route path="/chat/*" element={<Outlet />}>
           <Route element={<TabBar />}>
             <Route path="list" />
           </Route>
           <Route path="room" />
         </Route>
-      </Route>
-      <Route path="/profile/*">
-        <Route element={<HeaderProfile />}>
+        <Route path="/profile/*">
           <Route element={<TabBar />}>
             <Route path=":account" />
+            <Route path=":account/following" element={<Follow />} />
+            <Route path=":account/follower" element={<Follow />} />
           </Route>
-        </Route>
-        <Route element={<Header />}>
-          <Route path=":account/profile-upload" />
+          <Route path=":account/upload" />
         </Route>
       </Route>
     </Routes>

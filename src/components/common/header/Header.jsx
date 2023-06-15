@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 
 import IconCherovonL from "../../../assets/images/chevron-left.svg";
 import IconDots from "../../../assets/images/dots.svg";
@@ -7,9 +7,10 @@ import IconSearch from "../../../assets/images/search.svg";
 
 import { Headers, SearchInput } from "./header.style";
 
-function Header() {
-  const { pathname } = useLocation();
+export default function Header() {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
+  const { account } = useParams();
 
   return (
     <>
@@ -30,8 +31,6 @@ function Header() {
         {pathname === "/search" && (
           <SearchInput type="text" placeholder="계정 검색" />
         )}
-        {pathname === "/follow/following" && <p>Following</p>}
-        {pathname === "/follow/follower" && <p>Followers</p>}
         {pathname === "/product/upload" && <p>상품 업로드</p>}
         {pathname === "/chat/room" && (
           <>
@@ -41,27 +40,15 @@ function Header() {
             </button>
           </>
         )}
+        {pathname === `/profile/${account}` && (
+          <button type="button">
+            <img src={IconDots} alt="설정" />
+          </button>
+        )}
+        {pathname === `/profile/${account}/following` && <p>Following</p>}
+        {pathname === `/profile/${account}/follower` && <p>Followers</p>}
       </Headers>
       <Outlet />
     </>
   );
 }
-
-function HeaderProfile() {
-  const navigate = useNavigate();
-  return (
-    <>
-      <Headers>
-        <button type="button" onClick={() => navigate(-1)}>
-          <img src={IconCherovonL} alt="뒤로 가기" />
-        </button>
-        <button type="button">
-          <img src={IconDots} alt="설정" />
-        </button>
-      </Headers>
-      <Outlet />
-    </>
-  );
-}
-
-export { Header, HeaderProfile };
