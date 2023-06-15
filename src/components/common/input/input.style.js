@@ -15,14 +15,15 @@ export const StyledInput = styled.input`
   border-bottom: solid var(--color-dark) 2px;
   margin-bottom: 24px;
 
-  ::placeholder {
+  &::placeholder {
     color: var(--color-dark);
     font-family: "LINE Seed KR";
     font-size: var(--font-size-md);
   }
 
-  // 포커스를 주었을 때
-  &:valid {
+  // 유효 상태 및 포커스 상태
+  &:valid,
+  &:focus {
     border-bottom-color: var(--color-primary);
   }
 
