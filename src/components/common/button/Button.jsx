@@ -2,35 +2,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
 
-const SIZES = {
-  sm: css`
-    --button-font-size: var(--font-size-sm);
-    --button-padding: 0 1rem;
-    --button-height: 2.5rem;
-  `,
-  md: css`
-    --button-font-size: var(--font-size-md);
-    --button-padding: 0 4rem;
-    --button-height: 3rem;
-  `,
-  lg: css`
-    --button-font-size: var(--font-size-lg);
-    --button-padding: 0 6rem;
-    --button-height: 4rem;
-  `,
-  cta: css`
-    --button-font-size: var(--font-size-xl);
-    --button-padding: 0 1rem;
-    --button-height: 4rem;
-    position: fixed;
-    bottom: 1rem;
-    width: min(calc(100% - 2rem), calc(var(--size-max-width) - 2rem));
-    border-radius: 0;
-    align-items: center;
-    justify-content: center;
-  `,
-};
-
 const VARIANTS = {
   primary: css`
     --button-color: var(--color-white);
@@ -61,6 +32,38 @@ const VARIANTS = {
   `,
 };
 
+const SIZES = {
+  sm: css`
+    --button-font-size: var(--font-size-sm);
+    --button-padding: 0 1rem;
+    --button-height: 2.25rem;
+  `,
+  md: css`
+    --button-font-size: var(--font-size-md);
+    --button-padding: 0 4rem;
+    --button-height: 3rem;
+  `,
+  lg: css`
+    --button-font-size: var(--font-size-lg);
+    --button-padding: 0 6rem;
+    --button-height: 4rem;
+  `,
+  cta: css`
+    --button-font-size: var(--font-size-xl);
+    --button-padding: 0 1rem;
+    --button-height: 4rem;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 1rem;
+    width: min(calc(100% - 2rem), calc(var(--size-max-width) - 2rem));
+    border-radius: 0;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+  `,
+};
+
 export default function Button({ size, variant, children, icon, ...props }) {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
@@ -71,8 +74,8 @@ export default function Button({ size, variant, children, icon, ...props }) {
 }
 
 const StyledButton = styled.button`
-  ${({ size }) => SIZES[size]}
   ${({ variant }) => VARIANTS[variant]}
+  ${({ size }) => SIZES[size]}
 
   font:inherit;
   cursor: pointer;
@@ -82,8 +85,9 @@ const StyledButton = styled.button`
   color: var(--button-color);
   padding: var(--button-padding);
   height: var(--button-height);
+  font-size: var(--button-font-size);
   border-radius: 0.25rem;
-  display: flex;
+  display: inline-flex;
   align-items: center;
   gap: 0.5rem;
   transition: all 0.2s ease-in-out;
