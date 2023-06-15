@@ -3,10 +3,11 @@ import styled from "styled-components";
 
 const Nav = styled.nav`
   position: fixed;
+  z-index: 1000;
   bottom: 0;
   max-width: var(--size-max-width);
   width: 100%;
-  margin-left: -16px;
+  margin-left: calc(-1 * var(--size-gap));
   background-color: var(--color-white);
 `;
 
@@ -15,7 +16,7 @@ const MenuList = styled.ul`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 60px;
+  height: var(--size-tabBar);
   background-image: url(../../asset/icon/icon-chatList-active.svg);
 `;
 

@@ -5,9 +5,9 @@ const Headers = styled.div`
   top: 0;
   max-width: var(--size-max-width);
   width: 100%;
-  height: 64px;
-  padding: 0 16px;
-  margin-left: -16px;
+  height: var(--size-header);
+  padding: 0 var(--size-gap);
+  margin-left: calc(-1 * var(--size-gap));
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-light);
   display: flex;
