@@ -9,6 +9,7 @@ const Nav = styled.nav`
   width: 100%;
   margin-left: calc(-1 * var(--size-gap));
   background-color: var(--color-white);
+  border-top: 1px solid var(--color-light);
 `;
 
 const MenuList = styled.ul`
