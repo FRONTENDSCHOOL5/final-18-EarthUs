@@ -31,6 +31,7 @@ export default function useApiQuery(apiUrl, method, body = null) {
   const { isLoading, error, data } = useQuery(
     [apiUrl, method, body],
     executeQuery,
+    { refetchOnWindowFocus: false }, // 브라우저 화면을 이탈했다가 다시 포커스할 때 refetch 방지
   );
   if (isLoading) {
     console.warn("요청 실행 중...");
