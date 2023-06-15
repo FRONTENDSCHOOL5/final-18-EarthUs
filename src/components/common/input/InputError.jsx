@@ -7,7 +7,7 @@ import { ErrorTextStyle, ErrorImg } from "./inputError.style";
 export default function ErrorMessage({ children }) {
   return (
     <ErrorTextStyle>
-      <ErrorImg src={errorImage} />
+      <ErrorImg className="errorIcon" src={errorImage} />
       {children}
     </ErrorTextStyle>
   );
