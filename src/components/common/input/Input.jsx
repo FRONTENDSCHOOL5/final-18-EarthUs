@@ -12,6 +12,7 @@ export default function Input({
   onChange,
   children,
   className,
+  isRequired = false,
 }) {
   return (
     <>
@@ -25,7 +26,7 @@ export default function Input({
         minLength={minLength}
         onChange={onChange}
         className={className}
-        required
+        required={isRequired && true}
       />
     </>
   );
