@@ -30,3 +30,6 @@ export default function Input({
     </>
   );
 }
+
+// 유효성 검사 실패 시 className을 추가해 border-bottom-color 변경
+// className={errorMessage ? "error" : ""}
