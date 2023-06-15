@@ -35,12 +35,15 @@ ${normalize}
   --font-size-sm: clamp(14px, 2vw, 16px);
   --font-size-md: clamp(15px, 2vw, 17px);
   --font-size-lg: clamp(16px, 2vw, 18px);
-  --font-size-xl: clamp(18px, 2vw, 20px);
-  --font-size-xxl: clamp(22px, 2.5vw, 26px);
-  --font-size-title: clamp(32px, 3vw, 36px);
+  --font-size-xl: clamp(18px, 3vw, 20px);
+  --font-size-xxl: clamp(22px, 4vw, 26px);
+  --font-size-title: clamp(32px, 5vw, 36px);
 
   /* size */
+  --size-header: 64px;
+  --size-tabBar: 80px;
   --size-max-width: 520px;
+  --size-gap : 16px;
   }
 
 
@@ -53,12 +56,13 @@ ${normalize}
     width: min(100%, var(--size-max-width));
     margin: auto;
     line-height:1.5;
-    letter-spacing: -0.015rem;
+    letter-spacing: -0.02rem;
     background-color: var(--color-bg);
+
     #root {
       background-color: #fff;
       min-height: 100vh;
-      padding: 64px 16px 0;
+      padding: calc(var(--size-header) + 1.5rem) var(--size-gap) calc(var(--size-tabBar) + 1.5rem);
       position: relative;
     }
   }
@@ -68,24 +72,25 @@ ${normalize}
   text-decoration: none;
   }
 
-h1,
-h2,
-h3,
-p,
-input,
-button,
-fieldset,
-input,
-ul {
-  margin: 0;
-  padding: 0;
-}
+  h1,
+  h2,
+  h3,
+  p,
+  input,
+  button,
+  fieldset,
+  input,
+  ul {
+    margin: 0;
+    padding: 0;
+  }
 
   input, button {
     background-color: transparent;
     border: none;
     outline: none;
-    font-family: var(--font);
+    font: inherit;
+    letter-spacing: inherit;
     padding: 0;
     margin: 0;
     cursor: pointer;
