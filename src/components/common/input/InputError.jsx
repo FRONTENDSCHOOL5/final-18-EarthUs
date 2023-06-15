@@ -4,7 +4,7 @@ import errorImage from "../../../assets/images/error.svg";
 
 import { ErrorTextStyle, ErrorImg } from "./inputError.style";
 
-export default function ErrorMessage({ children }) {
+export default function InputError({ children }) {
   return (
     <ErrorTextStyle>
       <ErrorImg className="errorIcon" src={errorImage} />
