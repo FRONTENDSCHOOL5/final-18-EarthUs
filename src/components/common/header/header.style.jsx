@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 const Headers = styled.div`
   position: fixed;
+  z-index: 1000;
   top: 0;
   max-width: var(--size-max-width);
   width: 100%;
