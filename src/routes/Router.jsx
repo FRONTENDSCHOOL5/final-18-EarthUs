@@ -4,6 +4,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import Header from "../components/common/header/Header";
 import TabBar from "../components/common/tabBar/TabBar";
 import Follow from "../pages/follow/Follow";
+import ProfileUpload from "../pages/profile/profileUpload/ProfileUpload";
 import SignIn from "../pages/SignIn";
 
 export default function Router() {
@@ -28,7 +29,9 @@ export default function Router() {
           </Route>
           <Route path="room" />
         </Route>
-        <Route path="/profile/*">
+        <Route path="/profile/*" element={<ProfileUpload />}>
+          <Route path=":account/upload" />
+          <Route path=":account/edit" />
           <Route element={<TabBar />}>
             <Route path=":account" />
             <Route path=":account/following" element={<Follow />} />
