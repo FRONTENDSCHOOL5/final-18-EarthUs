@@ -10,6 +10,7 @@ const Avatars = styled.article`
   border-radius: 50%;
   border: 1px solid var(--color-light);
   overflow: hidden;
+  flex-shrink: 0;
 
   &::before {
     content: "";

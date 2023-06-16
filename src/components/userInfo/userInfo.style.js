@@ -4,6 +4,7 @@ const Users = styled.article`
   display: flex;
   gap: 8px;
   justify-content: space-between;
+  align-items: center;
 
   a {
     display: flex;
@@ -21,7 +22,12 @@ const Users = styled.article`
 
     p {
       font-size: var(--font-size-xs);
+      color: var(--color-gray-76);
     }
+  }
+
+  button {
+    flex-shrink: 0;
   }
 `;
 
