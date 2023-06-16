@@ -32,5 +32,10 @@ export default function Input({
   );
 }
 
+// ✅ Usage
+
 // 유효성 검사 실패 시 className을 추가해 border-bottom-color 변경
 // className={errorMessage ? "error" : ""}
+
+// 값이 입력되면 className을 추가해 border-bottom-color 변경
+// className={username ? "filled" : ""}
