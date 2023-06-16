@@ -88,14 +88,12 @@ const StyledButton = styled.button`
   font-size: var(--button-font-size);
   border-radius: 0.25rem;
   display: inline-flex;
+  justify-content: center;
   align-items: center;
   gap: 0.5rem;
-  transition: all 0.2s ease-in-out;
-
-  &:active,
-  &:hover,
-  &:focus {
-    opacity: 0.9;
+  transition: all 0.4s ease-out;
+  &:hover {
+    filter: brightness(0.9);
   }
 
   // icon이 있는 경우
