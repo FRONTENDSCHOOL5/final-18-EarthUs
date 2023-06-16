@@ -46,3 +46,24 @@ export default function Card({
     </Cards>
   );
 }
+
+// ✅ Usage
+// <Card
+//   accountname={data.post.author.accountname}     // <UserInfo />에 들어감
+//   profileImage={data.post.author.image}          // <UserInfo />에 들어감
+//   username={data.post.author.username}           // <UserInfo />에 들어감
+//   postImage={data.post.image}                    // post 이미지
+//   content={data.post.content}                    // post 글
+//   heartCount={data.post.heartCount}              // 좋아요 수
+//   commentCount={data.post.commentCount}          // 댓글 수
+//   time={`${time[0]}년 ${time[1]}월 ${time[2]}일`}  // post 작성일, const time = data && data.post.createdAt.slice(0, 10).split("-");으로 연월일 분리
+// />
+
+// <UserInfo
+//   key={accountname}
+//   account={accountname}
+//   profileImg={profileImage}
+//   userName={username}
+//   id={accountname}         // 아이디가 들어가야 함
+//   more
+// />
