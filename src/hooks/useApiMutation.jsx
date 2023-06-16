@@ -9,9 +9,21 @@ import { useRecoilState } from "recoil";
 import userDataAtom from "../recoil/userDataAtom";
 import BASE_URL from "../utils/config";
 
+/**
+ * @returns API서버에 데이터 전달
+ * @example
+ * const getFollow = useApiMutation(
+ *  `/profile/${account}/follow`,
+ *  `POST`,
+ * { data },
+ * {
+ * onSuccess: () => {
+ * console.log('요청에 성공했습니다.');
+ * },
+ */
 export default function useApiMutation(
-  apiUrl,
-  method,
+  apiUrl = "",
+  method = "",
   data = null,
   options = {},
 ) {
@@ -39,9 +51,6 @@ export default function useApiMutation(
   };
 
   const mutations = useMutation(executeMutation, {
-    onError: err => {
-      console.warn("요청에 실패했습니다.");
-    },
     onSettled: () => {
       console.warn("요청을 실행합니다.");
     },
@@ -52,11 +61,16 @@ export default function useApiMutation(
 }
 
 // ✅ Usage
-// 1. 사용 시 'uploadSample' 네이밍은 용도에 맞도록 변경해서 사용.
-// const uploadSample = useMutations(
+// // 1. 사용 시 'uploadSample' 네이밍은 용도에 맞도록 변경해서 사용.
+// const uploadSample = useApiMutation(
 //   '/url',              // API 주소
 //   'post',              // post, put, delete ...
-//   {onSuccess:() => {   // 추가로 실행할 옵션
-//     console.log('요청에 성공했습니다.');
-// }
+//   {
+//     onSuccess: () => {   // 추가로 실행할 옵션
+//       console.log('요청에 성공했습니다.')
+//     },
+//     onError: () => {    // 추가로 실행할 옵션
+//       console.log('요청에 실패했습니다.');
+//     }
+//   }
 // );

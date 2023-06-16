@@ -6,6 +6,10 @@ import { useRecoilState } from "recoil";
 import userDataAtom from "../recoil/userDataAtom";
 import BASE_URL from "../utils/config";
 
+/**
+ * @returns API서버에서 데이터 출력
+ * @example const { data } = useApiQuery(url, "get");
+ */
 export default function useApiQuery(apiUrl, method, body = null) {
   // token을 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
@@ -18,7 +22,7 @@ export default function useApiQuery(apiUrl, method, body = null) {
     };
     const res = await axios({
       url: BASE_URL + apiUrl,
-      method,
+      method: "",
       headers,
       data: body,
     });
@@ -31,7 +35,8 @@ export default function useApiQuery(apiUrl, method, body = null) {
   const { isLoading, error, data } = useQuery(
     [apiUrl, method, body],
     executeQuery,
-    { refetchOnWindowFocus: false }, // 브라우저 화면을 이탈했다가 다시 포커스할 때 refetch 방지
+    // 브라우저 화면을 이탈했다가 다시 포커스할 때 refetch 방지
+    { refetchOnWindowFocus: false },
   );
   if (isLoading) {
     console.warn("요청 실행 중...");

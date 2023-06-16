@@ -5,6 +5,11 @@ import axios from "axios";
 
 import BASE_URL from "../utils/config";
 
+/**
+ * @returns API서버에 이미지 전달
+ * @example
+ * const { mutation: uploadSampleImage, image } =useImgMutationHook(apiUrl);
+ */
 export default function useImageUploader(apiUrl) {
   // image 주소를 저장할 state
   const [image, setImage] = useState("");
