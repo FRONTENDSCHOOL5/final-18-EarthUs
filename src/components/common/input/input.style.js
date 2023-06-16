@@ -21,8 +21,8 @@ export const StyledInput = styled.input`
     font-size: var(--font-size-md);
   }
 
-  // 유효 상태 및 포커스 상태
-  &:valid,
+  // 값이 입력되거나 포커스 상태일 때
+  &.filled,
   &:focus {
     border-bottom-color: var(--color-primary);
   }
