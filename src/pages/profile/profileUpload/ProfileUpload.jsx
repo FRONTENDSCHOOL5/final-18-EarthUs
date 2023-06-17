@@ -7,6 +7,7 @@ import Button from "../../../components/common/button/Button";
 import Input from "../../../components/common/input/Input";
 import InputError from "../../../components/common/input/InputError";
 import useApiMutation from "../../../hooks/useApiMutation";
+import useImgMutationHook from "../../../hooks/useImageUploader";
 
 import {
   FormStyle,
@@ -33,7 +34,6 @@ export default function ProfileUpload() {
   const [username, setUserName] = useState("");
   const [accountname, setAccountId] = useState("");
   const [intro, setIntro] = useState("");
-  const [image, setImage] = useState(Nodata);
 
   // 오류 메시지 상태 저장
   const [errorMessage, setErrorMessage] = useState("");
@@ -67,9 +67,12 @@ export default function ProfileUpload() {
   };
 
   // 이미지 업로드 처리
+  const { mutation: uploadProfileImage, image } =
+    useImgMutationHook("/image/uploadfile");
+
   const handleImgUpload = e => {
-    const uploadedImage = e.target.files[0];
-    setImage(URL.createObjectURL(uploadedImage));
+    const uploadImageFile = e.target.files[0];
+    uploadProfileImage.mutate(uploadImageFile);
   };
 
   // 회원가입 API 호출
