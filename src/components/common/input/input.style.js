@@ -9,7 +9,7 @@ export const StyledLabel = styled.label`
 
 export const StyledInput = styled.input`
   display: flex;
-  width: 488px;
+  width: min(100%, var(--size-max-width));
   height: 52px;
   color: var(--color-black);
   border-bottom: solid var(--color-dark) 2px;
