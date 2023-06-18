@@ -40,13 +40,13 @@ export default function TabBar() {
             </Links>
           </TabMenu>
           <TabMenu>
-            <Links to="post/upload">
+            <Links to="/post/upload">
               <img src={iconEdit} alt="게시물 작성" />
               <div>게시물 작성</div>
             </Links>
           </TabMenu>
           <TabMenu>
-            <Links to={`profile/${myName}`}>
+            <Links to={`/profile/${myName}`}>
               <img src={iconUser} alt="프로필" />
               <div>프로필</div>
             </Links>
