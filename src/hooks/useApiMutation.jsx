@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 
-import userDataAtom from "../recoil/userDataAtom";
+import privateDataAtom from "../recoil/privateDataAtom";
 import BASE_URL from "../utils/config";
 
 /**
@@ -28,8 +28,8 @@ export default function useApiMutation(
   options = {},
 ) {
   // token을 가져오기 위한 userDataAtom 사용
-  const [userData] = useRecoilState(userDataAtom);
-  const token = userData && userData.token ? userData.token : "";
+  const [privateData] = useRecoilState(privateDataAtom);
+  const token = privateData || "";
 
   const executeMutation = async () => {
     const headers = {

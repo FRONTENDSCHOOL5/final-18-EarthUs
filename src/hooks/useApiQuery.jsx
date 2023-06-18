@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 
-import userDataAtom from "../recoil/userDataAtom";
+import privateDataAtom from "../recoil/privateDataAtom";
 import BASE_URL from "../utils/config";
 
 /**
@@ -11,9 +11,9 @@ import BASE_URL from "../utils/config";
  * @example const { data } = useApiQuery(url, "get");
  */
 export default function useApiQuery(apiUrl, method, body = null) {
-  // token을 가져오기 위한 userDataAtom 사용
-  const [userData] = useRecoilState(userDataAtom);
-  const { token } = userData;
+  // token을 가져오기 위한 privateDataAtom 사용
+  const [privateData] = useRecoilState(privateDataAtom);
+  const token = privateData && privateData ? privateData : "";
 
   const executeQuery = async () => {
     const headers = {

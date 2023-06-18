@@ -1,5 +1,6 @@
 import { atom } from "recoil";
 
+// API를 호출하는 대상의 데이터를 저장하는 atom
 const userDataFromLocalStorage = JSON.parse(
   localStorage.getItem("userData"),
 ) || {
@@ -11,14 +12,14 @@ const userDataFromLocalStorage = JSON.parse(
     image: "",
     intro: "",
     token: "",
-    _id: "",
+    id: "",
   },
 };
 
 const loginState = atom({
   key: "loginState",
-  default: userDataFromLocalStorage, // Use data from localStorage
+  // 로컬스토리지에 저장된 데이터를 기본값으로 설정
+  default: userDataFromLocalStorage,
 });
 
 export default loginState;
-// export default userDataAtom;ㄴ
