@@ -1,16 +1,12 @@
-import styled from "styled-components";
+/* eslint-disable consistent-return */
+import { Link } from "react-router-dom";
+import styled, { css } from "styled-components";
 
 const Users = styled.article`
   display: flex;
   gap: 8px;
   justify-content: space-between;
   align-items: center;
-
-  a {
-    display: flex;
-    gap: 8px;
-    flex-grow: 1;
-  }
 
   div {
     flex-grow: 1;
@@ -31,4 +27,18 @@ const Users = styled.article`
   }
 `;
 
-export default Users;
+const UserHeader = styled(Link)`
+  display: flex;
+  gap: 8px;
+  flex-grow: 1;
+  ${({ disabled }) => {
+    if (disabled) {
+      return css`
+        pointer-events: none;
+        cursor: auto;
+      `;
+    }
+  }}
+`;
+
+export { Users, UserHeader };
