@@ -1,9 +1,14 @@
+/* eslint-disable no-undef */
 import React from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import Header from "../components/common/header/Header";
 import TabBar from "../components/common/tabBar/TabBar";
 import Follow from "../pages/follow/Follow";
+import Home from "../pages/home/Home";
+import PostDetail from "../pages/post/postDetail/PostDetail";
+import ProductDetail from "../pages/product/productDetail/ProductDetail";
+import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
 import ProfileUpload from "../pages/profile/profileUpload/ProfileUpload";
 import SignIn from "../pages/SignIn";
 
@@ -13,31 +18,49 @@ export default function Router() {
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" />
       <Route path="/onboarding" />
+
       <Route path="/" element={<Header />}>
+        {/* HOME */}
         <Route element={<TabBar />}>
-          <Route path="/home" />
-          <Route path="/search" />
-          <Route path="/newsletter" />
+          <Route path="" element={<Home />} />
+          <Route path="search" />
+          <Route path="newsletter" />
         </Route>
-        <Route path="/post/*" element={<Outlet />}>
-          <Route path="upload" />
-        </Route>
-        <Route path="/product/upload" />
-        <Route path="/chat/*" element={<Outlet />}>
+
+        {/* CHAT */}
+        <Route path="chat/*" element={<Outlet />}>
           <Route element={<TabBar />}>
-            <Route path="list" />
+            <Route path="" />
           </Route>
           <Route path="room" />
         </Route>
-        <Route path="/profile/*" element={<ProfileUpload />}>
-          <Route path=":account/upload" />
-          <Route path=":account/edit" />
-          <Route element={<TabBar />}>
-            <Route path=":account" />
-            <Route path=":account/following" element={<Follow />} />
-            <Route path=":account/follower" element={<Follow />} />
+
+        {/* POST */}
+        <Route path="post/*" element={<Outlet />}>
+          <Route path=":postId" element={<PostDetail />} />
+          <Route path="upload" />
+          <Route path="edit" />
+        </Route>
+
+        {/* PROFILE */}
+        <Route path="profile/*" element={<Outlet />}>
+          <Route path="" element={<SignIn />} />
+          <Route path=":account/*" element={<Outlet />}>
+            <Route element={<TabBar />}>
+              <Route path="" element={<ProfileDetail />} />
+              <Route path=":view" element={<ProfileDetail />} />
+              <Route path="following" element={<Follow />} />
+              <Route path="follower" element={<Follow />} />
+            </Route>
+            <Route path="upload" element={<ProfileUpload />} />
+            <Route path="edit" element={<ProfileUpload />} />
           </Route>
-          <Route path=":account/upload" />
+        </Route>
+
+        {/* PRODUCT */}
+        <Route path="product/*" element={<Outlet />}>
+          <Route path=":account" element={<ProductDetail />} />
+          <Route path="upload" />
         </Route>
       </Route>
     </Routes>
