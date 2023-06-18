@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
 
 import { StyledInput, StyledLabel } from "./input.style";
@@ -13,6 +14,7 @@ export default function Input({
   children,
   className,
   isRequired = false,
+  ...props
 }) {
   return (
     <>
@@ -27,6 +29,7 @@ export default function Input({
         onChange={onChange}
         className={className}
         required={isRequired && true}
+        {...props}
       />
     </>
   );
