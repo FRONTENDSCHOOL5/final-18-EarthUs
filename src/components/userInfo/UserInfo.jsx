@@ -48,7 +48,7 @@ export default function UserInfo({
         </UserHeader>
       ) : (
         // eslint-disable-next-line jsx-a11y/anchor-is-valid
-        <UserHeader to="#" className="my-info" myInfo="true" disabled>
+        <UserHeader to="#" disabled>
           {renderLinkContent()}
         </UserHeader>
       )}
