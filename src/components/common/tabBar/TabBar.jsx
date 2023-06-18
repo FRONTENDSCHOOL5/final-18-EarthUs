@@ -1,21 +1,28 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Outlet } from "react-router-dom";
+import { useRecoilState } from "recoil";
 
 import iconChat from "../../../assets/images/chat.svg";
 import iconEdit from "../../../assets/images/edit.svg";
 import iconHome from "../../../assets/images/home.svg";
 import iconNewsletter from "../../../assets/images/newsletter.svg";
 import iconUser from "../../../assets/images/user.svg";
+import userDataAtom from "../../../recoil/userDataAtom";
 
 import { Links, TabMenu, MenuList, Nav } from "./tabBar.style";
 
 export default function TabBar() {
+  // * 유저데이터를 가져오기 위한 userDataAtom 사용
+  const [userData] = useRecoilState(userDataAtom);
+  const myName = userData && userData.accountname ? userData.accountname : "";
+
   return (
     <>
       <Nav>
         <MenuList>
           <TabMenu>
-            <Links to="/home">
+            <Links to="/">
               <img src={iconHome} alt="홈" />
               <div>홈</div>
             </Links>
@@ -39,7 +46,7 @@ export default function TabBar() {
             </Links>
           </TabMenu>
           <TabMenu>
-            <Links to="profile/">
+            <Links to={`profile/${myName}`}>
               <img src={iconUser} alt="프로필" />
               <div>프로필</div>
             </Links>
