@@ -1,21 +1,23 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import { Notice, SearchButton } from "./blank.style";
+import Button from "../common/button/Button";
 
-export default function Blank() {
+import BlankWrap from "./blank.style";
+
+export default function Blank({ children, btn }) {
   const navigate = useNavigate();
   return (
-    <>
-      <Notice>유저를 검색해 팔로우 해보세요!</Notice>
-      <SearchButton
+    <BlankWrap>
+      <p>{children}</p>
+      <Button
         size="cta"
         variant="primary"
         type="button"
         onClick={() => navigate("/search")}
       >
-        유저 검색하기
-      </SearchButton>
-    </>
+        {btn}
+      </Button>
+    </BlankWrap>
   );
 }
