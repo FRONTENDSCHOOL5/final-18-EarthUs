@@ -4,25 +4,33 @@ const Cards = styled.article`
   display: flex;
   flex-direction: column;
   gap: var(--size-gap);
-`;
-
-const ImgWrap = styled.div`
-  width: 100%;
-  aspect-ratio: 3/2;
-  border: 0.5px solid var(--color-light);
-  border-radius: 10px;
+  max-width: 100%;
   overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  .imgWrap {
+    max-width: 100%;
+    aspect-ratio: 1/1;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    border: 1px solid var(--color-light);
+    background: var(--color-bg);
+    img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 `;
 
 const Content = styled.p`
   font-size: var(--font-size-md);
   color: var(--color-gray-46);
+  strong {
+    display: block;
+    font-size: var(--font-size-lg);
+    color: var(--color-gray-2);
+    margin: 0 0 0.5rem;
+  }
 `;
 
 const Reaction = styled.div`
@@ -48,4 +56,4 @@ const Time = styled.p`
   color: var(--color-gray-76);
 `;
 
-export { Cards, ImgWrap, Content, Reaction, Time };
+export { Cards, Content, Reaction, Time };
