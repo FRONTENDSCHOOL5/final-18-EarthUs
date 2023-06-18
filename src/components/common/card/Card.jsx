@@ -14,7 +14,7 @@ import iconHeartEmpty from "../../../assets/images/heart-empty.svg";
 import Nodata from "../../../assets/images/no-data.svg";
 import UserInfo from "../../userInfo/UserInfo";
 
-import { Cards, Content, Reaction, Time } from "./card.style";
+import { Cards, Content, Img, Imgs, Reaction, Time } from "./card.style";
 
 export default function Card({
   accountname,
@@ -69,7 +69,7 @@ export default function Card({
           {multipartImages.map(img => (
             // eslint-disable-next-line react/no-array-index-key
             <SwiperSlide key={img}>
-              <img src={img} alt="게시물 이미지" onError={handleImgError} />
+              <Imgs src={img} alt="게시물 이미지" onError={handleImgError} />
             </SwiperSlide>
           ))}
         </Swiper>
@@ -78,7 +78,7 @@ export default function Card({
         postImage && (
           <figure className="imgWrap">
             <figcaption>{content}</figcaption>
-            <img src={postImage} alt="게시물 이미지" onError={handleImgError} />
+            <Img src={postImage} alt="게시물 이미지" onError={handleImgError} />
           </figure>
         )
       )}

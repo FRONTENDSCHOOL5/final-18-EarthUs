@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const Cards = styled.article`
   display: flex;
@@ -7,19 +7,40 @@ const Cards = styled.article`
   max-width: 100%;
   overflow: hidden;
   .imgWrap {
+    position: relative;
     max-width: 100%;
     aspect-ratio: 1/1;
     border-radius: 0.5rem;
     overflow: hidden;
     border: 1px solid var(--color-light);
     background: var(--color-bg);
-    img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
   }
+`;
+
+const Imgs = styled.img`
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+
+const Img = styled.img`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  ${props =>
+    props.src === "https://api.mandarin.weniv.co.kr/1687097552358.png" &&
+    css`
+      width: 100px;
+      height: 90px;
+      object-fit: none;
+    `};
 `;
 
 const Content = styled.p`
@@ -56,4 +77,4 @@ const Time = styled.p`
   color: var(--color-gray-76);
 `;
 
-export { Cards, Content, Reaction, Time };
+export { Cards, Imgs, Img, Content, Reaction, Time };
