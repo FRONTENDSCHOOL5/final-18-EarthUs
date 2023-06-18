@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -18,8 +19,8 @@ export default function Header() {
   const { account } = useParams();
 
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
-  const [setUserData] = useRecoilState(userDataAtom);
-  const [setPrivateData] = useRecoilState(privateDataAtom);
+  const [userData, setUserData] = useRecoilState(userDataAtom);
+  const [privateData, setPrivateData] = useRecoilState(privateDataAtom);
 
   // * 로그아웃
   const handleSignOut = () => {
@@ -27,7 +28,7 @@ export default function Header() {
     localStorage.removeItem("privateData");
     setUserData(userDataAtom.default);
     setPrivateData(privateDataAtom.default);
-    navigate("/");
+    navigate("/signin");
   };
 
   // * 전역 상태 관리를 위한 Recoil State 가져오기
