@@ -1,9 +1,14 @@
 import React from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import IconCherovonL from "../../../assets/images/chevron-left.svg";
 import IconDots from "../../../assets/images/dots.svg";
 import IconSearch from "../../../assets/images/search.svg";
+import modalConfigState from "../../../recoil/modalConfigAtom";
+import modalState from "../../../recoil/modalStateAtom";
+import privateDataAtom from "../../../recoil/privateDataAtom";
+import userDataAtom from "../../../recoil/userDataAtom";
 
 import { Headers, SearchInput } from "./header.style";
 
@@ -11,6 +16,66 @@ export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { account } = useParams();
+
+  // * 유저데이터를 가져오기 위한 userDataAtom 사용
+  const [setUserData] = useRecoilState(userDataAtom);
+  const [setPrivateData] = useRecoilState(privateDataAtom);
+
+  // * 로그아웃
+  const handleSignOut = () => {
+    localStorage.removeItem("userData");
+    localStorage.removeItem("privateData");
+    setUserData(userDataAtom.default);
+    setPrivateData(privateDataAtom.default);
+    navigate("/");
+  };
+
+  // * 전역 상태 관리를 위한 Recoil State 가져오기
+  const setModalOpen = useSetRecoilState(modalState);
+  const setModalConfig = useSetRecoilState(modalConfigState);
+
+  // * 프로필 모달 데이터
+  const setLogout = e => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "confirm",
+      title: "로그아웃하시겠어요?",
+      buttons: [
+        {
+          label: "취소",
+          onClick: eventInner => {
+            eventInner.stopPropagation();
+            setModalOpen(false); // close modal
+          },
+        },
+        {
+          label: "로그아웃",
+          onClick: () => handleSignOut(),
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
+  const setProfileModal = e => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "bottomSheet", // "confirm" or "bottomSheet"
+      buttons: [
+        {
+          label: "설정 및 개인정보",
+          onClick: eventInner => {
+            eventInner.stopPropagation();
+            setModalOpen(false); // close modal
+          },
+        },
+        {
+          label: "로그아웃",
+          onClick: eventInner => setLogout(eventInner),
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
 
   return (
     <>
@@ -41,7 +106,7 @@ export default function Header() {
           </>
         )}
         {pathname === `/profile/${account}` && (
-          <button type="button">
+          <button type="button" onClick={e => setProfileModal(e)}>
             <img src={IconDots} alt="설정" />
           </button>
         )}
