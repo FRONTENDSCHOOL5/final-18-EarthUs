@@ -4,6 +4,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 
 import Header from "../components/common/header/Header";
 import TabBar from "../components/common/tabBar/TabBar";
+import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
 import Follow from "../pages/follow/Follow";
 import Home from "../pages/home/Home";
 import PostDetail from "../pages/post/postDetail/PostDetail";
@@ -32,7 +33,7 @@ export default function Router() {
           <Route element={<TabBar />}>
             <Route path="" />
           </Route>
-          <Route path="room" />
+          <Route path="room" element={<ChatRoom />} />
         </Route>
 
         {/* POST */}
