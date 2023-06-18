@@ -9,6 +9,7 @@ import Follow from "../pages/follow/Follow";
 import Home from "../pages/home/Home";
 import PostDetail from "../pages/post/postDetail/PostDetail";
 import ProductDetail from "../pages/product/productDetail/ProductDetail";
+import ProductUpload from "../pages/product/productUpload/ProductUpload";
 import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
 import ProfileUpload from "../pages/profile/profileUpload/ProfileUpload";
 import SignIn from "../pages/SignIn";
@@ -61,7 +62,8 @@ export default function Router() {
         {/* PRODUCT */}
         <Route path="product/*" element={<Outlet />}>
           <Route path=":account" element={<ProductDetail />} />
-          <Route path="upload" />
+          <Route path="upload" element={<ProductUpload />} />
+          <Route path=":productId/edit" element={<ProductUpload />} />
         </Route>
       </Route>
     </Routes>
