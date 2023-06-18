@@ -1,10 +1,11 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useRecoilState } from "recoil";
 
 import iconDots from "../../assets/images/dots.svg";
+import userDataAtom from "../../recoil/userDataAtom";
 import Avatar from "../common/avatar/Avatar";
 
-import Users from "./userInfo.style";
+import { Users, UserHeader } from "./userInfo.style";
 
 export default function UserInfo({
   account,
@@ -14,20 +15,46 @@ export default function UserInfo({
   id,
   more,
   children,
+  handleModal,
 }) {
-  return (
-    <Users>
-      <Link to={`/profile/${account}`}>
+  // * 유저데이터를 가져오기 위한 userDataAtom 사용
+  const [userData] = useRecoilState(userDataAtom);
+  // eslint-disable-next-line no-underscore-dangle
+  // const myName = userData ? userData.accountname.trim().toLowerCase() : "";
+  const myName =
+    userData && userData.accountname
+      ? userData.accountname.trim().toLowerCase()
+      : "";
+
+  // Link 랜더링 조건부 출력
+  function renderLinkContent() {
+    return (
+      <>
         <Avatar profileImg={profileImg} size={40} />
         <div>
           <strong>{userName}</strong>
           {intro ? <p>{intro}</p> : ""}
           {id ? <p>@{account}</p> : ""}
         </div>
-      </Link>
+      </>
+    );
+  }
+
+  return (
+    <Users>
+      {account.trim().toLowerCase() !== myName ? (
+        <UserHeader to={`/profile/${account}`}>
+          {renderLinkContent()}
+        </UserHeader>
+      ) : (
+        // eslint-disable-next-line jsx-a11y/anchor-is-valid
+        <UserHeader to="#" disabled>
+          {renderLinkContent()}
+        </UserHeader>
+      )}
       {children}
       {more ? (
-        <button type="button">
+        <button type="button" onClick={handleModal}>
           <img src={iconDots} alt="더 보기" />
         </button>
       ) : (
