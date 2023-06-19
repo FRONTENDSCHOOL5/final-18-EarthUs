@@ -6,8 +6,8 @@ import Header from "../components/common/header/Header";
 import TabBar from "../components/common/tabBar/TabBar";
 import ChatList from "../pages/chat/chatList/ChatList";
 import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
+import Feed from "../pages/feed/Feed";
 import Follow from "../pages/follow/Follow";
-import Home from "../pages/home/Home";
 import PostDetail from "../pages/post/postDetail/PostDetail";
 import ProductDetail from "../pages/product/productDetail/ProductDetail";
 import ProductUpload from "../pages/product/productUpload/ProductUpload";
@@ -26,9 +26,9 @@ export default function Router() {
       <Route path="/" element={<Header />}>
         {/* HOME */}
         <Route element={<TabBar />}>
-          <Route path="" element={<Home />} />
+          <Route path="" element={<Feed />} />
           <Route path="search" element={<Search />} />
-          <Route path="newsletter" />
+          <Route path="newsletter" element={<Feed />} />
         </Route>
 
         {/* CHAT */}
