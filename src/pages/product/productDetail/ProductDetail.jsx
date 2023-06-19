@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Blank from "../../../components/blank/Blank";
 import A11yHidden from '../../../components/common/a11yHidden/A11yHidden';
@@ -11,7 +11,10 @@ import Button from "../../../components/common/button/Button";
 import Card from "../../../components/common/card/Card";
 import useApiMutation from "../../../hooks/useApiMutation";
 import useApiQuery from "../../../hooks/useApiQuery";
+import modalConfigState from "../../../recoil/modalConfigAtom";
+import modalState from "../../../recoil/modalStateAtom";
 import userDataAtom from "../../../recoil/userDataAtom";
+
 
 
 import ProdDetailWrap from "./productDetail.style";
@@ -24,14 +27,14 @@ export default function ProfileProduct() {
   const navigate = useNavigate();
 
 
-  // * 유저데이터를 가져오기 위한 userDataAtom 사용
+  // * 전역 상태 관리를 위한 Recoil State 가져오기
   const [userData] = useRecoilState(userDataAtom);
   const myName = userData ? userData.accountname.trim().toLowerCase() : '';
   const normalizedAccount = account.trim().toLowerCase();
 
   const [deleteProd, setDeleteProd] = useState(null);
 
-  // * 상품 삭제 API 호출
+  // * 상품 삭제
   const deleteProductMutation = useApiMutation(
     deleteProd,
     'DELETE',
@@ -45,11 +48,40 @@ export default function ProfileProduct() {
     }
   );
 
-  const deleteProduct = (id) => {
-    const url = `/product/${id}`;
+  const handleDeleteFeed = prodId => {
+    const url = `/product/${prodId}`;
     setDeleteProd(url);
     deleteProductMutation.mutate();
   }
+
+
+  // 전역 상태 관리를 위한 Recoil State
+  const setModalOpen = useSetRecoilState(modalState);
+  const setModalConfig = useSetRecoilState(modalConfigState);
+
+  // 게시물 삭제 확인 모달
+  const setDeleteProduct = (e, id) => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "confirm",
+      title: "게시물을 삭제하시겠어요?",
+      body: "",
+      buttons: [
+        {
+          label: "취소",
+          onClick: eventInner => {
+            eventInner.stopPropagation();
+            setModalOpen(false);
+          },
+        },
+        {
+          label: "삭제",
+          onClick: () => handleDeleteFeed(id),
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
 
 
   return (
@@ -87,7 +119,7 @@ export default function ProfileProduct() {
                   <Button size="sm" variant="white" onClick={() => navigate(`/product/${id}/edit`)}>
                     수정
                   </Button>
-                  <Button size="sm" variant="white" onClick={() => deleteProduct(id)}>
+                  <Button size="sm" variant="white" onClick={(e) => setDeleteProduct(e, id)}>
                     삭제
                   </Button>
                 </div>
