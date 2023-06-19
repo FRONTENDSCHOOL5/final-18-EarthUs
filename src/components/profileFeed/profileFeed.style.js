@@ -1,5 +1,6 @@
+/* eslint-disable consistent-return */
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 const ProfileFeedWrap = styled.article`
   width: 100%;
@@ -8,29 +9,34 @@ const ProfileFeedWrap = styled.article`
   header {
     margin: 0;
     text-align: right;
+
     h2 {
       margin: 0;
     }
   }
-  main {
-    gap: 2rem;
-    /* display: grid; */
-    display: flex;
-    flex-wrap: wrap;
-    /* grid-template-columns: repeat(1, 1fr); */
-    > article {
-      flex: 1 0 100%;
-    }
-    &.grid {
-      /* grid-template-columns: repeat(3, 1fr); */
+`;
+
+const FeedView = styled.div`
+  gap: 2rem;
+  display: flex;
+  flex-wrap: wrap;
+
+  > article {
+    flex: 1 0 100%;
+  }
+
+  ${({ view }) =>
+    view === "grid" &&
+    css`
       gap: 1rem;
       img {
         aspect-ratio: 1/1;
         object-fit: cover;
         border-radius: 0.25rem;
       }
-      div {
-        flex: 1 0 calc((100% - 2rem) / 3);
+      a {
+        flex: 0 1 calc((100% - 2rem) / 3);
+        display: inline-block;
         position: relative;
         span {
           position: absolute;
@@ -38,8 +44,7 @@ const ProfileFeedWrap = styled.article`
           top: 0.5rem;
         }
       }
-    }
-  }
+    `}
 `;
 
 const ViewBtn = styled(NavLink)`
@@ -48,9 +53,10 @@ const ViewBtn = styled(NavLink)`
   height: 3rem;
   background: url(${props => props.icon}) no-repeat center/1.5rem;
   filter: invert(0.7);
+
   &.active {
     filter: invert(0);
   }
 `;
 
-export { ProfileFeedWrap, ViewBtn };
+export { ProfileFeedWrap, FeedView, ViewBtn };
