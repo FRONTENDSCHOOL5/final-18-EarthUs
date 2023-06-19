@@ -158,7 +158,7 @@ export default function Card({
               </button>
               <span>{heartCount}</span>
             </div>
-            <Link to={`/post/${id}`}>
+            <Link to={`/post/${postID}`}>
               <img src={iconComment} alt="댓글달기" />
               <span>{commentCount}</span>
             </Link>
