@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const FormStyle = styled.form`
   display: flex;
@@ -33,7 +33,7 @@ export const ProfileImgInput = styled.input`
 
 export const Label = styled.label`
   position: absolute;
-  top: 83%;
+  top: 70%;
   left: 83%;
   transform: translate(-50%, -50%);
   width: 36px;
@@ -44,7 +44,7 @@ export const Label = styled.label`
 
 export const ImgAddBtn = styled.button`
   position: absolute;
-  top: 83%;
+  top: 70%;
   left: 83%;
   transform: translate(-50%, -50%);
   width: 36px;
@@ -60,7 +60,8 @@ export const ImgBtn = styled.img`
   }
 `;
 
-export const ImgFrame = styled.img`
+export const ImgFrame = styled.div`
+  position: relative;
   width: 110px;
   height: 110px;
   background-color: var(--color-bg);
@@ -68,9 +69,23 @@ export const ImgFrame = styled.img`
   border-radius: 110px;
 `;
 
+export const Img = styled.img`
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  ${props =>
+    props.src === "https://api.mandarin.weniv.co.kr/1687097552358.png" &&
+    css`
+      transform: scale(0.6);
+      object-fit: none;
+    `};
+`;
+
 export const ProfileImgSection = styled.section`
   position: relative;
-  margin-top: 24px;
 `;
 
 export const ProfileTitleSection = styled.section`

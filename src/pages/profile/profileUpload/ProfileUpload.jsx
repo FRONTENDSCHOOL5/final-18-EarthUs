@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useParams } from "react-router-dom";
 
 import Camera from "../../../assets/images/camera.svg";
-import Nodata from "../../../assets/images/no-data.svg";
 import Button from "../../../components/common/button/Button";
 import Input from "../../../components/common/input/Input";
 import InputError from "../../../components/common/input/InputError";
 import useApiMutation from "../../../hooks/useApiMutation";
+import useApiQuery from "../../../hooks/useApiQuery";
 import useImgMutationHook from "../../../hooks/useImageUploader";
 
 import {
@@ -16,6 +16,7 @@ import {
   ImgAddBtn,
   ImgBtn,
   ImgFrame,
+  Img,
   ProfileImgSection,
   ProfileTitleSection,
   Div,
@@ -34,6 +35,9 @@ export default function ProfileUpload() {
   const [username, setUserName] = useState("");
   const [accountname, setAccountId] = useState("");
   const [intro, setIntro] = useState("");
+  const [profileimage, setProfileImage] = useState(
+    "https://api.mandarin.weniv.co.kr/1687097552358.png",
+  );
 
   // 오류 메시지 상태 저장
   const [errorMessage, setErrorMessage] = useState("");
@@ -71,15 +75,43 @@ export default function ProfileUpload() {
     useImgMutationHook("/image/uploadfile");
 
   const handleImgUpload = e => {
+    // 취소 눌렀을 경우
+    if (e.target.files.length === 0) {
+      return;
+    }
+
     const uploadImageFile = e.target.files[0];
+
+    // 이미지 파일 크기
+    if (uploadImageFile.size > 10000000) {
+      alert("10MB 이하 이미지를 넣어주세요");
+      return;
+    }
+
+    // 이미지 파일 확장자명
+    const fileNamesplitedArr = uploadImageFile.name.split(".");
+    const fileExtension = fileNamesplitedArr[fileNamesplitedArr.length - 1];
+    const fileExtensions = ["jpg", "gif", "png", "jpeg", "bmp", "tif", "heic"];
+
+    if (!fileExtensions.includes(fileExtension)) {
+      alert("이미지 파일만 업로드 가능합니다.");
+      return;
+    }
+
     uploadProfileImage.mutate(uploadImageFile);
   };
+
+  useEffect(() => {
+    if (image !== "") {
+      setProfileImage(image);
+    }
+  }, [image]);
 
   // 회원가입 API 호출
   const uploadProfile = useApiMutation(
     "/user",
     "post",
-    { user: { username, accountname, intro, image } },
+    { user: { username, accountname, intro, image: profileimage } },
     {
       onSuccess: () => {
         console.warn("요청에 성공했습니다.");
@@ -92,11 +124,26 @@ export default function ProfileUpload() {
     },
   );
 
+  const imgPre = useRef(null);
+
+  if (pathname === `/profile/${account}/edit`) {
+    const { data } = useApiQuery("/user/myinfo", "get");
+    useEffect(() => {
+      if (data) {
+        imgPre.current.src = data.user.image;
+        setProfileImage(data && data.user.image);
+        setUserName(data && data.user.username);
+        setAccountId(data && data.user.accountname);
+        setIntro(data && data.user.intro);
+      }
+    }, [data]);
+  }
+
   // 프로필 수정 api 호출
   const settingProfile = useApiMutation(
     "/user",
     "put",
-    { user: { username, accountname, intro, image } },
+    { user: { username, accountname, intro, image: profileimage } },
     {
       onSuccess: () => {
         console.warn("요청에 성공했습니다.");
@@ -119,6 +166,14 @@ export default function ProfileUpload() {
     }
   };
 
+  // Enter 키 이벤트
+  const handleOnKeyPress = e => {
+    if (e.key === "Enter" || e.key === "") {
+      e.preventDefault();
+      e.target.click();
+    }
+  };
+
   return (
     <section>
       <Div>
@@ -129,18 +184,22 @@ export default function ProfileUpload() {
           </ProfileTitleSection>
         )}
         <ProfileImgSection>
-          <ImgFrame
-            src={image || Nodata}
-            className="imgFrame"
-            alt="프로필 사진"
-          />
-          <Label htmlFor="image" />
+          <ImgFrame>
+            <Img
+              src={image}
+              className="imgFrame"
+              alt="프로필 사진"
+              ref={imgPre}
+            />
+          </ImgFrame>
+          <Label htmlFor="image" tabIndex={0} onKeyDown={handleOnKeyPress} />
           <ProfileImgInput
             type="file"
             id="image"
             accept="image/*"
             onChange={handleImgUpload}
           />
+          {/* 접근성 */}
           <ImgAddBtn type="submit">
             <ImgBtn
               src={Camera}
