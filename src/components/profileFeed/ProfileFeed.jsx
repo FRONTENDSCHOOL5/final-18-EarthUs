@@ -45,6 +45,7 @@ function ColumnView({ item }) {
     account,
     commentCount,
     createdAt,
+    hearted,
   } = item;
   const time = createdAt.slice(0, 10).split("-");
   const navigate = useNavigate();
@@ -180,6 +181,7 @@ function ColumnView({ item }) {
           : e => setReport(e)
       }
       postID={id}
+      hearted={hearted}
     />
   );
 }
