@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-shadow */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
@@ -127,10 +128,10 @@ export default function Header() {
         {pathname.match(
           new RegExp(`^/profile/${myName}(/|/column/?|/grid/?)?$`),
         ) && (
-          <button type="button" onClick={e => setProfileModal(e)}>
-            <img src={IconDots} alt="설정" />
-          </button>
-        )}
+            <button type="button" onClick={e => setProfileModal(e)}>
+              <img src={IconDots} alt="설정" />
+            </button>
+          )}
 
         {/* 검색 */}
         {pathname === "/search" && (
