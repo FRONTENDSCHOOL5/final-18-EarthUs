@@ -83,6 +83,21 @@ export default function Header() {
     setModalOpen(true);
   };
 
+  // * 채팅방 모달 데이터
+  const setChatRoom = e => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "bottomSheet",
+      buttons: [
+        {
+          label: "채팅방 나가기",
+          onClick: () => navigate(`/chat/list`),
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
+
   return (
     <>
       <Headers>
@@ -112,10 +127,10 @@ export default function Header() {
         {pathname.match(
           new RegExp(`^/profile/${myName}(/|/column/?|/grid/?)?$`),
         ) && (
-            <button type="button" onClick={e => setProfileModal(e)}>
-              <img src={IconDots} alt="설정" />
-            </button>
-          )}
+          <button type="button" onClick={e => setProfileModal(e)}>
+            <img src={IconDots} alt="설정" />
+          </button>
+        )}
 
         {/* 검색 */}
         {pathname === "/search" && (
@@ -134,7 +149,7 @@ export default function Header() {
         {pathname === "/chat/room" && (
           <>
             <p>상대방 이름</p>
-            <button type="button" onClick={() => navigate("/search")}>
+            <button type="button" onClick={e => setChatRoom(e)}>
               <img src={IconDots} alt="설정" />
             </button>
           </>
