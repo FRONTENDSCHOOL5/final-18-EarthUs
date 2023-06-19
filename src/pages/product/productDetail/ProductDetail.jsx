@@ -95,9 +95,8 @@ export default function ProfileProduct() {
         data.product.map(product => {
           const { id, price, link, itemName, itemImage } = product;
           return (
-            <div>
+            <div key={id}>
               <Card
-                key={id}
                 postImage={itemImage}
                 content={itemName}
                 onClick={() => {
