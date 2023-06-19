@@ -1,3 +1,5 @@
+/* eslint-disable no-shadow */
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 import React from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -46,8 +48,8 @@ export default function Header() {
       buttons: [
         {
           label: "취소",
-          onClick: eventInner => {
-            eventInner.stopPropagation();
+          onClick: e => {
+            e.stopPropagation();
             setModalOpen(false); // close modal
           },
         },
@@ -65,15 +67,16 @@ export default function Header() {
       type: "bottomSheet", // "confirm" or "bottomSheet"
       buttons: [
         {
-          label: "설정 및 개인정보",
-          onClick: eventInner => {
-            eventInner.stopPropagation();
-            setModalOpen(false); // close modal
-          },
+          label: "판매중인 상품 보기",
+          onClick: () => navigate(`/product/${account}`),
+        },
+        {
+          label: "프로필 수정",
+          onClick: () => navigate(`/profile/${account}/edit`),
         },
         {
           label: "로그아웃",
-          onClick: eventInner => setLogout(eventInner),
+          onClick: e => setLogout(e),
         },
       ],
     });
@@ -109,10 +112,10 @@ export default function Header() {
         {pathname.match(
           new RegExp(`^/profile/${myName}(/|/column/?|/grid/?)?$`),
         ) && (
-          <button type="button" onClick={e => setProfileModal(e)}>
-            <img src={IconDots} alt="설정" />
-          </button>
-        )}
+            <button type="button" onClick={e => setProfileModal(e)}>
+              <img src={IconDots} alt="설정" />
+            </button>
+          )}
 
         {/* 검색 */}
         {pathname === "/search" && (
