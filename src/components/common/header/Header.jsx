@@ -83,7 +83,7 @@ export default function Header() {
     setModalOpen(true);
   };
 
-  // * 채팅방 모달 데이터
+  // 채팅방 모달 데이터
   const setChatRoom = e => {
     e.stopPropagation();
     setModalConfig({
