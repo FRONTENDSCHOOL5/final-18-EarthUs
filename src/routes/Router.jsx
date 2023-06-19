@@ -13,6 +13,7 @@ import ProductDetail from "../pages/product/productDetail/ProductDetail";
 import ProductUpload from "../pages/product/productUpload/ProductUpload";
 import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
 import ProfileUpload from "../pages/profile/profileUpload/ProfileUpload";
+import Search from "../pages/search/Search";
 import SignIn from "../pages/SignIn";
 
 export default function Router() {
@@ -26,7 +27,7 @@ export default function Router() {
         {/* HOME */}
         <Route element={<TabBar />}>
           <Route path="" element={<Home />} />
-          <Route path="search" />
+          <Route path="search" element={<Search />} />
           <Route path="newsletter" />
         </Route>
 
