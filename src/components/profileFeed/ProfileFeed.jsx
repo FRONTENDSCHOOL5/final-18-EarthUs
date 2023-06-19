@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-shadow */
 import React, { useState } from "react";
 import { useNavigate, Link, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -74,13 +75,13 @@ function ColumnView({ item }) {
     },
   );
 
-  const handleDeleteFeed = feedId => {
-    const url = `/post/${feedId}`;
+  const handleDeleteFeed = postId => {
+    const url = `/post/${postId}`;
     setDeleteFeed(url);
     deleteFeedMutation.mutate();
   };
 
-  // * 신고하기
+  // * 신고하기 API 호출
   const [reports, setReports] = useState(null);
   const setReportMutation = useApiMutation(
     reports,
@@ -94,14 +95,14 @@ function ColumnView({ item }) {
     },
   );
 
-  const handleReport = feedId => {
-    const url = `/post/${feedId}`;
+  const handleReport = postId => {
+    const url = `/post/${postId}/report`;
     setReports(url);
     setReportMutation.mutate();
   };
 
   // * 신고하기 모달
-  const setReport = (e, prodId) => {
+  const reportConfirm = e => {
     e.stopPropagation();
     setModalConfig({
       type: "confirm",
@@ -109,22 +110,22 @@ function ColumnView({ item }) {
       buttons: [
         {
           label: "취소",
-          onClick: eventInner => {
-            eventInner.stopPropagation();
+          onClick: e => {
+            e.stopPropagation();
             setModalOpen(false);
           },
         },
         {
           label: "신고하기",
-          onClick: () => handleReport(prodId),
+          onClick: () => handleReport(id),
         },
       ],
     });
     setModalOpen(true);
   };
 
-  // * 프로필 모달 데이터
-  const setDeleteItem = e => {
+  // * 수정/삭제 모달
+  const deleteConfirm = e => {
     e.stopPropagation();
     setModalConfig({
       type: "confirm",
@@ -132,8 +133,8 @@ function ColumnView({ item }) {
       buttons: [
         {
           label: "취소",
-          onClick: eventInner => {
-            eventInner.stopPropagation();
+          onClick: e => {
+            e.stopPropagation();
             setModalOpen(false);
           },
         },
@@ -145,14 +146,14 @@ function ColumnView({ item }) {
     });
     setModalOpen(true);
   };
-  const setCardModal = e => {
+  const deleteCardModal = e => {
     e.stopPropagation();
     setModalConfig({
       type: "bottomSheet",
       buttons: [
         {
           label: "삭제",
-          onClick: eventInner => setDeleteItem(eventInner),
+          onClick: e => deleteConfirm(e),
         },
         {
           label: "수정",
@@ -169,7 +170,6 @@ function ColumnView({ item }) {
       accountname={author.accountname}
       profileImage={author.image}
       username={author.username}
-      content={content}
       postImage={image}
       heartCount={heartCount}
       commentCount={commentCount}
@@ -177,13 +177,26 @@ function ColumnView({ item }) {
       time={`${time[0]}년 ${time[1]}월 ${time[2]}일`}
       handleModal={
         author.accountname.trim().toLowerCase() === myName
-          ? e => setCardModal(e)
-          : e => setReport(e)
+          ? e => deleteCardModal(e)
+          : e => reportConfirm(e)
       }
-      postID={id}
-      hearted={hearted}
-    />
+    >
+      <DisplayPost content={content} />
+    </Card>
   );
+}
+
+// 줄바꿈 인식해서 Formatting
+function DisplayPost({ content }) {
+  const formattedContent = content.split("\n").map((line, index) => (
+    // eslint-disable-next-line react/no-array-index-key
+    <React.Fragment key={index}>
+      {line}
+      <br />
+    </React.Fragment>
+  ));
+
+  return <span>{formattedContent}</span>;
 }
 
 export default function ProfileFeed() {
