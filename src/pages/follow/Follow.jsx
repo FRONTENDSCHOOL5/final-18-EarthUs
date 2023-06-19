@@ -1,12 +1,16 @@
+/* eslint-disable no-shadow */
 /* eslint-disable no-console */
 import React, { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { useSetRecoilState } from "recoil";
 
 import Button from "../../components/common/button/Button";
 import UserInfo from "../../components/userInfo/UserInfo";
 import useApiMutation from "../../hooks/useApiMutation";
 import useApiQuery from "../../hooks/useApiQuery";
+import modalConfigState from "../../recoil/modalConfigAtom";
+import modalState from "../../recoil/modalStateAtom";
 
 import Follows from "./follow.style";
 
@@ -70,6 +74,49 @@ export default function Follow() {
     makeUnfollow.mutate();
   };
 
+  const setModalOpen = useSetRecoilState(modalState);
+  const setModalConfig = useSetRecoilState(modalConfigState);
+
+  // 알림설정 모달
+  const manageNotifications = e => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "confirm",
+      title: "알림을 설정할까요?",
+      buttons: [
+        {
+          label: "해제",
+          onClick: e => {
+            e.stopPropagation();
+            setModalOpen(false); // close modal
+          },
+        },
+        {
+          label: "설정",
+          onClick: e => {
+            e.stopPropagation();
+            setModalOpen(false); // close modal
+          },
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
+  const manageNotificationsModal = (e, accountname) => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "bottomSheet",
+      title: `@${accountname}`,
+      buttons: [
+        {
+          label: "알림 관리",
+          onClick: e => manageNotifications(e),
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
+
   return (
     <Follows>
       {data &&
@@ -83,6 +130,8 @@ export default function Follow() {
               profileImg={image}
               userName={username}
               intro={intro}
+              more
+              handleModal={e => manageNotificationsModal(e, accountname)}
             >
               <Button
                 size="sm"
