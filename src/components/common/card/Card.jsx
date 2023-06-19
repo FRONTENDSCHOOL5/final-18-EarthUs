@@ -14,7 +14,15 @@ import iconHeartEmpty from "../../../assets/images/heart-empty.svg";
 import Nodata from "../../../assets/images/no-data.svg";
 import UserInfo from "../../userInfo/UserInfo";
 
-import { Cards, Content, Img, Imgs, Reaction, Time } from "./card.style";
+import {
+  Cards,
+  Content,
+  Img,
+  Imgs,
+  PostLink,
+  Reaction,
+  Time,
+} from "./card.style";
 
 export default function Card({
   accountname,
@@ -30,6 +38,7 @@ export default function Card({
   children,
   handleModal,
   onClick = null,
+  postID,
 }) {
   // * 등록된 이미지가 1개 이상이라면 배열로 변환
   const multipartImages =
@@ -45,50 +54,58 @@ export default function Card({
 
   return (
     <Cards onClick={onClick}>
-      {!prod && (
-        <UserInfo
-          key={accountname}
-          account={accountname}
-          profileImg={profileImage}
-          userName={username}
-          id={id}
-          handleModal={handleModal}
-          more
-        />
-      )}
-
-      {/* Feed & Product 동시 사용 영역 */}
-      {multipartImages.length > 1 ? (
-        // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
-        <Swiper
-          className="imgWrap"
-          spaceBetween={0}
-          slidesPerView={1}
-          modules={[Navigation, Pagination]}
-        >
-          {multipartImages.map(img => (
-            // eslint-disable-next-line react/no-array-index-key
-            <SwiperSlide key={img}>
-              <Imgs src={img} alt="게시물 이미지" onError={handleImgError} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      ) : (
-        // postImage가 1개라면 기존의 figure 리턴
-        postImage && (
-          <figure className="imgWrap">
-            <figcaption>{content}</figcaption>
-            <Img src={postImage} alt="게시물 이미지" onError={handleImgError} />
-          </figure>
-        )
-      )}
-      <Content>
-        <span>{content}</span>
-        {children}
-      </Content>
-
-      {!prod && (
+      {!prod ? (
         <>
+          <UserInfo
+            key={accountname}
+            account={accountname}
+            profileImg={profileImage}
+            userName={username}
+            id={id}
+            handleModal={handleModal}
+            more
+          />
+          <PostLink to={`/post/${postID}`}>
+            <>
+              {/* Feed & Product 동시 사용 영역 */}
+              {multipartImages.length > 1 ? (
+                // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
+                <Swiper
+                  className="imgWrap"
+                  spaceBetween={0}
+                  slidesPerView={1}
+                  modules={[Navigation, Pagination]}
+                >
+                  {multipartImages.map(img => (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <SwiperSlide key={img}>
+                      <Imgs
+                        src={img}
+                        alt="게시물 이미지"
+                        onError={handleImgError}
+                      />
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
+              ) : (
+                // postImage가 1개라면 기존의 figure 리턴
+                postImage && (
+                  <figure className="imgWrap">
+                    <figcaption>{content}</figcaption>
+                    <Img
+                      src={postImage}
+                      alt="게시물 이미지"
+                      onError={handleImgError}
+                    />
+                  </figure>
+                )
+              )}
+            </>
+            <Content>
+              <span>{content}</span>
+              {children}
+            </Content>
+          </PostLink>
           <Reaction>
             <div>
               <button type="submit">
@@ -102,6 +119,46 @@ export default function Card({
             </Link>
           </Reaction>
           <Time>{time}</Time>
+        </>
+      ) : (
+        <>
+          {multipartImages.length > 1 ? (
+            // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
+            <Swiper
+              className="imgWrap"
+              spaceBetween={0}
+              slidesPerView={1}
+              modules={[Navigation, Pagination]}
+            >
+              {multipartImages.map(img => (
+                // eslint-disable-next-line react/no-array-index-key
+                <SwiperSlide key={img}>
+                  <Imgs
+                    src={img}
+                    alt="게시물 이미지"
+                    onError={handleImgError}
+                  />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          ) : (
+            // postImage가 1개라면 기존의 figure 리턴
+            postImage && (
+              <figure className="imgWrap">
+                <figcaption>{content}</figcaption>
+                <Img
+                  src={postImage}
+                  alt="게시물 이미지"
+                  onError={handleImgError}
+                />
+              </figure>
+            )
+          )}
+
+          <Content>
+            <span>{content}</span>
+            {children}
+          </Content>
         </>
       )}
     </Cards>

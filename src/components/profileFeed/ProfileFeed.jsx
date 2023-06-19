@@ -179,6 +179,7 @@ function ColumnView({ item }) {
           ? e => setCardModal(e)
           : e => setReport(e)
       }
+      postID={id}
     />
   );
 }

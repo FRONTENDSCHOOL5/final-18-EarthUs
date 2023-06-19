@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const Cards = styled.article`
@@ -15,6 +16,12 @@ const Cards = styled.article`
     border: 1px solid var(--color-light);
     background: var(--color-bg);
   }
+`;
+
+const PostLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  gap: var(--size-gap);
 `;
 
 const Imgs = styled.img`
@@ -77,4 +84,4 @@ const Time = styled.p`
   color: var(--color-gray-76);
 `;
 
-export { Cards, Imgs, Img, Content, Reaction, Time };
+export { Cards, PostLink, Imgs, Img, Content, Reaction, Time };
