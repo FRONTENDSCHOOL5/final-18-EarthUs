@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
 import iconDots from "../../assets/images/dots.svg";
@@ -16,7 +17,10 @@ export default function UserInfo({
   more,
   children,
   handleModal,
+  searchKeyword,
 }) {
+  const location = useLocation();
+
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
   // eslint-disable-next-line no-underscore-dangle
@@ -28,6 +32,27 @@ export default function UserInfo({
 
   // Link 랜더링 조건부 출력
   function renderLinkContent() {
+    // Search 페이지 하이라이트 관련
+    if (location.pathname === "/search") {
+      const regex = new RegExp(searchKeyword, "gi");
+      const userNameWithHighlight = userName.replace(
+        regex,
+        match => `<mark class="highlight">${match}</mark>`,
+      );
+
+      return (
+        <>
+          <Avatar profileImg={profileImg} size={40} />
+          <div>
+            <strong
+              dangerouslySetInnerHTML={{ __html: userNameWithHighlight }}
+            />
+            {id ? <p>@{account}</p> : ""}
+          </div>
+        </>
+      );
+    }
+
     return (
       <>
         <Avatar profileImg={profileImg} size={40} />
