@@ -83,7 +83,7 @@ export default function Header() {
     setModalOpen(true);
   };
 
-  // * 채팅방 모달 데이터
+  // 채팅방 모달 데이터
   const setChatRoom = e => {
     e.stopPropagation();
     setModalConfig({
@@ -134,7 +134,12 @@ export default function Header() {
 
         {/* 검색 */}
         {pathname === "/search" && (
-          <SearchInput type="text" placeholder="계정 검색" />
+          <SearchInput
+            type="text"
+            placeholder="계정 검색"
+            value={searchKeyword}
+            onChange={handleSearchKeywordChange}
+          />
         )}
 
         {/* 팔로워/팔로잉 */}
