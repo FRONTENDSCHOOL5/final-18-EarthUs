@@ -13,7 +13,7 @@ import BASE_URL from "../utils/config";
 export default function useApiQuery(apiUrl, method, body = null) {
   // token을 가져오기 위한 privateDataAtom 사용
   const [privateData] = useRecoilState(privateDataAtom);
-  const token = privateData && privateData ? privateData : "";
+  const token = privateData || "";
 
   const executeQuery = async () => {
     const headers = {
