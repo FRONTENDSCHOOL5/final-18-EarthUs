@@ -54,6 +54,7 @@ export default function useApiMutation(
     onSettled: () => {
       console.warn("요청을 실행합니다.");
     },
+    mutationKey: apiUrl,
     ...options,
   });
 
