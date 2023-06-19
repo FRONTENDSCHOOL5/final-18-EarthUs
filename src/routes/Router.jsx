@@ -4,6 +4,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 
 import Header from "../components/common/header/Header";
 import TabBar from "../components/common/tabBar/TabBar";
+import ChatList from "../pages/chat/chatList/ChatList";
 import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
 import Follow from "../pages/follow/Follow";
 import Home from "../pages/home/Home";
@@ -32,7 +33,8 @@ export default function Router() {
         {/* CHAT */}
         <Route path="chat/*" element={<Outlet />}>
           <Route element={<TabBar />}>
-            <Route path="" />
+            <Route path="" element={<ChatList />} />
+            <Route path="list" element={<ChatList />} />
           </Route>
           <Route path="room" element={<ChatRoom />} />
         </Route>
