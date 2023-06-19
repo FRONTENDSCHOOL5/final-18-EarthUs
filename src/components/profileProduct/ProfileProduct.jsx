@@ -10,7 +10,6 @@ import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/pagination/pagination.min.css";
 import A11yHidden from "../common/a11yHidden/A11yHidden";
-import Button from "../common/button/Button";
 import Card from "../common/card/Card";
 
 import ProfileProductList from "./profileProduct.style";
@@ -47,12 +46,7 @@ export default function ProfileProduct() {
                       window.open(link);
                     }}
                   >
-                    <Card
-                      key={id}
-                      postImage={itemImage}
-                      content={itemName}
-                      prod
-                    >
+                    <Card postImage={itemImage} content={itemName} prod>
                       <strong>
                         {/*  Intl객체로 원화 Formatter */}
                         {new Intl.NumberFormat("ko", {
@@ -64,13 +58,6 @@ export default function ProfileProduct() {
                   </SwiperSlide>
                 );
               })}
-            <SwiperSlide>
-              <Link to={`/product/${account}`}>
-                <Button size="sm" variant="white">
-                  더보기
-                </Button>
-              </Link>
-            </SwiperSlide>
           </Swiper>
         </>
       ) : (
