@@ -36,7 +36,7 @@ export default function UserInfo({
   const location = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const currentUser = account.trim().toLowerCase();
+  const currentUser = account.trim().toLowerCase() === myName;
 
   // * 피드아이템 삭제
   const [deleteFeed, setDeleteFeed] = useState(null);
@@ -181,7 +181,7 @@ export default function UserInfo({
 
   return (
     <Users isSearch={location.pathname === "/search"}>
-      {currentUser !== myName ? (
+      {!currentUser ? (
         <UserHeader to={`/profile/${account}`}>
           {renderLinkContent()}
         </UserHeader>
@@ -191,15 +191,13 @@ export default function UserInfo({
           {renderLinkContent()}
         </UserHeader>
       )}
-      {children}
+      {currentUser ? null : children}
       {more ? (
         <button
           type="button"
           // onClick={handleModal}
           onClick={
-            currentUser === myName
-              ? e => deleteCardModal(e)
-              : e => reportConfirm(e)
+            currentUser ? e => deleteCardModal(e) : e => reportConfirm(e)
           }
         >
           <img src={iconDots} alt="더 보기" />

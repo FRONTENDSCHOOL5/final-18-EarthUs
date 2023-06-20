@@ -42,6 +42,7 @@ const UserHeader = styled(Link)`
   display: flex;
   gap: 8px;
   flex-grow: 1;
+  overflow: hidden;
   ${({ disabled }) => {
     if (disabled) {
       return css`
