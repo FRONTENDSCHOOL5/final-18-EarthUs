@@ -22,7 +22,7 @@ export default function Header() {
   const { pathname } = useLocation();
   const { account, productId } = useParams();
 
-  // 검색 이벤트
+  // * 검색 이벤트
   const [searchKeyword, setSearchKeyword] = useState("");
 
   const handleSearchKeywordChange = e => {
@@ -94,7 +94,7 @@ export default function Header() {
     setModalOpen(true);
   };
 
-  // 채팅방 모달 데이터
+  // * 채팅방 모달 데이터
   const setChatRoom = e => {
     e.stopPropagation();
     setModalConfig({
@@ -138,10 +138,10 @@ export default function Header() {
         {pathname.match(
           new RegExp(`^/profile/${myName}(/|/column/?|/grid/?)?$`),
         ) && (
-            <button type="button" onClick={e => setProfileModal(e)}>
-              <img src={IconDots} alt="설정" />
-            </button>
-          )}
+          <button type="button" onClick={e => setProfileModal(e)}>
+            <img src={IconDots} alt="설정" />
+          </button>
+        )}
 
         {/* 검색 */}
         {pathname === "/search" && (
