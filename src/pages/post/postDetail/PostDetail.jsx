@@ -1,6 +1,9 @@
+/* eslint-disable react/no-array-index-key */
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 import React, { useEffect, useState, useRef } from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
@@ -9,6 +12,7 @@ import Avatar from "../../../components/common/avatar/Avatar";
 import Button from "../../../components/common/button/Button";
 import Card from "../../../components/common/card/Card";
 import Comment from "../../../components/common/comment/Comment";
+import useApiInfiniteQuery from "../../../hooks/useApiInfiniteQuery";
 import useApiMutation from "../../../hooks/useApiMutation";
 import useApiQuery from "../../../hooks/useApiQuery";
 import userDataAtom from "../../../recoil/userDataAtom";
@@ -23,10 +27,11 @@ export default function PostDetail() {
   const { data: postData } = useApiQuery(`/post/${postId}`, "get");
   const time = postData && postData.post.createdAt.slice(0, 10).split("-");
 
-  const { data: commentData } = useApiQuery(
-    `/post/${postId}/comments/?limit=nolimit`,
-    "get",
-  );
+  const {
+    data: commentData,
+    hasNextPage: commentHasNextPage,
+    fetchNextPage: commentFetchNextPage,
+  } = useApiInfiniteQuery(`/post/${postId}/comments`, "comments");
 
   const [content, setContent] = useState("");
 
@@ -93,24 +98,32 @@ export default function PostDetail() {
         />
       )}
       <Line />
-      <CommentList ref={scrollRef}>
-        {commentData &&
-          commentData.comments
-            .map(v => {
-              return (
-                <Comment
-                  key={v.id}
-                  commentID={v.id}
-                  profileImg={v.author.image}
-                  userName={v.author.username}
-                  comment={v.content}
-                  time={v.createdAt}
-                  authorID={v.author._id}
-                />
-              );
-            })
-            .reverse()}
-      </CommentList>
+      {commentData && (
+        <InfiniteScroll
+          hasMore={commentHasNextPage}
+          loadMore={() => commentFetchNextPage()}
+        >
+          <CommentList ref={scrollRef}>
+            {commentData.pages
+              .map(v => v.comments)
+              .flat()
+              .reverse()
+              .map(v => {
+                return (
+                  <Comment
+                    key={v.id}
+                    commentID={v.id}
+                    profileImg={v.author.image}
+                    userName={v.author.username}
+                    comment={v.content}
+                    time={v.createdAt}
+                    authorID={v.author._id}
+                  />
+                );
+              })}
+          </CommentList>
+        </InfiniteScroll>
+      )}
       <CommentInput>
         <Avatar profileImg={userData && userData.image} size={40} />
         <input
