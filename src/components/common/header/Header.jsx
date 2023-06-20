@@ -2,7 +2,7 @@
 /* eslint-disable no-shadow */
 /* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -17,9 +17,19 @@ import userDataAtom from "../../../recoil/userDataAtom";
 import { Headers, SearchInput } from "./header.style";
 
 export default function Header() {
+  const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { account, productId } = useParams();
+
+  // 검색 이벤트
+  const [searchKeyword, setSearchKeyword] = useState("");
+
+  const handleSearchKeywordChange = e => {
+    const newSearchKeyword = e.target.value;
+    setSearchKeyword(newSearchKeyword);
+    navigate({ search: `?keyword=${newSearchKeyword}` });
+  };
 
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData, setUserData] = useRecoilState(userDataAtom);
@@ -136,7 +146,8 @@ export default function Header() {
         {/* 검색 */}
         {pathname === "/search" && (
           <SearchInput
-            type="text"
+            type="search"
+            name="q"
             placeholder="계정 검색"
             value={searchKeyword}
             onChange={handleSearchKeywordChange}
