@@ -8,6 +8,12 @@ const Users = styled.article`
   justify-content: space-between;
   align-items: center;
 
+  ${({ isSearch }) =>
+    isSearch &&
+    css`
+      margin-bottom: 24px;
+    `}
+
   .highlight {
     background-color: transparent;
     color: var(--color-primary);
