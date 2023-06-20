@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
@@ -14,9 +14,25 @@ export default function Search() {
   const searchParams = new URLSearchParams(location.search);
   const searchKeyword = searchParams.get("keyword") || "";
 
-  // 검색 API 호출
+  const [debouncedKeyword, setDebouncedKeyword] = useState("");
+  const [timer, setTimer] = useState(null);
+
+  // * 바운싱 현상 해결
+  useEffect(() => {
+    clearTimeout(timer); // 이전 타이머 클리어
+    const newTimer = setTimeout(() => {
+      setDebouncedKeyword(searchKeyword);
+    }, 500);
+    setTimer(newTimer);
+
+    return () => {
+      clearTimeout(newTimer); // 컴포넌트 언마운트 시 타이머 클리어
+    };
+  }, [searchKeyword]);
+
+  // * 검색 API 호출
   const { data } = useApiQuery(
-    searchKeyword ? `/user/searchuser/?keyword=${searchKeyword}` : null,
+    debouncedKeyword && `/user/searchuser/?keyword=${debouncedKeyword}`,
     "get",
   );
   const queryClient = useQueryClient();
@@ -70,12 +86,13 @@ export default function Search() {
     makeUnfollow.mutate();
   };
 
-  if (data === undefined) {
-    console.log("검색에 실패했습니다.");
+  // * data 배열 정의
+  let limitedData = [];
+  if (Array.isArray(data)) {
+    limitedData = data.slice(0, 10);
+  } else {
+    return null;
   }
-
-  // 검색 결과 최대 10개까지 출력
-  const limitedData = data && data.slice(0, 10);
 
   return (
     <div>
@@ -97,6 +114,7 @@ export default function Search() {
                   ? handleUnfollow(v.accountname)
                   : handleFollow(v.accountname)
               }
+              type="button"
             >
               {v.isfollow ? "팔로잉" : "팔로우"}
             </Button>
