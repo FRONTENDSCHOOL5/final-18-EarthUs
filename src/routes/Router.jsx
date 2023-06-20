@@ -25,8 +25,8 @@ export default function Router() {
 
       <Route path="/" element={<Header />}>
         {/* HOME */}
+        <Route path="" element={<Feed />} />
         <Route element={<TabBar />}>
-          <Route path="" element={<Feed />} />
           <Route path="search" element={<Search />} />
           <Route path="newsletter" element={<Feed />} />
         </Route>
