@@ -180,6 +180,8 @@ function ColumnView({ item }) {
           ? e => deleteCardModal(e)
           : e => reportConfirm(e)
       }
+      postID={id}
+      hearted
     >
       <DisplayPost content={content} />
     </Card>
