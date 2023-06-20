@@ -66,7 +66,7 @@ export default function UserInfo({
   }
 
   return (
-    <Users>
+    <Users isSearch={location.pathname === "/search"}>
       {account.trim().toLowerCase() !== myName ? (
         <UserHeader to={`/profile/${account}`}>
           {renderLinkContent()}
