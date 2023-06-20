@@ -1,11 +1,14 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 import React from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 import Blank from "../../components/blank/Blank";
 import Card from "../../components/common/card/Card";
 import TabBar from "../../components/common/tabBar/TabBar";
+import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
 import useApiQuery from "../../hooks/useApiQuery";
 import earthusDataAtom from "../../recoil/earthusDataAtom";
 import userDataAtom from "../../recoil/userDataAtom";
@@ -20,75 +23,108 @@ export default function Feed() {
 
   const isNewsletterPage = pathname === "/newsletter";
 
-  const { data: home } = useApiQuery("/post/feed", "get");
+  const {
+    data: home,
+    hasNextPage: homeHasNextPage,
+    fetchNextPage: homeFetchNextPage,
+  } = useApiInfiniteQuery("/post/feed", "posts");
 
   const { data: isFollowing } = useApiQuery(
     `/profile/${userData.accountname}/following`,
     "get",
   );
 
-  const { data: newsletter } = useApiQuery(
-    `/post/${earthusData.accountname}/userpost`,
-    "get",
-  );
+  const {
+    data: newsletterData,
+    hasNextPage: newsletterHasNextPage,
+    fetchNextPage: newsletterFetchNextPage,
+  } = useApiInfiniteQuery(`/post/${earthusData.accountname}/userpost`, "post");
 
   return (
-    <FeedWrap>
+    <>
       {/* NewsLetter */}
-      {isNewsletterPage &&
-        newsletter &&
-        newsletter.post.map(v => {
-          return (
-            <Card
-              key={v.id}
-              accountname={v.author.accountname}
-              profileImage={v.author.image}
-              username={v.author.username}
-              id={v.author.accountname}
-              postImage={v.image}
-              content={v.content}
-              heartCount={v.heartCount}
-              commentCount={v.commentCount}
-              time={`${v.createdAt.slice(0, 10).split("-")[0]}년 ${
-                v.createdAt.slice(0, 10).split("-")[1]
-              }월 ${v.createdAt.slice(0, 10).split("-")[2]}일`}
-              postID={v.id}
-              hearted={v.hearted}
-            />
-          );
-        })}
+      {isNewsletterPage && newsletterData && (
+        <InfiniteScroll
+          hasMore={newsletterHasNextPage}
+          loadMore={() => newsletterFetchNextPage()}
+        >
+          <FeedWrap>
+            {newsletterData.pages.map(page => {
+              return (
+                <>
+                  {page.post.map(v => {
+                    return (
+                      <Card
+                        key={v.id}
+                        accountname={v.author.accountname}
+                        profileImage={v.author.image}
+                        username={v.author.username}
+                        id={v.author.accountname}
+                        postImage={v.image}
+                        content={v.content}
+                        heartCount={v.heartCount}
+                        commentCount={v.commentCount}
+                        time={`${v.createdAt.slice(0, 10).split("-")[0]}년 ${
+                          v.createdAt.slice(0, 10).split("-")[1]
+                        }월 ${v.createdAt.slice(0, 10).split("-")[2]}일`}
+                        postID={v.id}
+                        hearted={v.hearted}
+                      />
+                    );
+                  })}
+                </>
+              );
+            })}
+          </FeedWrap>
+        </InfiniteScroll>
+      )}
 
       {/* Home */}
       {!isNewsletterPage && isFollowing && isFollowing.length === 0 && (
         <Blank btn="유저 검색하기">유저를 검색해 팔로우 해보세요!</Blank>
       )}
-      {!isNewsletterPage &&
-        home &&
-        home.posts
-          .filter(v => v.author._id !== earthusData.id)
-          .map(v => {
-            return (
-              <>
-                <Card
-                  key={v.id}
-                  accountname={v.author.accountname}
-                  profileImage={v.author.image}
-                  username={v.author.username}
-                  id={v.author.accountname}
-                  postImage={v.image}
-                  content={v.content}
-                  heartCount={v.heartCount}
-                  commentCount={v.commentCount}
-                  time={`${v.createdAt.slice(0, 10).split("-")[0]}년 ${
-                    v.createdAt.slice(0, 10).split("-")[1]
-                  }월 ${v.createdAt.slice(0, 10).split("-")[2]}일`}
-                  postID={v.id}
-                  hearted={v.hearted}
-                />
-                <TabBar />
-              </>
-            );
-          })}
-    </FeedWrap>
+      {!isNewsletterPage && home && (
+        <InfiniteScroll
+          hasMore={homeHasNextPage}
+          loadMore={() => homeFetchNextPage()}
+        >
+          <FeedWrap>
+            {home.pages.map(page => {
+              return (
+                <>
+                  {page.posts
+                    .filter(v => v.author._id !== earthusData.id)
+                    .map(v => {
+                      return (
+                        <>
+                          <Card
+                            key={v.id}
+                            accountname={v.author.accountname}
+                            profileImage={v.author.image}
+                            username={v.author.username}
+                            id={v.author.accountname}
+                            postImage={v.image}
+                            content={v.content}
+                            heartCount={v.heartCount}
+                            commentCount={v.commentCount}
+                            time={`${
+                              v.createdAt.slice(0, 10).split("-")[0]
+                            }년 ${v.createdAt.slice(0, 10).split("-")[1]}월 ${
+                              v.createdAt.slice(0, 10).split("-")[2]
+                            }일`}
+                            postID={v.id}
+                            hearted={v.hearted}
+                          />
+                          <TabBar />
+                        </>
+                      );
+                    })}
+                </>
+              );
+            })}
+          </FeedWrap>
+        </InfiniteScroll>
+      )}
+    </>
   );
 }
