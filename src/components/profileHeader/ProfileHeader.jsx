@@ -1,4 +1,3 @@
-/* eslint-disable prettier/prettier */
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -22,10 +21,10 @@ export default function ProfileHeader() {
   // * navigate 실행 함수
   const setNavigate = url => {
     const navigateUrl = {
-      'chat': `/chat`,
-      'uploadProfile': `/profile/${account}/edit`,
-      'uploadProduct': `/product/${account}/upload`,
-    }
+      chat: `/chat`,
+      uploadProfile: `/profile/${account}/edit`,
+      uploadProduct: `/product/${account}/upload`,
+    };
     navigate(navigateUrl[url]);
   };
 
@@ -35,10 +34,10 @@ export default function ProfileHeader() {
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
   // eslint-disable-next-line no-underscore-dangle
-  const myId = userData?._id;
-  const myName = userData ? userData.accountname.trim().toLowerCase() : '';
+  const myId = userData && userData._id;
+  const myName = userData ? userData.accountname.trim().toLowerCase() : "";
 
-  console.log('myId', myId);
+  console.log("myId", myId);
 
   // QueryClient의 캐시 무효화 기능을 사용해서 변경된 API 데이터를 화면에 동적으로 표시
   const queryClient = useQueryClient();
@@ -46,40 +45,41 @@ export default function ProfileHeader() {
   // * 유저 언팔로우
   const getUnfollow = useApiMutation(
     `/profile/${account}/unfollow`,
-    'DELETE',
+    "DELETE",
     { data },
     {
       onSuccess: () => {
-        console.log('요청에 성공했습니다.');
+        console.log("요청에 성공했습니다.");
         queryClient.invalidateQueries(`/profile/${account}`);
-      }
-    }
+      },
+    },
   );
 
   // * 유저 팔로우
   const getFollow = useApiMutation(
     `/profile/${account}/follow`,
-    'POST',
+    "POST",
     { data },
     {
       onSuccess: () => {
-        console.log('요청에 성공했습니다.');
+        console.log("요청에 성공했습니다.");
         queryClient.invalidateQueries(`/profile/${account}`);
       },
       onError: () => {
-        console.log('요청에 실패했습니다.');
-      }
-    }
-  )
+        console.log("요청에 실패했습니다.");
+      },
+    },
+  );
 
   // * 전역 상태 관리를 위한 Recoil State
   const setModalOpen = useSetRecoilState(modalState);
   const setModalConfig = useSetRecoilState(modalConfigState);
 
   // * 공유하기 모달 데이터
-  const setShareModalData = () => { // 이벤트 사용하면 'e' 인자 추가. 아니면 생략
+  const setShareConfirm = () => {
+    // 이벤트 사용하면 'e' 인자 추가. 아니면 생략
     setModalConfig({
-      type: "confirm",    // "confirm" or "bottomSheet"
+      type: "confirm", // "confirm" or "bottomSheet"
       title: "공유하기",
       body: "준비중",
       buttons: [
@@ -92,10 +92,17 @@ export default function ProfileHeader() {
     setModalOpen(true);
   };
 
-
   // data가 없으면 null 반환
   if (!data) return null;
-  const { image, username, isfollow, accountname, intro, followingCount, followerCount } = data.profile;
+  const {
+    image,
+    username,
+    isfollow,
+    accountname,
+    intro,
+    followingCount,
+    followerCount,
+  } = data.profile;
 
   return (
     <ProfileHeaderWrap>
@@ -109,7 +116,7 @@ export default function ProfileHeader() {
             <span>@{accountname}</span>
             {username}
           </h3>
-          <button type="button" onClick={setShareModalData} >
+          <button type="button" onClick={setShareConfirm}>
             <A11yHidden>공유하기</A11yHidden>
           </button>
         </li>
@@ -119,7 +126,7 @@ export default function ProfileHeader() {
             팔로워
             <strong>
               {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
-                followerCount
+                followerCount,
               )}
             </strong>
           </Link>
@@ -127,12 +134,12 @@ export default function ProfileHeader() {
             팔로잉
             <strong>
               {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
-                followingCount
+                followingCount,
               )}
             </strong>
           </Link>
         </li>
-      </ul >
+      </ul>
 
       <ProfileButtonArea>
         {/* account와 accountname이 동일하지 않다면 실행 () */}
@@ -142,7 +149,9 @@ export default function ProfileHeader() {
             <Button
               size="sm"
               variant={isfollow ? "white" : "primary"}
-              onClick={() => (isfollow ? getUnfollow.mutate() : getFollow.mutate())}
+              onClick={() =>
+                isfollow ? getUnfollow.mutate() : getFollow.mutate()
+              }
             >
               {isfollow ? "언팔로우" : "팔로우"}
             </Button>
@@ -150,19 +159,18 @@ export default function ProfileHeader() {
               size="sm"
               variant="primary"
               type="button"
-              onClick={() => setNavigate('chat')}
+              onClick={() => setNavigate("chat")}
             >
               메시지
             </Button>
           </>
-
         ) : (
           <>
             <Button
               size="sm"
               variant="white"
               type="button"
-              onClick={() => setNavigate('uploadProfile')}
+              onClick={() => setNavigate("uploadProfile")}
             >
               프로필 수정
             </Button>
@@ -170,7 +178,7 @@ export default function ProfileHeader() {
               size="sm"
               variant="white"
               type="button"
-              onClick={() => setNavigate('uploadProduct')}
+              onClick={() => setNavigate("uploadProduct")}
             >
               상품 업로드
             </Button>
@@ -180,4 +188,3 @@ export default function ProfileHeader() {
     </ProfileHeaderWrap>
   );
 }
-
