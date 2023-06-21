@@ -1,5 +1,7 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { useRecoilState, useSetRecoilState } from "recoil";
 
 import Camera from "../../../assets/images/camera.svg";
 import Button from "../../../components/common/button/Button";
@@ -8,6 +10,13 @@ import InputError from "../../../components/common/input/InputError";
 import useApiMutation from "../../../hooks/useApiMutation";
 import useApiQuery from "../../../hooks/useApiQuery";
 import useImgMutationHook from "../../../hooks/useImageUploader";
+import userDataAtom from "../../../recoil/userDataAtom";
+import {
+  getProfileDetailPath,
+  getProfileEditPath,
+  getProfileUploadPath,
+  NO_IMAGE,
+} from "../../../utils/config";
 
 import {
   FormStyle,
@@ -26,18 +35,24 @@ import {
 
 // pathname 조건부 렌더링
 export default function ProfileUpload() {
-  const { pathname } = useLocation();
-  const { account } = useParams();
+  // 리코일 유저 데이터 저장
+  const [userData] = useRecoilState(userDataAtom);
+  const setUserLoginState = useSetRecoilState(userDataAtom);
 
-  const showContent = pathname === `/profile/${account}/upload`;
+  // 경로 설정
+  const { account } = useParams();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const PROFILE_DETAIL = getProfileDetailPath(account);
+  const PROFILE_UPLOAD = getProfileUploadPath(account);
+  const PROFILE_EDIT = getProfileEditPath(account);
 
   // 초기값 세팅 - 사용자 이름, 계정 ID, 소개
   const [username, setUserName] = useState("");
   const [accountname, setAccountId] = useState("");
   const [intro, setIntro] = useState("");
-  const [profileimage, setProfileImage] = useState(
-    "https://api.mandarin.weniv.co.kr/1687097552358.png",
-  );
+  const [profileImage, setProfileImage] = useState(NO_IMAGE);
 
   // 오류 메시지 상태 저장
   const [errorMessage, setErrorMessage] = useState("");
@@ -101,6 +116,18 @@ export default function ProfileUpload() {
     uploadProfileImage.mutate(uploadImageFile);
   };
 
+  // 회원정보 수정 API 호출
+  // * userData가 변경되면 로컬스토리지 데이터 갱신.
+  useEffect(() => {
+    if (
+      userData &&
+      JSON.stringify(userData) !== localStorage.getItem("userData")
+    ) {
+      localStorage.setItem("userData", JSON.stringify(userData));
+      console.table(userData);
+    }
+  }, [userData]);
+
   useEffect(() => {
     if (image !== "") {
       setProfileImage(image);
@@ -111,10 +138,12 @@ export default function ProfileUpload() {
   const uploadProfile = useApiMutation(
     "/user",
     "post",
-    { user: { username, accountname, intro, image: profileimage } },
+    { user: { username, accountname, intro, image: profileImage } },
     {
-      onSuccess: () => {
-        console.warn("요청에 성공했습니다.");
+      onSuccess: data => {
+        console.warn("프로필 등록이 완료되었습니다.");
+        setUserLoginState(data.user);
+        navigate(PROFILE_DETAIL);
       },
       onError: error => {
         const apiError = error.response.data.message;
@@ -126,7 +155,7 @@ export default function ProfileUpload() {
 
   const imgPre = useRef(null);
 
-  if (pathname === `/profile/${account}/edit`) {
+  if (pathname === PROFILE_EDIT) {
     const { data } = useApiQuery("/user/myinfo", "get");
     useEffect(() => {
       if (data) {
@@ -143,10 +172,12 @@ export default function ProfileUpload() {
   const settingProfile = useApiMutation(
     "/user",
     "put",
-    { user: { username, accountname, intro, image: profileimage } },
+    { user: { username, accountname, intro, image: profileImage } },
     {
-      onSuccess: () => {
-        console.warn("요청에 성공했습니다.");
+      onSuccess: data => {
+        console.warn("프로필 수정이 완료되었습니다.");
+        setUserLoginState(data.user);
+        navigate(PROFILE_DETAIL);
       },
       onError: error => {
         const apiError = error.response.data.message;
@@ -159,9 +190,9 @@ export default function ProfileUpload() {
   const handleSubmit = e => {
     e.preventDefault();
 
-    if (pathname === `/profile/${account}/upload`) {
+    if (pathname === PROFILE_UPLOAD) {
       uploadProfile.mutate();
-    } else if (pathname === `/profile/${account}/edit`) {
+    } else if (pathname === PROFILE_EDIT) {
       settingProfile.mutate();
     }
   };
@@ -177,7 +208,7 @@ export default function ProfileUpload() {
   return (
     <section>
       <Div>
-        {showContent && (
+        {pathname === PROFILE_UPLOAD && (
           <ProfileTitleSection className="title">
             <H2>프로필 설정</H2>
             <P>나중에 언제든지 변경할 수 있습니다.</P>
@@ -219,9 +250,8 @@ export default function ProfileUpload() {
           maxLength={10}
           minLength={2}
           onChange={onChangedName}
-          className={`${userNameError ? "error" : ""} ${
-            username ? "filled" : ""
-          }`}
+          className={`${userNameError ? "error" : ""} 
+          ${username ? "filled" : ""}`}
           isRequired
         >
           사용자 이름
@@ -232,9 +262,8 @@ export default function ProfileUpload() {
           placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
           value={accountname}
           onChange={onChangedId}
-          className={`${accountNameError ? "error" : ""} ${
-            accountname ? "filled" : ""
-          }`}
+          className={`${accountNameError ? "error" : ""} 
+          ${accountname ? "filled" : ""}`}
           isRequired
         >
           계정 ID
