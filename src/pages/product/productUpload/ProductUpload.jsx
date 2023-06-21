@@ -147,6 +147,7 @@ export default function ProductUpload() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다");
+        navigate(`/product/${myName}`);
       },
     },
   );
@@ -181,6 +182,7 @@ export default function ProductUpload() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다");
+        navigate(-1);
       },
     },
   );
@@ -280,17 +282,11 @@ export default function ProductUpload() {
           variant={
             !errorMessage && itemName && price && link ? "primary" : "disabled"
           }
-          onClick={() => navigate(`/product/${myName}`)}
         >
           저장
         </Button>
       ) : (
-        <Button
-          type="submit"
-          size="cta"
-          variant="primary"
-          onClick={() => navigate(-1)}
-        >
+        <Button type="submit" size="cta" variant="primary">
           저장
         </Button>
       )}
