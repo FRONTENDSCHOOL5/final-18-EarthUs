@@ -5,7 +5,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 
 import privateDataAtom from "../recoil/privateDataAtom";
-import BASE_URL from "../utils/config";
+import { BASE_URL } from "../utils/config";
 
 export default function useApiInfiniteQuery(apiUrl, keyName) {
   const [privateData] = useRecoilState(privateDataAtom);
