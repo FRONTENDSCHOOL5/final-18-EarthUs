@@ -14,21 +14,29 @@ import modalConfigState from "../../recoil/modalConfigAtom";
 import modalState from "../../recoil/modalStateAtom";
 import userDataAtom from "../../recoil/userDataAtom";
 import A11yHidden from "../common/a11yHidden/A11yHidden";
+import BreakLine from "../common/breakLine/BreakLine";
 import Card from "../common/card/Card";
 
 import { ProfileFeedWrap, ViewBtn, FeedView } from "./profileFeed.style";
 
 function GridView({ item }) {
   const { id, image } = item;
-  const apiImg = image ? image.split(",") : [];
+  // * 등록된 이미지가 1개 이상이라면 배열로 변환
+  const multipartImages =
+    typeof image === "string"
+      ? image.trim().replace(/\s+/g, "").split(",")
+      : [image];
 
   return (
     image && (
       <Link to={`/post/${id}/`} key={id}>
-        <img key={id} src={apiImg} alt="게시물 이미지" />
-        {apiImg.length > 1 && (
+        <img key={id} src={multipartImages[0]} alt="게시물 이미지" />
+        {multipartImages.length > 1 && (
           <span>
-            <img src={layer} alt={`${apiImg.length}장의 게시물 이미지`} />
+            <img
+              src={layer}
+              alt={`${multipartImages.length}장의 게시물 이미지`}
+            />
           </span>
         )}
       </Link>
@@ -183,22 +191,9 @@ function ColumnView({ item }) {
       postID={id}
       hearted
     >
-      <DisplayPost content={content} />
+      <BreakLine content={content} />
     </Card>
   );
-}
-
-// 줄바꿈 인식해서 Formatting
-function DisplayPost({ content }) {
-  const formattedContent = content.split("\n").map((line, index) => (
-    // eslint-disable-next-line react/no-array-index-key
-    <React.Fragment key={index}>
-      {line}
-      <br />
-    </React.Fragment>
-  ));
-
-  return <span>{formattedContent}</span>;
 }
 
 export default function ProfileFeed() {
