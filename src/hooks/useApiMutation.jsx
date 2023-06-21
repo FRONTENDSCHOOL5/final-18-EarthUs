@@ -7,7 +7,7 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 
 import privateDataAtom from "../recoil/privateDataAtom";
-import BASE_URL from "../utils/config";
+import { BASE_URL } from "../utils/config";
 
 /**
  * @returns API서버에 데이터 전달
