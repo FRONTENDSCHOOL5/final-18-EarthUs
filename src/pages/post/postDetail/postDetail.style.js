@@ -10,7 +10,7 @@ const CommentList = styled.section`
   display: flex;
   flex-direction: column;
   gap: 20px;
-  scroll-margin-bottom: 100px;
+  scroll-margin-top: 80px;
 `;
 
 const Comments = styled.article`
