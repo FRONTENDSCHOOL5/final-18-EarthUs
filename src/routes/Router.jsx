@@ -9,6 +9,7 @@ import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
 import Feed from "../pages/feed/Feed";
 import Follow from "../pages/follow/Follow";
 import PostDetail from "../pages/post/postDetail/PostDetail";
+import PostUpload from "../pages/post/postUpload/PostUpload";
 import ProductDetail from "../pages/product/productDetail/ProductDetail";
 import ProductUpload from "../pages/product/productUpload/ProductUpload";
 import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
@@ -42,9 +43,11 @@ export default function Router() {
 
         {/* POST */}
         <Route path="post/*" element={<Outlet />}>
-          <Route path=":postId" element={<PostDetail />} />
-          <Route path="upload" />
-          <Route path="edit" />
+          <Route path=":postId">
+            <Route path="" element={<PostDetail />} />
+            <Route path="edit" element={<PostUpload />} />
+          </Route>
+          <Route path="upload" element={<PostUpload />} />
         </Route>
 
         {/* PROFILE */}
