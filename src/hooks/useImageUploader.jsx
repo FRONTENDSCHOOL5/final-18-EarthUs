@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 
-import BASE_URL from "../utils/config";
+import { BASE_URL } from "../utils/config";
 
 /**
  * @returns API서버에 이미지 전달
@@ -11,14 +11,20 @@ import BASE_URL from "../utils/config";
  * const { mutation: uploadSampleImage, image } =useImgMutationHook(apiUrl);
  */
 export default function useImageUploader(apiUrl) {
-  // image 주소를 저장할 state
+  // eslint-disable-next-line no-unused-vars
   const [image, setImage] = useState("");
 
-  const executeImageUpload = async file => {
+  const executeImageUpload = async files => {
     const formData = new FormData();
-    formData.append("image", file);
-    const response = await axios.post(BASE_URL + apiUrl, formData);
 
+    // ! 이미지가 파일인지 배열인지 확인 후 조건식 실행
+    const filesArray = Array.isArray(files) ? files : [files];
+    filesArray.forEach(file => {
+      formData.append("image", file);
+    });
+
+    // axios로 formData 전송해서 응답 반환
+    const response = await axios.post(BASE_URL + apiUrl, formData);
     return response.data;
   };
 
@@ -28,15 +34,29 @@ export default function useImageUploader(apiUrl) {
     },
     onSuccess: data => {
       console.log("이미지 등록에 성공했습니다.");
-      console.table(data);
-      console.table(data.filename);
+      console.log("data:", { ...data });
 
-      // 이미지 주소가 undefined일 경우에는 api 실행하지 않고 종료
-      if (!data.filename) return;
+      // ! 이미지가 배열인지 확인 후 조건식 실행
+      let filenames;
+      if (Array.isArray(data)) {
+        filenames = data.map(d => d.filename);
+        console.table("filenames:", filenames);
+      } else {
+        filenames = [data.filename];
+        console.table("filename:", data.filename);
+      }
 
-      // 이미지 주소를 저장
-      const apiImg = `${BASE_URL}/${data.filename}`;
+      // 이미지 주소가 없으면 종료.
+      if (!filenames.every(Boolean)) {
+        console.log("이미지 주소를 찾을 수 없습니다.");
+      }
+
+      // ! 이미지 주소를 BASE_URL과 조합해서 image 상태에 저장.
+      const apiImg = filenames
+        .map(filename => `${BASE_URL}/${filename}`)
+        .join(",");
       setImage(apiImg);
+      console.log("image:", apiImg);
     },
   });
 
