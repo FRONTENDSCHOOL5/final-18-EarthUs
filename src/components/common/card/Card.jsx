@@ -14,6 +14,7 @@ import "swiper/components/pagination/pagination.min.css";
 import iconComment from "../../../assets/images/comment.svg";
 import iconHeartEmpty from "../../../assets/images/heart-empty.svg";
 import iconHeartFull from "../../../assets/images/heart-full.svg";
+import layer from "../../../assets/images/layer-image.svg";
 import Nodata from "../../../assets/images/no-data.svg";
 import useApiMutation from "../../../hooks/useApiMutation";
 import UserInfo from "../../userInfo/UserInfo";
@@ -26,6 +27,7 @@ import {
   PostLink,
   Reaction,
   Time,
+  LayerIcon,
 } from "./card.style";
 
 export default function Card({
@@ -109,23 +111,31 @@ export default function Card({
               {/* Feed & Product 동시 사용 영역 */}
               {multipartImages.length > 1 ? (
                 // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
-                <Swiper
-                  className="imgWrap"
-                  spaceBetween={0}
-                  slidesPerView={1}
-                  modules={[Navigation, Pagination]}
-                >
-                  {multipartImages.map(img => (
-                    // eslint-disable-next-line react/no-array-index-key
-                    <SwiperSlide key={img}>
-                      <Imgs
-                        src={img}
-                        alt="게시물 이미지"
-                        onError={handleImgError}
-                      />
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
+                <>
+                  <LayerIcon>
+                    <img
+                      src={layer}
+                      alt={`${multipartImages.length}장의 게시물 이미지`}
+                    />
+                  </LayerIcon>
+                  <Swiper
+                    className="imgWrap"
+                    spaceBetween={0}
+                    slidesPerView={1}
+                    modules={[Navigation, Pagination]}
+                  >
+                    {multipartImages.map(img => (
+                      // eslint-disable-next-line react/no-array-index-key
+                      <SwiperSlide key={img}>
+                        <Imgs
+                          src={img}
+                          alt="게시물 이미지"
+                          onError={handleImgError}
+                        />
+                      </SwiperSlide>
+                    ))}
+                  </Swiper>
+                </>
               ) : (
                 // postImage가 1개라면 기존의 figure 리턴
                 postImage && (

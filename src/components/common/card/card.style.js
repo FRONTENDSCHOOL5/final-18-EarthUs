@@ -22,6 +22,7 @@ const PostLink = styled(Link)`
   display: flex;
   flex-direction: column;
   gap: var(--size-gap);
+  position: relative;
 `;
 
 const Imgs = styled.img`
@@ -84,4 +85,11 @@ const Time = styled.p`
   color: var(--color-gray-76);
 `;
 
-export { Cards, PostLink, Imgs, Img, Content, Reaction, Time };
+const LayerIcon = styled.div`
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  z-index: 10;
+`;
+
+export { Cards, PostLink, Imgs, Img, Content, Reaction, Time, LayerIcon };
