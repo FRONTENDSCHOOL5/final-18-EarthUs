@@ -62,13 +62,9 @@ export default function PostDetail() {
     if (send) {
       setContent(""); // 댓글 전송 시 댓글 입력창 비우기
       setTimeout(
-        () =>
-          scrollRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-          }),
+        () => scrollRef.current.scrollIntoView({ behavior: "smooth" }),
         1000,
-      ); // 댓글 작성 시 스크롤 제일 아래로 이동
+      ); // 댓글 작성 시 스크롤 작성한 댓글로 이동
     }
     return () => setSend(false);
   }, [send]);
@@ -104,23 +100,25 @@ export default function PostDetail() {
           loadMore={() => commentFetchNextPage()}
         >
           <CommentList ref={scrollRef}>
-            {commentData.pages
-              .map(v => v.comments)
-              .flat()
-              .reverse()
-              .map(v => {
-                return (
-                  <Comment
-                    key={v.id}
-                    commentID={v.id}
-                    profileImg={v.author.image}
-                    userName={v.author.username}
-                    comment={v.content}
-                    time={v.createdAt}
-                    authorID={v.author._id}
-                  />
-                );
-              })}
+            {commentData.pages.map(page => {
+              return (
+                <>
+                  {page.comments.map(v => {
+                    return (
+                      <Comment
+                        key={v.id}
+                        commentID={v.id}
+                        profileImg={v.author.image}
+                        userName={v.author.username}
+                        comment={v.content}
+                        time={v.createdAt}
+                        authorID={v.author._id}
+                      />
+                    );
+                  })}
+                </>
+              );
+            })}
           </CommentList>
         </InfiniteScroll>
       )}
