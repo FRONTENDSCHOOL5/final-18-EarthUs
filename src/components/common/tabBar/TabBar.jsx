@@ -22,7 +22,7 @@ export default function TabBar() {
       <Nav>
         <MenuList>
           <TabMenu>
-            <Links to="/">
+            <Links to="/home">
               <img src={iconHome} alt="홈" />
               <div>홈</div>
             </Links>
