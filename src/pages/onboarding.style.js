@@ -63,22 +63,21 @@ const strokeAnimation = keyframes`
   0% {
     stroke-dashoffset: 25%;
     stroke-dasharray: 0 50%;
-    fill: rgba(72, 138, 204, 0);
+    fill: rgba(142, 194, 138, 0);
     stroke: #ffc73c;
     stroke-width: 2;
   }
   70% {
-    fill: rgba(72, 138, 204, 0);
+    fill: rgba(142, 194, 138, 0);
     stroke: #ffc73c;
   }
   80% {
-    fill: rgba(72, 138, 204, 0);
+    fill: rgba(142, 194, 138, 0);
     stroke: #ffc73c;
   }
   100% {
     stroke-dashoffset: -25%;
     stroke-dasharray: 50% 0;
-    fill: "#8EC28A";
     stroke: #ffc73c;
     stroke-width: 0;
   }
@@ -129,12 +128,6 @@ const ImgSectionOne = styled(ImgSection)`
   }
 
   .ani1 {
-    width: 100px;
-    height: 100px;
-    x: 30px;
-    y: 30px;
-    stroke-dasharray: 50;
-    stroke-dashoffset: 50;
     animation: ${strokeAnimation} 1.5s 1 alternate;
   }
 `;
@@ -177,12 +170,6 @@ const Bulb = styled.div`
   .ani11,
   .ani12,
   .ani13 {
-    width: 100px;
-    height: 100px;
-    x: 30px;
-    y: 30px;
-    stroke-dasharray: 50;
-    stroke-dashoffset: 50;
     animation: ${strokeAnimation} 1.5s 1 alternate;
     animation-fill-mode: forwards;
   }
