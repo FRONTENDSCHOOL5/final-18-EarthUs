@@ -41,6 +41,7 @@ export const CHAT_LIST = `/chat`;
 export const CHAT_ROOM = `/chat/room`;
 
 export const ONBOARDING = `/onboarding`;
+export const INTRO = `/intro`;
 export const HOME = `/home`;
 
 export const SIGN_IN = `/signin`;
