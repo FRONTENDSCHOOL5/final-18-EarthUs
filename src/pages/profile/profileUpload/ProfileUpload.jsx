@@ -294,7 +294,9 @@ export default function ProfileUpload() {
         <Button
           type="submit"
           size="cta"
-          variant={disabledBtn ? "disabled" : "primary"}
+          variant={
+            !disabledBtn && username && accountname ? "primary" : "disabled"
+          }
         >
           {pathname === PROFILE_UPLOAD ? "저장" : "수정"}
         </Button>
