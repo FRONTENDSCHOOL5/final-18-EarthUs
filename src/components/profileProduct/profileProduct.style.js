@@ -25,6 +25,11 @@ const ProfileProductList = styled.article`
     margin: 0 calc(var(--size-gap) * -1);
     .swiper-wrapper {
       align-items: center;
+      p {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
     }
   }
 `;
