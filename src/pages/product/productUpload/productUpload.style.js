@@ -11,14 +11,6 @@ const InputFile = styled(Input)`
   border: 0;
 `;
 
-const InputNumber = styled(Input)`
-  &::-webkit-outer-spin-button,
-  &::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-  }
-`;
-
 const ImgLabel = styled.div`
   position: relative;
   width: 100%;
@@ -82,4 +74,4 @@ const ImgUploadButton = styled.div`
   }
 `;
 
-export { InputFile, InputNumber, ImgLabel, Img, ImgUploadButton };
+export { InputFile, ImgLabel, Img, ImgUploadButton };
