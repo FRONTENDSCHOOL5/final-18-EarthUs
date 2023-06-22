@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import React from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -8,6 +9,14 @@ import useApiQuery from "../../hooks/useApiQuery";
 import modalConfigState from "../../recoil/modalConfigAtom";
 import modalState from "../../recoil/modalStateAtom";
 import userDataAtom from "../../recoil/userDataAtom";
+import {
+  getProfileEditPath,
+  getProfileDetailPath,
+  getFollowingPath,
+  getFollowerPath,
+  CHAT_LIST,
+  PRODUCT_UPLOAD,
+} from "../../utils/config";
 import A11yHidden from "../common/a11yHidden/A11yHidden";
 import Avatar from "../common/avatar/Avatar";
 import Button from "../common/button/Button";
@@ -17,16 +26,10 @@ import { ProfileHeaderWrap, ProfileButtonArea } from "./profileHeader.style";
 export default function ProfileHeader() {
   const { account } = useParams();
   const navigate = useNavigate();
-
-  // * navigate 실행 함수
-  const setNavigate = url => {
-    const navigateUrl = {
-      chat: `/chat`,
-      uploadProfile: `/profile/${account}/edit`,
-      uploadProduct: `/product/${account}/upload`,
-    };
-    navigate(navigateUrl[url]);
-  };
+  const PROFILE_EDIT = getProfileEditPath(account);
+  const PROFILE_DETAIL = getProfileDetailPath(account);
+  const PROFILE_FOLLOWING = getFollowingPath(account);
+  const PROFILE_FOLLOWER = getFollowerPath(account);
 
   // * 커스텀 훅을 통한 API 호출으로 유저 정보 표시
   const { data } = useApiQuery(`/profile/${account}`, "get");
@@ -50,7 +53,7 @@ export default function ProfileHeader() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다.");
-        queryClient.invalidateQueries(`/profile/${account}`);
+        queryClient.invalidateQueries(PROFILE_DETAIL);
       },
     },
   );
@@ -63,7 +66,7 @@ export default function ProfileHeader() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다.");
-        queryClient.invalidateQueries(`/profile/${account}`);
+        queryClient.invalidateQueries(PROFILE_DETAIL);
       },
       onError: () => {
         console.log("요청에 실패했습니다.");
@@ -79,13 +82,13 @@ export default function ProfileHeader() {
   const setShareConfirm = () => {
     // 이벤트 사용하면 'e' 인자 추가. 아니면 생략
     setModalConfig({
-      type: "confirm", // "confirm" or "bottomSheet"
+      type: "confirm",
       title: "공유하기",
       body: "준비중",
       buttons: [
         {
           label: "닫기",
-          onClick: () => setModalOpen(false), // 모달 닫기
+          onClick: () => setModalOpen(false),
         },
       ],
     });
@@ -122,7 +125,7 @@ export default function ProfileHeader() {
         </li>
         <li className="intro">{intro}</li>
         <li className="follow">
-          <Link to={`/profile/${account}/follower`}>
+          <Link to={PROFILE_FOLLOWER}>
             팔로워
             <strong>
               {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
@@ -130,7 +133,7 @@ export default function ProfileHeader() {
               )}
             </strong>
           </Link>
-          <Link to={`/profile/${account}/following`}>
+          <Link to={PROFILE_FOLLOWING}>
             팔로잉
             <strong>
               {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
@@ -159,7 +162,7 @@ export default function ProfileHeader() {
               size="sm"
               variant="primary"
               type="button"
-              onClick={() => setNavigate("chat")}
+              onClick={() => navigate(CHAT_LIST)}
             >
               메시지
             </Button>
@@ -170,7 +173,7 @@ export default function ProfileHeader() {
               size="sm"
               variant="white"
               type="button"
-              onClick={() => setNavigate("uploadProfile")}
+              onClick={() => navigate(PROFILE_EDIT)}
             >
               프로필 수정
             </Button>
@@ -178,7 +181,7 @@ export default function ProfileHeader() {
               size="sm"
               variant="white"
               type="button"
-              onClick={() => setNavigate("uploadProduct")}
+              onClick={() => navigate(PRODUCT_UPLOAD)}
             >
               상품 업로드
             </Button>
