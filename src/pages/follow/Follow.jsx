@@ -1,14 +1,16 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable no-shadow */
 /* eslint-disable no-console */
 import React, { useState } from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { useLocation, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useSetRecoilState } from "recoil";
 
 import Button from "../../components/common/button/Button";
 import UserInfo from "../../components/userInfo/UserInfo";
+import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
 import useApiMutation from "../../hooks/useApiMutation";
-import useApiQuery from "../../hooks/useApiQuery";
 import modalConfigState from "../../recoil/modalConfigAtom";
 import modalState from "../../recoil/modalStateAtom";
 
@@ -26,8 +28,9 @@ export default function Follow() {
   const [followUrl, setFollowUrl] = useState(null);
   const [unfollowUrl, setUnfollowUrl] = useState(null);
 
-  const { data } = useApiQuery(`/profile/${account}/${followPage}`, "get");
-
+  const { data, hasNextPage, fetchNextPage } = useApiInfiniteQuery(
+    `/profile/${account}/${followPage}`,
+  );
   // * 유저 팔로우
   // 클릭한 user의 accountname을 가져와서 해당 유저 팔로우
   const makeFollow = useApiMutation(
@@ -118,35 +121,54 @@ export default function Follow() {
   };
 
   return (
-    <Follows>
-      {data &&
-        data.map(v => {
-          const { _id, accountname, image, username, intro, isfollow } = v;
-
-          return (
-            <UserInfo
-              key={_id}
-              account={accountname}
-              profileImg={image}
-              userName={username}
-              intro={intro}
-              more
-              handleModal={e => manageNotificationsModal(e, accountname)}
-            >
-              <Button
-                size="sm"
-                variant={isfollow ? "white" : "primary"}
-                onClick={() =>
-                  isfollow
-                    ? handleUnfollow(accountname)
-                    : handleFollow(accountname)
-                }
-              >
-                {isfollow ? "팔로잉" : "팔로우"}
-              </Button>
-            </UserInfo>
-          );
-        })}
-    </Follows>
+    <section>
+      {data && (
+        <InfiniteScroll hasMore={hasNextPage} loadMore={() => fetchNextPage()}>
+          <Follows>
+            {data.pages.map((page, i) => {
+              return (
+                <React.Fragment key={i}>
+                  {page.map(v => {
+                    const {
+                      _id,
+                      accountname,
+                      image,
+                      username,
+                      intro,
+                      isfollow,
+                    } = v;
+                    return (
+                      <UserInfo
+                        key={_id}
+                        account={accountname}
+                        profileImg={image}
+                        userName={username}
+                        intro={intro}
+                        more
+                        handleModal={e =>
+                          manageNotificationsModal(e, accountname)
+                        }
+                      >
+                        <Button
+                          size="sm"
+                          variant={isfollow ? "white" : "primary"}
+                          onClick={() =>
+                            isfollow
+                              ? handleUnfollow(accountname)
+                              : handleFollow(accountname)
+                          }
+                        >
+                          {isfollow ? "팔로잉" : "팔로우"}
+                        </Button>
+                      </UserInfo>
+                    );
+                  })}
+                </React.Fragment>
+              );
+            })}
+          </Follows>
+        </InfiniteScroll>
+      )}
+    </section>
   );
 }
