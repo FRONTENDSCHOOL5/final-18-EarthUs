@@ -123,7 +123,7 @@ export default function Header() {
         </button>
 
         {/* 홈 */}
-        {pathname === "/" && (
+        {pathname === "/home" && (
           <>
             <p>Home</p>
             <button type="button" onClick={() => navigate("/search")}>
