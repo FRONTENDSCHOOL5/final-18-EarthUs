@@ -17,7 +17,7 @@ import ProductUpload from "../pages/product/productUpload/ProductUpload";
 import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
 import ProfileUpload from "../pages/profile/profileUpload/ProfileUpload";
 import Search from "../pages/search/Search";
-import SignIn from "../pages/SignIn";
+import SignIn from "../pages/sign/SignIn";
 import Splash from "../pages/splash/Splash";
 
 export default function Router() {
