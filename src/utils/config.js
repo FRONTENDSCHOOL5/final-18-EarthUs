@@ -39,3 +39,6 @@ export const getProductEditPath = productId => `/product/${productId}/edit`;
  */
 export const CHAT_LIST = `/chat`;
 export const CHAT_ROOM = `/chat/room`;
+
+export const ONBOARDING = `/onboarding`;
+export const HOME = `/home`;
