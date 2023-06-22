@@ -8,15 +8,20 @@ import { useRecoilState } from "recoil";
 
 import Button from "../../../components/common/button/Button";
 import Input from "../../../components/common/input/Input";
-import InputError from "../../../components/common/input/InputError";
+// import InputError from "../../../components/common/input/InputError";
 import useApiMutation from "../../../hooks/useApiMutation";
 import useApiQuery from "../../../hooks/useApiQuery";
 import useImageUploader from "../../../hooks/useImageUploader";
 import userDataAtom from "../../../recoil/userDataAtom";
+import {
+  getProductDetailPath,
+  getProductEditPath,
+  PRODUCT_UPLOAD,
+  NO_IMAGE,
+} from "../../../utils/config";
 
 import {
   InputFile,
-  InputNumber,
   ImgLabel,
   ImgUploadButton,
   Img,
@@ -28,69 +33,69 @@ export default function ProductUpload() {
   const navigate = useNavigate();
   const [userData] = useRecoilState(userDataAtom);
   const myName = userData ? userData.accountname.trim().toLowerCase() : "";
+  const PRODUCT_DETAIL = getProductDetailPath(myName);
+  const PRODUCT_EDIT = getProductEditPath(productId);
 
+  const [itemImage, setItemImage] = useState(NO_IMAGE);
+
+  // 버튼 활성화 상태 관리
+  const [disabledBtn, setDisabledBtn] = useState(pathname === PRODUCT_UPLOAD);
+
+  // 인풋필드 상태 저장
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState("");
   const [link, setLink] = useState("");
-  const [itemImage, setItemImage] = useState(
-    "https://api.mandarin.weniv.co.kr/1687097552358.png",
-  );
 
   // 오류 메시지 상태 저장
-  const [errorMessage, setErrorMessage] = useState(false);
   const [itemNameError, setItemNameError] = useState("");
   const [priceError, setPriceError] = useState("");
   const [linkError, setLinkError] = useState("");
 
-  // input value 변경
-  // 유효성 검사
-  const handleInputChange = e => {
-    switch (e.target.type) {
-      case "text":
-        setItemName(e.target.value);
+  // * 게시물 유효성 검사
+  const validationFields = e => {
+    const currentValue = e.target.value;
+    const itemNameRegExp = /^[가-힣a-zA-Z0-9@:%._\+~#=]+$/;
+    const linkRegExp =
+      /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?$/;
 
-        const itemNameRegExp = /^[가-힣a-zA-Z0-9]+$/;
-        if (!itemNameRegExp.test(e.target.value)) {
-          setErrorMessage(true);
+    switch (e.target.id) {
+      case "itemName":
+        setItemName(currentValue);
+        if (!itemNameRegExp.test(currentValue) || currentValue === "") {
           setItemNameError("자음 또는 모음으로 상품명 설정이 불가합니다.");
+          setDisabledBtn(true);
         } else {
-          setErrorMessage(false);
           setItemNameError("");
+          setDisabledBtn(false);
         }
-
         break;
 
-      case "number":
-        setPrice(e.target.value);
-
-        if (e.target.value < 100) {
-          setErrorMessage(true);
-          setPriceError("100원 이상으로 적어주세요.");
+      case "price":
+        setPrice(currentValue);
+        if (currentValue < 100 || currentValue === "") {
+          setPriceError("100원 이하는 설정이 불가합니다.");
+          setDisabledBtn(true);
         } else {
-          setErrorMessage(false);
           setPriceError("");
+          setDisabledBtn(false);
         }
-
         break;
 
-      case "url":
-        setLink(e.target.value);
-
-        const linkRegExp =
-          /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?$/;
-        if (!linkRegExp.test(e.target.value)) {
-          setErrorMessage(true);
+      case "link":
+        setLink(currentValue);
+        if (!linkRegExp.test(currentValue) || currentValue === "") {
           setLinkError("URL을 확인해주세요.");
+          setDisabledBtn(true);
         } else {
-          setErrorMessage(false);
           setLinkError("");
+          setDisabledBtn(false);
         }
-
         break;
 
       default:
         break;
     }
+    return null;
   };
 
   // 이미지 업로드 Hook 호출
@@ -147,14 +152,14 @@ export default function ProductUpload() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다");
-        navigate(`/product/${myName}`);
+        navigate(PRODUCT_DETAIL);
       },
     },
   );
 
   const imgPre = useRef(null);
 
-  if (pathname === `/product/${productId}/edit`) {
+  if (pathname === PRODUCT_EDIT) {
     const { data } = useApiQuery(`/product/detail/${productId}`, "get");
     useEffect(() => {
       if (data) {
@@ -187,18 +192,18 @@ export default function ProductUpload() {
     },
   );
 
-  const handleUploadProduct = e => {
+  const handleSubmit = e => {
     e.preventDefault();
 
-    if (pathname === "/product/upload") {
+    if (pathname === PRODUCT_UPLOAD) {
       uploadProduct.mutate();
-    } else if (pathname === `/product/${productId}/edit`) {
+    } else if (pathname === PRODUCT_EDIT) {
       editProduct.mutate();
     }
   };
 
   return (
-    <form onSubmit={handleUploadProduct}>
+    <form onSubmit={handleSubmit}>
       <InputFile type="file" id="itemImage" onChange={e => handleImgChange(e)}>
         이미지 등록
         <ImgLabel>
@@ -216,29 +221,25 @@ export default function ProductUpload() {
           />
         </ImgLabel>
       </InputFile>
+
       <Input
         type="text"
         id="itemName"
+        value={itemName}
+        error={itemNameError}
+        onChange={validationFields}
+        label="상품명"
+        placeholder="2~15자 이내여야 합니다."
         maxLength={10}
         minLength={2}
-        value={itemName || ""}
-        onChange={e => handleInputChange(e)}
-        onBlur={() => setErrorMessage("")}
-        className={`${itemNameError ? "error" : ""} ${
-          itemName ? "filled" : ""
-        }`}
-        placeholder="2~15자 이내여야 합니다."
-        isRequired
-      >
-        상품명
-      </Input>
-      <InputNumber
-        type="number"
+        required
+      />
+      <Input
+        type="text"
         id="price"
-        min={100}
-        max={999999999}
-        value={price || ""}
-        onChange={e => handleInputChange(e)}
+        value={price}
+        error={priceError}
+        onChange={validationFields}
         // e, E, +, - 입력 방지
         onKeyDown={e =>
           ["e", "E", "+", "-"].includes(e.key) && e.preventDefault()
@@ -251,45 +252,29 @@ export default function ProductUpload() {
             e.target.focus();
           }, 0);
         }}
-        onBlur={() => setErrorMessage("")}
-        className={`${priceError ? "error" : ""} ${price ? "filled" : ""}`}
-        placeholder="숫자만 입력 가능합니다."
-        isRequired
-      >
-        가격
-      </InputNumber>
+        label="가격"
+        placeholder="숫자만 입력 가능합니다"
+        min={100}
+        max={999999999}
+        required
+      />
       <Input
         type="url"
         id="link"
-        value={link || ""}
-        onChange={e => handleInputChange(e)}
-        onBlur={() => setErrorMessage("")}
-        className={`${linkError ? "error" : ""} ${link ? "filled" : ""}`}
+        value={link}
+        error={linkError}
+        onChange={validationFields}
+        label="판매 링크"
         placeholder="URL을 입력해주세요."
-        isRequired
+        required
+      />
+      <Button
+        type="submit"
+        size="cta"
+        variant={disabledBtn ? "disabled" : "primary"}
       >
-        판매 링크
-      </Input>
-      {errorMessage && itemNameError && (
-        <InputError>{itemNameError}</InputError>
-      )}
-      {errorMessage && priceError && <InputError>{priceError}</InputError>}
-      {errorMessage && linkError && <InputError>{linkError}</InputError>}
-      {pathname === "/product/upload" ? (
-        <Button
-          type="submit"
-          size="cta"
-          variant={
-            !errorMessage && itemName && price && link ? "primary" : "disabled"
-          }
-        >
-          저장
-        </Button>
-      ) : (
-        <Button type="submit" size="cta" variant="primary">
-          저장
-        </Button>
-      )}
+        {pathname === PRODUCT_UPLOAD ? "저장" : "수정"}
+      </Button>
     </form>
   );
 }
