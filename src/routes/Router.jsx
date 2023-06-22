@@ -17,10 +17,12 @@ import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
 import ProfileUpload from "../pages/profile/profileUpload/ProfileUpload";
 import Search from "../pages/search/Search";
 import SignIn from "../pages/SignIn";
+import Splash from "../pages/splash/Splash";
 
 export default function Router() {
   return (
     <Routes>
+      <Route path="/" element={<Splash />} />
       <Route path="/intro" element={<Intro />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" />
@@ -28,7 +30,7 @@ export default function Router() {
 
       <Route path="/" element={<Header />}>
         {/* HOME */}
-        <Route path="" element={<Feed />} />
+        <Route path="home" element={<Feed />} />
         <Route element={<TabBar />}>
           <Route path="search" element={<Search />} />
           <Route path="newsletter" element={<Feed />} />
