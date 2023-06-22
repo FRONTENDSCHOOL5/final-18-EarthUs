@@ -15,6 +15,7 @@ const Cards = styled.article`
     overflow: hidden;
     border: 1px solid var(--color-light);
     background: var(--color-bg);
+    margin: 0;
   }
 `;
 

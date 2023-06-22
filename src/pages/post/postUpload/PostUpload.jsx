@@ -3,8 +3,10 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 /* eslint-disable no-unused-vars */
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { v4 as uuidv4 } from "uuid";
 
 import A11yHidden from "../../../components/common/a11yHidden/A11yHidden";
 import Button from "../../../components/common/button/Button";
@@ -172,7 +174,7 @@ export default function PostUpload() {
             apiImg.map((imgUrl, idx) => (
               <ImagePrev
                 // eslint-disable-next-line react/no-array-index-key
-                key={`${imgUrl}-${idx}`}
+                key={uuidv4()}
                 src={imgUrl}
                 alt={`${idx + 1}번째 이미지`}
                 event={() => handleDelete(imgUrl)}

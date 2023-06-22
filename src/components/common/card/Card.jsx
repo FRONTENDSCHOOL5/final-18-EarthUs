@@ -3,8 +3,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { v4 as uuidv4 } from "uuid";
 
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
@@ -122,11 +122,10 @@ export default function Card({
                     className="imgWrap"
                     spaceBetween={0}
                     slidesPerView={1}
-                    modules={[Navigation, Pagination]}
                   >
                     {multipartImages.map(img => (
                       // eslint-disable-next-line react/no-array-index-key
-                      <SwiperSlide key={img}>
+                      <SwiperSlide key={uuidv4()}>
                         <Imgs
                           src={img}
                           alt="게시물 이미지"
@@ -179,15 +178,10 @@ export default function Card({
         <>
           {multipartImages.length > 1 ? (
             // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
-            <Swiper
-              className="imgWrap"
-              spaceBetween={0}
-              slidesPerView={1}
-              modules={[Navigation, Pagination]}
-            >
+            <Swiper className="imgWrap" spaceBetween={0} slidesPerView={1}>
               {multipartImages.map(img => (
                 // eslint-disable-next-line react/no-array-index-key
-                <SwiperSlide key={img}>
+                <SwiperSlide key={uuidv4()}>
                   <Imgs
                     src={img}
                     alt="게시물 이미지"
