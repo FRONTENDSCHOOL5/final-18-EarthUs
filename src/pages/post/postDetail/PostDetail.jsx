@@ -9,6 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 
 import Avatar from "../../../components/common/avatar/Avatar";
+import BreakLine from "../../../components/common/breakLine/BreakLine";
 import Button from "../../../components/common/button/Button";
 import Card from "../../../components/common/card/Card";
 import Comment from "../../../components/common/comment/Comment";
@@ -85,13 +86,14 @@ export default function PostDetail() {
           username={postData.post.author.username}
           id={postData.post.author.accountname}
           postImage={postData.post.image}
-          content={postData.post.content}
           heartCount={postData.post.heartCount}
           commentCount={postData.post.commentCount}
           time={`${time[0]}년 ${time[1]}월 ${time[2]}일`}
           postID={postData.post.id}
           hearted={postData.post.hearted}
-        />
+        >
+          <BreakLine content={postData.post.content} />
+        </Card>
       )}
       <Line />
       {commentData && (
