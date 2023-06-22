@@ -6,39 +6,34 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 
-import layer from "../../../assets/images/layer-image.svg";
 import A11yHidden from "../../../components/common/a11yHidden/A11yHidden";
 import Button from "../../../components/common/button/Button";
 import ImagePrev from "../../../components/common/imagePrev/ImagePrev";
+import Input from "../../../components/common/input/Input";
 import TextArea from "../../../components/common/textArea/TextArea";
 import useApiMutation from "../../../hooks/useApiMutation";
 import useApiQuery from "../../../hooks/useApiQuery";
 import useImageUploader from "../../../hooks/useImageUploader";
 import { getPostEditPath, POST_UPLOAD } from "../../../utils/config";
 
-import {
-  PostUploadWrap,
-  InputPrevWrap,
-  InputFile,
-  ImgLabel,
-  ImgUploadButton,
-} from "./postUpload.style";
+import { InputPrevWrap, ImgLabel, ImgUploadButton } from "./postUpload.style";
 
 export default function PostUpload() {
-  const navigate = useNavigate();
   const { pathname } = useLocation();
   const { postId } = useParams();
+  const navigate = useNavigate();
   const POST_EDIT = getPostEditPath(postId);
 
   // 데이터 패치
   const [apiImg, setApiImg] = useState([]);
-  const [apiError, setApiError] = useState("");
   const [editImageData, setEditImageData] = useState("");
 
-  // 인풋 필드
-  const [disabledBtn, setDisabledBtn] = useState(true);
-  const [contentError, setContentError] = useState("");
+  // 인풋필드 상태 저장
+  const [disabledBtn, setDisabledBtn] = useState(pathname === POST_UPLOAD);
   const [content, setContent] = useState("");
+
+  // 오류 메시지 상태 저장
+  const [contentError, setContentError] = useState("");
 
   // * 게시물 수정 시 이전 정보 출력
   const { data: apiData } = useApiQuery(
@@ -48,7 +43,6 @@ export default function PostUpload() {
     pathname === POST_EDIT,
   );
 
-  // img, content 데이터 패치
   useEffect(() => {
     if (apiData) {
       setApiImg(apiData.post.image.split(","));
@@ -57,7 +51,7 @@ export default function PostUpload() {
     }
   }, [apiData]);
 
-  // 게시물 유효성 검사
+  // * 게시물 유효성 검사
   const validationFields = e => {
     const currentValue = e.target.value;
     switch (e.target.id) {
@@ -185,19 +179,17 @@ export default function PostUpload() {
               />
             ))}
         </InputPrevWrap>
-        <InputFile
+        <Input
           className="itemImage"
           type="file"
           id="itemImage"
           onChange={e => handleImgChange(e)}
           multiple
+          data={!apiImg.length ? "data" : ""}
         >
           {/* 이미지 등록 */}
           <ImgLabel data={!apiImg.length ? "data" : ""}>
             {/* 접근성 */}
-            <div>
-              <A11yHidden>이미지 등록</A11yHidden>
-            </div>
             <ImgUploadButton
               data={apiImg.length < 1 ? "data" : ""}
               role="button"
@@ -210,14 +202,15 @@ export default function PostUpload() {
               }}
             />
           </ImgLabel>
-        </InputFile>
+        </Input>
         <TextArea
           type="text"
           id="content"
           value={content}
           error={contentError}
           onChange={validationFields}
-          placeholder="내용 입력"
+          label="내용"
+          placeholder="내용을 입력하세요."
           required
         />
         <Button
@@ -225,7 +218,7 @@ export default function PostUpload() {
           size="cta"
           variant={disabledBtn ? "disabled" : "primary"}
         >
-          저장
+          {pathname === POST_UPLOAD ? "저장" : "수정"}
         </Button>
       </form>
     </section>
