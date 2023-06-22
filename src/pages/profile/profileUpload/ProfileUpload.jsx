@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -6,7 +8,6 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import Camera from "../../../assets/images/camera.svg";
 import Button from "../../../components/common/button/Button";
 import Input from "../../../components/common/input/Input";
-import InputError from "../../../components/common/input/InputError";
 import useApiMutation from "../../../hooks/useApiMutation";
 import useApiQuery from "../../../hooks/useApiQuery";
 import useImgMutationHook from "../../../hooks/useImageUploader";
@@ -44,48 +45,64 @@ export default function ProfileUpload() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const PROFILE_DETAIL = getProfileDetailPath(account);
   const PROFILE_UPLOAD = getProfileUploadPath(account);
   const PROFILE_EDIT = getProfileEditPath(account);
 
-  // 초기값 세팅 - 사용자 이름, 계정 ID, 소개
-  const [username, setUserName] = useState("");
-  const [accountname, setAccountId] = useState("");
-  const [intro, setIntro] = useState("");
+  // 버튼 활성화 상태 관리
+  const [disabledBtn, setDisabledBtn] = useState(pathname === PROFILE_UPLOAD);
+
+  // 인풋필드 상태 저장
   const [profileImage, setProfileImage] = useState(NO_IMAGE);
+  const [username, setUserName] = useState("");
+  const [accountname, setAccountName] = useState("");
+  const [intro, setIntro] = useState("");
 
   // 오류 메시지 상태 저장
-  const [errorMessage, setErrorMessage] = useState("");
   const [userNameError, setUserNameError] = useState("");
   const [accountNameError, setAccountNameError] = useState("");
 
-  // 사용자 이름 검사
-  const onChangedName = e => {
-    const currentUserName = e.target.value;
-    setUserName(currentUserName);
+  // * 게시물 유효성 검사
+  const validationFields = e => {
+    const currentValue = e.target.value;
     const userNameRegExp = /^[가-힣a-zA-Z\s]*$/;
+    const accountNameRegExp = /^[a-zA-Z0-9._]*$/;
 
-    if (!userNameRegExp.test(currentUserName)) {
-      setUserNameError("자음 또는 모음으로 이름 설정이 불가합니다.");
-    } else {
-      setUserNameError("");
+    switch (e.target.id) {
+      case "username":
+        setUserName(currentValue);
+        if (!userNameRegExp.test(currentValue) || currentValue === "") {
+          setUserNameError("자음 또는 모음으로 이름 설정이 불가합니다.");
+          setDisabledBtn(true);
+        } else {
+          setUserNameError("");
+          setDisabledBtn(false);
+        }
+        break;
+
+      case "accountname":
+        setAccountName(currentValue);
+        if (!accountNameRegExp.test(currentValue) || currentValue === "") {
+          setAccountNameError(
+            "영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.",
+          );
+          setDisabledBtn(true);
+        } else {
+          setAccountNameError("");
+          setDisabledBtn(false);
+        }
+        break;
+
+      case "intro":
+        setIntro(currentValue);
+        break;
+
+      default:
+        break;
     }
+    return null;
   };
 
-  // 계정 ID 검사
-  const onChangedId = e => {
-    const currentId = e.target.value;
-    setAccountId(currentId);
-    const idRegExp = /^[a-zA-Z0-9._]*$/;
-
-    if (!idRegExp.test(currentId)) {
-      setAccountNameError("영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.");
-    } else {
-      setAccountNameError("");
-    }
-  };
-
-  // 이미지 업로드 처리
+  // * 이미지 업로드 처리
   const { mutation: uploadProfileImage, image } =
     useImgMutationHook("/image/uploadfile");
 
@@ -143,12 +160,13 @@ export default function ProfileUpload() {
       onSuccess: data => {
         console.warn("프로필 등록이 완료되었습니다.");
         setUserLoginState(data.user);
-        navigate(PROFILE_DETAIL);
+        navigate(`/profile/${data.user.accountname}`);
       },
       onError: error => {
-        const apiError = error.response.data.message;
-        setErrorMessage(apiError);
-        console.warn("요청에 실패했습니다.");
+        console.warn(
+          "프로필 등록 요청에 실패했습니다.",
+          error.response.data.message,
+        );
       },
     },
   );
@@ -162,7 +180,7 @@ export default function ProfileUpload() {
         imgPre.current.src = data.user.image;
         setProfileImage(data && data.user.image);
         setUserName(data && data.user.username);
-        setAccountId(data && data.user.accountname);
+        setAccountName(data && data.user.accountname);
         setIntro(data && data.user.intro);
       }
     }, [data]);
@@ -177,12 +195,13 @@ export default function ProfileUpload() {
       onSuccess: data => {
         console.warn("프로필 수정이 완료되었습니다.");
         setUserLoginState(data.user);
-        navigate(PROFILE_DETAIL);
+        navigate(`/profile/${data.user.accountname}`);
       },
       onError: error => {
-        const apiError = error.response.data.message;
-        setErrorMessage(apiError);
-        console.warn("요청에 실패했습니다.");
+        console.warn(
+          "프로필 수정 요청에 실패했습니다.",
+          error.response.data.message,
+        );
       },
     },
   );
@@ -245,44 +264,39 @@ export default function ProfileUpload() {
         <Input
           type="text"
           id="username"
-          placeholder="2~10자 이내여야 합니다."
           value={username}
+          error={userNameError}
+          onChange={validationFields}
+          label="사용자 이름"
+          placeholder="2~10자 이내여야 합니다."
           maxLength={10}
           minLength={2}
-          onChange={onChangedName}
-          className={`${userNameError ? "error" : ""} 
-          ${username ? "filled" : ""}`}
-          isRequired
-        >
-          사용자 이름
-        </Input>
+          required
+        />
         <Input
           type="text"
           id="accountname"
-          placeholder="영문, 숫자, 특수문자(.),(_)만 사용 가능합니다."
           value={accountname}
-          onChange={onChangedId}
-          className={`${accountNameError ? "error" : ""} 
-          ${accountname ? "filled" : ""}`}
-          isRequired
-        >
-          계정 ID
-        </Input>
+          error={accountNameError}
+          onChange={validationFields}
+          label="계정 ID"
+          placeholder="내용을 입력하세요."
+          required
+        />
         <Input
           type="text"
           id="intro"
-          placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
           value={intro}
-          onChange={e => setIntro(e.target.value)}
-          className={intro ? "filled" : ""}
+          onChange={validationFields}
+          label="소개"
+          placeholder="자신과 판매할 상품에 대해 소개해 주세요!"
+        />
+        <Button
+          type="submit"
+          size="cta"
+          variant={disabledBtn ? "disabled" : "primary"}
         >
-          소개
-        </Input>
-        {userNameError && <InputError>{userNameError}</InputError>}
-        {accountNameError && <InputError>{accountNameError}</InputError>}
-        {errorMessage && <InputError>{errorMessage}</InputError>}
-        <Button size="cta" variant="primary">
-          저장
+          {pathname === PROFILE_UPLOAD ? "저장" : "수정"}
         </Button>
       </FormStyle>
     </section>
