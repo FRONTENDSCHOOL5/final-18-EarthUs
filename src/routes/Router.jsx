@@ -9,6 +9,7 @@ import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
 import Feed from "../pages/feed/Feed";
 import Follow from "../pages/follow/Follow";
 import Intro from "../pages/intro/Intro";
+import Onboarding from "../pages/Onboarding";
 import PostDetail from "../pages/post/postDetail/PostDetail";
 import PostUpload from "../pages/post/postUpload/PostUpload";
 import ProductDetail from "../pages/product/productDetail/ProductDetail";
@@ -26,7 +27,7 @@ export default function Router() {
       <Route path="/intro" element={<Intro />} />
       <Route path="/signin" element={<SignIn />} />
       <Route path="/signup" />
-      <Route path="/onboarding" />
+      <Route path="/onboarding" element={<Onboarding />} />
 
       <Route path="/" element={<Header />}>
         {/* HOME */}

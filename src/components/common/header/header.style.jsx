@@ -1,5 +1,7 @@
 import styled from "styled-components";
 
+import IconClose from "../../../assets/images/close.svg";
+
 const Headers = styled.div`
   position: fixed;
   z-index: 1000;
@@ -33,10 +35,11 @@ const Headers = styled.div`
 `;
 
 const SearchInput = styled.input`
+  width: 100%;
   flex-grow: 1;
   height: 40px;
   margin-left: 4px;
-  padding-left: 16px;
+  padding: 0 16px 0 16px;
   background: var(--color-bg);
   border-radius: 40px;
 
@@ -45,6 +48,35 @@ const SearchInput = styled.input`
     color: var(--color-gray-76);
     line-height: var(--font-size-sm);
   }
+
+  /* IE */
+  &::-ms-clear,
+  &::-ms-reveal {
+    opacity: 0;
+  }
+  /* chrome */
+  &::-webkit-search-decoration,
+  &::-webkit-search-cancel-button,
+  &::-webkit-search-results-button,
+  &::-webkit-search-results-decoration {
+    opacity: 0;
+  }
 `;
 
-export { Headers, SearchInput };
+const SearchInputDiv = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+const SearchInputSpan = styled.span`
+  position: absolute;
+  transform: translate(-9px, 8px);
+  top: 0;
+  right: 0;
+  height: 23px;
+  padding-right: 23px;
+  pointer-events: none;
+  background: url(${IconClose});
+`;
+
+export { Headers, SearchInput, SearchInputDiv, SearchInputSpan };

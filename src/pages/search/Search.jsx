@@ -89,7 +89,7 @@ export default function Search() {
   // * data 배열 정의
   let limitedData = [];
   if (Array.isArray(data)) {
-    limitedData = data.slice(0, 10);
+    limitedData = data.slice(0, 12);
   } else {
     return null;
   }

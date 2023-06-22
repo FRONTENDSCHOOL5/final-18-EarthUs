@@ -14,7 +14,12 @@ import modalState from "../../../recoil/modalStateAtom";
 import privateDataAtom from "../../../recoil/privateDataAtom";
 import userDataAtom from "../../../recoil/userDataAtom";
 
-import { Headers, SearchInput } from "./header.style";
+import {
+  Headers,
+  SearchInput,
+  SearchInputDiv,
+  SearchInputSpan,
+} from "./header.style";
 
 export default function Header() {
   const location = useLocation();
@@ -145,13 +150,16 @@ export default function Header() {
 
         {/* 검색 */}
         {pathname === "/search" && (
-          <SearchInput
-            type="search"
-            name="q"
-            placeholder="계정 검색"
-            value={searchKeyword}
-            onChange={handleSearchKeywordChange}
-          />
+          <SearchInputDiv>
+            <SearchInput
+              type="search"
+              name="q"
+              placeholder="계정 검색"
+              value={searchKeyword}
+              onChange={handleSearchKeywordChange}
+            />
+            <SearchInputSpan />
+          </SearchInputDiv>
         )}
 
         {/* 팔로워/팔로잉 */}
