@@ -9,6 +9,7 @@ export const Section = styled.section`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 0.5rem;
 `;
 
 export const BlueRound = styled.div`
@@ -23,7 +24,7 @@ export const BlueRound = styled.div`
 `;
 
 export const Div = styled.article`
-  margin: 0 169px 0 8px;
+  flex: 1 0 0;
 `;
 
 export const Strong = styled.h3`
@@ -36,6 +37,13 @@ export const P = styled.p`
   font-size: var(--font-size-xs);
   font-weight: 400;
   color: var(--color-gray-76);
+  overflow: hidden;
+  white-space: normal;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  word-break: keep-all;
 `;
 
 export const Time = styled.time`
