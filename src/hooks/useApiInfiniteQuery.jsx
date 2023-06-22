@@ -7,7 +7,7 @@ import { useRecoilState } from "recoil";
 import privateDataAtom from "../recoil/privateDataAtom";
 import { BASE_URL } from "../utils/config";
 
-export default function useApiInfiniteQuery(apiUrl, keyName) {
+export default function useApiInfiniteQuery(apiUrl, keyName = null) {
   const [privateData] = useRecoilState(privateDataAtom);
   const token = privateData || "";
 
@@ -31,7 +31,9 @@ export default function useApiInfiniteQuery(apiUrl, keyName) {
     useInfiniteQuery([apiUrl], executeInfiniteQuery, {
       getNextPageParam: (lastPage, allPages) => {
         const resKey = keyName;
-        if (lastPage[resKey].length < LIMIT) {
+        if (
+          keyName ? lastPage[resKey].length < LIMIT : lastPage.length < LIMIT
+        ) {
           return undefined;
         }
 
