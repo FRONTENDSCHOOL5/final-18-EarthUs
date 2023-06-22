@@ -1,6 +1,5 @@
 /* eslint-disable no-alert */
 /* eslint-disable no-useless-escape */
-/* eslint-disable no-case-declarations */
 /* eslint-disable no-console */
 import React, { useEffect, useState, useRef } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -8,7 +7,6 @@ import { useRecoilState } from "recoil";
 
 import Button from "../../../components/common/button/Button";
 import Input from "../../../components/common/input/Input";
-// import InputError from "../../../components/common/input/InputError";
 import useApiMutation from "../../../hooks/useApiMutation";
 import useApiQuery from "../../../hooks/useApiQuery";
 import useImageUploader from "../../../hooks/useImageUploader";
@@ -36,12 +34,11 @@ export default function ProductUpload() {
   const PRODUCT_DETAIL = getProductDetailPath(myName);
   const PRODUCT_EDIT = getProductEditPath(productId);
 
-  const [itemImage, setItemImage] = useState(NO_IMAGE);
-
   // 버튼 활성화 상태 관리
   const [disabledBtn, setDisabledBtn] = useState(pathname === PRODUCT_UPLOAD);
 
   // 인풋필드 상태 저장
+  const [itemImage, setItemImage] = useState(NO_IMAGE);
   const [itemName, setItemName] = useState("");
   const [price, setPrice] = useState("");
   const [link, setLink] = useState("");
@@ -54,15 +51,26 @@ export default function ProductUpload() {
   // * 게시물 유효성 검사
   const validationFields = e => {
     const currentValue = e.target.value;
-    const itemNameRegExp = /^[가-힣a-zA-Z0-9@:%._\+~#=]+$/;
+    const itemNameRegExp =
+      /^[가-힣a-zA-Z0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]+$/;
+    const spclCharRegExp = /^[가-힣a-zA-Z0-9~.,_%+\(\)]+$/;
     const linkRegExp =
       /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?$/;
 
     switch (e.target.id) {
       case "itemName":
         setItemName(currentValue);
-        if (!itemNameRegExp.test(currentValue) || currentValue === "") {
-          setItemNameError("자음 또는 모음으로 상품명 설정이 불가합니다.");
+        if (currentValue === "") {
+          setItemNameError("상품명을 작성해주세요.");
+          setDisabledBtn(true);
+        } else if (!itemNameRegExp.test(currentValue)) {
+          setItemNameError("자음 또는 모음, 공백으로 설정이 불가합니다.");
+          setDisabledBtn(true);
+        } else if (!spclCharRegExp.test(currentValue)) {
+          setItemNameError("특수문자는 .,~_%+()만 사용 가능합니다.");
+          setDisabledBtn(true);
+        } else if (currentValue.length < 2) {
+          setItemNameError("2글자 이상 작성해주세요.");
           setDisabledBtn(true);
         } else {
           setItemNameError("");
@@ -72,7 +80,10 @@ export default function ProductUpload() {
 
       case "price":
         setPrice(currentValue);
-        if (currentValue < 100 || currentValue === "") {
+        if (currentValue === "") {
+          setPriceError("가격을 작성해주세요.");
+          setDisabledBtn(true);
+        } else if (currentValue < 100) {
           setPriceError("100원 이하는 설정이 불가합니다.");
           setDisabledBtn(true);
         } else {
@@ -83,7 +94,10 @@ export default function ProductUpload() {
 
       case "link":
         setLink(currentValue);
-        if (!linkRegExp.test(currentValue) || currentValue === "") {
+        if (currentValue === "") {
+          setLinkError("URL을 작성해주세요.");
+          setDisabledBtn(true);
+        } else if (!linkRegExp.test(currentValue)) {
           setLinkError("URL을 확인해주세요.");
           setDisabledBtn(true);
         } else {
@@ -235,7 +249,7 @@ export default function ProductUpload() {
         required
       />
       <Input
-        type="text"
+        type="number"
         id="price"
         value={price}
         error={priceError}
