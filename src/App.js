@@ -15,9 +15,7 @@ function App() {
       <h1>
         <A11yHidden>Earth Us</A11yHidden>
       </h1>
-      <Modal title="My Modal">
-        <p>Modal content</p>
-      </Modal>
+      <Modal />
       <Router />
     </>
   );
