@@ -1,5 +1,7 @@
 import styled, { css } from "styled-components";
 
+import { NO_PROFILE_IMAGE } from "../../../utils/config";
+
 export const FormStyle = styled.form`
   display: flex;
   flex-direction: column;
@@ -67,6 +69,7 @@ export const ImgFrame = styled.div`
   background-color: var(--color-bg);
   border: 1px solid var(--color-light);
   border-radius: 110px;
+  overflow: hidden;
 `;
 
 export const Img = styled.img`
@@ -77,9 +80,9 @@ export const Img = styled.img`
   object-fit: cover;
 
   ${props =>
-    props.src === "https://api.mandarin.weniv.co.kr/1687097552358.png" &&
+    props.src === NO_PROFILE_IMAGE &&
     css`
-      transform: scale(0.6);
+      transform: scale(1.3);
       object-fit: none;
     `};
 `;
