@@ -1,5 +1,5 @@
 export const BASE_URL = "https://api.mandarin.weniv.co.kr";
-export const NO_IMAGE = "https://api.mandarin.weniv.co.kr/1687097552358.png";
+export const NO_IMAGE = "https://api.mandarin.weniv.co.kr/1687488082591.png";
 export const NO_PROFILE_IMAGE =
   "https://api.mandarin.weniv.co.kr/1687452193045.png";
 
