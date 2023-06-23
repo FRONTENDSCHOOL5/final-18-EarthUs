@@ -4,7 +4,7 @@ import { atom } from "recoil";
 const userDataFromLocalStorage = JSON.parse(
   localStorage.getItem("privateData"),
 ) || {
-  key: "userDataAtom",
+  key: "privateDataAtom",
   default: {
     token: "",
   },
