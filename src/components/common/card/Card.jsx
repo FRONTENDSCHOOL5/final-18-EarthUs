@@ -104,6 +104,7 @@ export default function Card({
             userName={username}
             id={id}
             handleModal={handleModal}
+            postID={postID}
             more
           />
           <PostLink to={`/post/${postID}`}>

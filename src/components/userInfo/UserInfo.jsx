@@ -1,7 +1,9 @@
+/* eslint-disable no-nested-ternary */
+/* eslint-disable no-console */
 /* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -10,6 +12,7 @@ import useApiMutation from "../../hooks/useApiMutation";
 import modalConfigState from "../../recoil/modalConfigAtom";
 import modalState from "../../recoil/modalStateAtom";
 import userDataAtom from "../../recoil/userDataAtom";
+import { getFollowingPath, getFollowerPath } from "../../utils/config";
 import Avatar from "../common/avatar/Avatar";
 
 import { Users, UserHeader } from "./userInfo.style";
@@ -23,8 +26,14 @@ export default function UserInfo({
   more,
   children,
   searchKeyword,
+  postID,
 }) {
   // * 전역 상태 관리를 위한 Recoil State 가져오기
+  const { accountParam } = useParams();
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
   const [userData] = useRecoilState(userDataAtom);
   const setModalOpen = useSetRecoilState(modalState);
   const setModalConfig = useSetRecoilState(modalConfigState);
@@ -33,29 +42,27 @@ export default function UserInfo({
       ? userData.accountname.trim().toLowerCase()
       : "";
 
-  const location = useLocation();
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
   const currentUser = account.trim().toLowerCase() === myName;
+  const lastSegment = pathname.split("/").pop();
+  const followSegment =
+    (more && lastSegment === "followers") || lastSegment === "following";
 
   // * 피드아이템 삭제
   const [deleteFeed, setDeleteFeed] = useState(null);
-  // eslint-disable-next-line no-unused-vars
   const deleteFeedMutation = useApiMutation(
     deleteFeed,
     "DELETE",
     {},
     {
       onSuccess: () => {
-        // eslint-disable-next-line no-console
         console.log("게시물이 삭제되었습니다.");
         queryClient.invalidateQueries(`/profile/${account}`);
       },
     },
   );
 
-  const handleDeleteFeed = postId => {
-    const url = `/post/${postId}`;
+  const handleDeleteFeed = postID => {
+    const url = `/post/${postID}`;
     setDeleteFeed(url);
     deleteFeedMutation.mutate();
   };
@@ -68,14 +75,13 @@ export default function UserInfo({
     {},
     {
       onSuccess: () => {
-        // eslint-disable-next-line no-console
         console.log("신고되었습니다.");
       },
     },
   );
 
-  const handleReport = postId => {
-    const url = `/post/${postId}/report`;
+  const handleReport = postID => {
+    const url = `/post/${postID}/report`;
     setReports(url);
     setReportMutation.mutate();
   };
@@ -96,7 +102,7 @@ export default function UserInfo({
         },
         {
           label: "신고하기",
-          onClick: () => handleReport(id),
+          onClick: () => handleReport(postID),
         },
       ],
     });
@@ -119,7 +125,7 @@ export default function UserInfo({
         },
         {
           label: "삭제",
-          onClick: () => handleDeleteFeed(id),
+          onClick: () => handleDeleteFeed(postID),
         },
       ],
     });
@@ -136,7 +142,47 @@ export default function UserInfo({
         },
         {
           label: "수정",
-          onClick: () => navigate(`/post/${id}/edit`),
+          onClick: () => navigate(`/post/${postID}/edit`),
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
+
+  // * 알림설정 모달
+  const manageNotifications = e => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "confirm",
+      title: "알림을 설정할까요?",
+      buttons: [
+        {
+          label: "해제",
+          onClick: e => {
+            e.stopPropagation();
+            setModalOpen(false); // close modal
+          },
+        },
+        {
+          label: "설정",
+          onClick: e => {
+            e.stopPropagation();
+            setModalOpen(false); // close modal
+          },
+        },
+      ],
+    });
+    setModalOpen(true);
+  };
+  const manageNotificationsModal = (e, accountname) => {
+    e.stopPropagation();
+    setModalConfig({
+      type: "bottomSheet",
+      title: `@${accountname}`,
+      buttons: [
+        {
+          label: "알림 관리",
+          onClick: e => manageNotifications(e),
         },
       ],
     });
@@ -146,7 +192,7 @@ export default function UserInfo({
   // Link 랜더링 조건부 출력
   function renderLinkContent() {
     // Search 페이지 하이라이트 관련
-    if (location.pathname === "/search") {
+    if (pathname === "/search") {
       const regex = new RegExp(searchKeyword, "gi");
       const userNameWithHighlight = userName.replace(
         regex,
@@ -180,31 +226,36 @@ export default function UserInfo({
   }
 
   return (
-    <Users isSearch={location.pathname === "/search"}>
+    <Users isSearch={pathname === "/search"}>
       {!currentUser ? (
         <UserHeader to={`/profile/${account}`}>
           {renderLinkContent()}
         </UserHeader>
       ) : (
-        // eslint-disable-next-line jsx-a11y/anchor-is-valid
         <UserHeader to="#" disabled>
           {renderLinkContent()}
         </UserHeader>
       )}
+
       {currentUser ? null : children}
-      {more ? (
+
+      {!followSegment ? (
+        // 기존 피드 게시물에서 수정/삭제/신고 모달
         <button
           type="button"
-          // onClick={handleModal}
-          onClick={
-            currentUser ? e => deleteCardModal(e) : e => reportConfirm(e)
-          }
+          onClick={currentUser ? deleteCardModal : reportConfirm}
         >
-          <img src={iconDots} alt="더 보기" />
+          <img src={iconDots} alt="More" />
         </button>
-      ) : (
-        ""
-      )}
+      ) : !currentUser ? (
+        // 팔로우페이지에서 알림설정 모달
+        <button
+          type="button"
+          onClick={e => manageNotificationsModal(e, account)}
+        >
+          <img src={iconDots} alt="More" />
+        </button>
+      ) : null}
     </Users>
   );
 }
