@@ -13,10 +13,9 @@ import useApiQuery from "../../../hooks/useApiQuery";
 import useImgMutationHook from "../../../hooks/useImageUploader";
 import userDataAtom from "../../../recoil/userDataAtom";
 import {
-  getProfileDetailPath,
   getProfileEditPath,
-  getProfileUploadPath,
-  NO_IMAGE,
+  PROFILE_UPLOAD,
+  NO_PROFILE_IMAGE,
 } from "../../../utils/config";
 
 import {
@@ -45,14 +44,13 @@ export default function ProfileUpload() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  const PROFILE_UPLOAD = getProfileUploadPath(account);
   const PROFILE_EDIT = getProfileEditPath(account);
 
   // 버튼 활성화 상태 관리
   const [disabledBtn, setDisabledBtn] = useState(pathname === PROFILE_UPLOAD);
 
   // 인풋필드 상태 저장
-  const [profileImage, setProfileImage] = useState(NO_IMAGE);
+  const [profileImage, setProfileImage] = useState(NO_PROFILE_IMAGE);
   const [username, setUserName] = useState("");
   const [accountname, setAccountName] = useState("");
   const [intro, setIntro] = useState("");
@@ -236,7 +234,7 @@ export default function ProfileUpload() {
         <ProfileImgSection>
           <ImgFrame>
             <Img
-              src={image}
+              src={profileImage}
               className="imgFrame"
               alt="프로필 사진"
               ref={imgPre}
