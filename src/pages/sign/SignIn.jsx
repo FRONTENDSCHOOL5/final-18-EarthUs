@@ -1,8 +1,9 @@
+/* eslint-disable prettier/prettier */
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import Button from "../../components/common/button/Button";
 import Input from "../../components/common/input/Input";
@@ -30,21 +31,6 @@ export default function SignIn() {
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData, setUserData] = useRecoilState(userDataAtom);
   const [privateData, setPrivateData] = useRecoilState(privateDataAtom);
-  const setUserLoginState = useSetRecoilState(userDataAtom);
-  const setUserPrivateState = useSetRecoilState(privateDataAtom);
-
-  // * initialUserData에 로컬스토리지에 저장된 유저 데이터를 표시
-  const localStorageData = localStorage.getItem("userData");
-  const initialUserData = localStorageData
-    ? JSON.parse(localStorageData)
-    : userDataAtom.default;
-
-  // * mount시 로컬스토리지에 데이터가 있으면 userData에 저장
-  useEffect(() => {
-    if (initialUserData) {
-      setUserData(initialUserData);
-    }
-  }, []);
 
   // * userData가 변경되면 로컬스토리지 데이터 갱신
   useEffect(() => {
@@ -67,8 +53,8 @@ export default function SignIn() {
       onSuccess: data => {
         console.log("요청에 성공했습니다.");
         setPwError(data.message); // "아이디 또는 비밀번호가 일치하지 않습니다."
-        setUserLoginState(data.user);
-        setUserPrivateState(data.user.token);
+        setUserData(data.user);
+        setPrivateData(data.user.token);
         navigate(getProfileDetailPath(data.user.accountname)); // 로그인 시 프로필 페이지로 이동
       },
     },
@@ -128,7 +114,7 @@ export default function SignIn() {
           required
           className={
             emailError === "이메일을 입력해주세요." ||
-            pwError === "이메일 또는 비밀번호가 일치하지 않습니다."
+              pwError === "이메일 또는 비밀번호가 일치하지 않습니다."
               ? "error"
               : ""
           }
