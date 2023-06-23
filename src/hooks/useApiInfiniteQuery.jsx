@@ -7,6 +7,10 @@ import { useRecoilState } from "recoil";
 import privateDataAtom from "../recoil/privateDataAtom";
 import { BASE_URL } from "../utils/config";
 
+/**
+ * @returns useQuery 무한정 호출하여 API서버에서 데이터 출력
+ * @example const { data } = useApiInfiniteQuery(url, "posts");
+ */
 export default function useApiInfiniteQuery(apiUrl, keyName = null) {
   const [privateData] = useRecoilState(privateDataAtom);
   const token = privateData || "";
