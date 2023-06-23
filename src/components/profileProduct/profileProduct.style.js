@@ -30,6 +30,9 @@ const ProfileProductList = styled.article`
         text-overflow: ellipsis;
         overflow: hidden;
       }
+      .swiper-container {
+        margin: 0;
+      }
     }
   }
 `;
