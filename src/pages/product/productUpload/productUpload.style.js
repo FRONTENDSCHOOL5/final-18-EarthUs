@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 import IconCamera from "../../../assets/images/camera.svg";
 import Input from "../../../components/common/input/Input";
+import { NO_IMAGE } from "../../../utils/config";
 
 const InputFile = styled(Input)`
   width: 0;
@@ -33,11 +34,11 @@ const Img = styled.img`
   object-fit: cover;
 
   ${props =>
-    props.src === "https://api.mandarin.weniv.co.kr/1687097552358.png" &&
+    props.src === NO_IMAGE &&
     css`
-      width: 100px;
-      height: 90px;
-      object-fit: none;
+      width: 50px;
+      height: 45px;
+      object-fit: contain;
     `};
 `;
 
