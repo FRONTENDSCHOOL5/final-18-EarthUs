@@ -80,9 +80,11 @@ export default function Feed() {
       )}
 
       {/* Home */}
-      {!isNewsletterPage && isFollowing && isFollowing.length === 0 && (
-        <Blank btn="유저 검색하기">유저를 검색해 팔로우 해보세요!</Blank>
-      )}
+      {/* 팔로잉 없을 경우, 팔로잉은 있지만 올린 게시글이 없는 경우 */}
+      {(!isNewsletterPage && isFollowing && isFollowing.length === 0) ||
+        (!isNewsletterPage && home && home.pages[0].posts.length === 0 && (
+          <Blank btn="유저 검색하기">유저를 검색해 팔로우 해보세요!</Blank>
+        ))}
       {!isNewsletterPage && home && (
         <InfiniteScroll
           hasMore={homeHasNextPage}
