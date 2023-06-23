@@ -47,7 +47,7 @@ export default function PostDetail() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다");
-        queryClient.invalidateQueries(`/post/${postId}`);
+        queryClient.invalidateQueries(`/post/${postId}/comments`);
       },
     },
   );
