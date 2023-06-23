@@ -1,17 +1,18 @@
 export const BASE_URL = "https://api.mandarin.weniv.co.kr";
 export const NO_IMAGE = "https://api.mandarin.weniv.co.kr/1687097552358.png";
+export const NO_PROFILE_IMAGE =
+  "https://api.mandarin.weniv.co.kr/1687452193045.png";
 
 /**
  * @Profile
  * const { account } = useParams();
  * const PROFILE_DETAIL = getProfileDetailPath(account);
- * const PROFILE_UPLOAD = getProfileUploadPath(account);
  * const PROFILE_EDIT = getProfileEditPath(account);
  * const PROFILE_FOLLOWING = getFollowingPath(account);
  * const PROFILE_FOLLOWER = getFollowerPath(account);
  */
 export const getProfileDetailPath = account => `/profile/${account}`;
-export const getProfileUploadPath = account => `/profile/${account}/upload`;
+export const PROFILE_UPLOAD = `/profile/upload`;
 export const getProfileEditPath = account => `/profile/${account}/edit`;
 export const getFollowingPath = account => `/profile/${account}/following`;
 export const getFollowerPath = account => `/profile/${account}/follower`;
