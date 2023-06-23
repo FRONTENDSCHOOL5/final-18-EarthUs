@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-import iconAvatar from "../../../assets/images/user.svg";
+import { NO_PROFILE_IMAGE } from "../../../utils/config";
 
 const Avatars = styled.article`
   position: relative;
@@ -11,32 +11,27 @@ const Avatars = styled.article`
   border: 1px solid var(--color-light);
   overflow: hidden;
   flex-shrink: 0;
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    background: url(${iconAvatar}) no-repeat center/1.5rem;
-    filter: invert(100%) sepia(75%) saturate(803%) hue-rotate(263deg)
-      brightness(126%) contrast(67%);
-  }
-
-  img {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 `;
 
-export default Avatars;
+const Img = styled.img`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+
+  ${props =>
+    props.src === NO_PROFILE_IMAGE &&
+    css`
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    `};
+`;
+
+export { Avatars, Img };
 
 // ✅ Usage
 // <Avatar profileImg={이미지 주소} size={40} />
