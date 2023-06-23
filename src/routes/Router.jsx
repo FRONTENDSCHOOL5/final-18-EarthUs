@@ -9,7 +9,7 @@ import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
 import Feed from "../pages/feed/Feed";
 import Follow from "../pages/follow/Follow";
 import Intro from "../pages/intro/Intro";
-import Onboarding from "../pages/Onboarding";
+import Onboarding from "../pages/onboarding/Onboarding";
 import PostDetail from "../pages/post/postDetail/PostDetail";
 import PostUpload from "../pages/post/postUpload/PostUpload";
 import ProductDetail from "../pages/product/productDetail/ProductDetail";
