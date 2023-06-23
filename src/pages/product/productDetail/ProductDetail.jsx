@@ -1,38 +1,55 @@
+/* eslint-disable no-console */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable prettier/prettier */
+// import React from "react";
 import React, { useState } from "react";
+import InfiniteScroll from "react-infinite-scroller";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { v4 as uuidv4 } from 'uuid';
 
 import Blank from "../../../components/blank/Blank";
 import A11yHidden from '../../../components/common/a11yHidden/A11yHidden';
 import Button from "../../../components/common/button/Button";
 import Card from "../../../components/common/card/Card";
+import useApiInfiniteQuery from "../../../hooks/useApiInfiniteQuery";
 import useApiMutation from "../../../hooks/useApiMutation";
-import useApiQuery from "../../../hooks/useApiQuery";
 import modalConfigState from "../../../recoil/modalConfigAtom";
 import modalState from "../../../recoil/modalStateAtom";
 import userDataAtom from "../../../recoil/userDataAtom";
-
+import {
+  PRODUCT_UPLOAD,
+  getProductDetailPath,
+  getProductEditPath,
+} from "../../../utils/config";
 
 
 import ProdDetailWrap from "./productDetail.style";
 
 export default function ProfileProduct() {
   const queryClient = useQueryClient();
-
-  const { account } = useParams();
-  const { data } = useApiQuery(`/product/${account}`, "get");
   const navigate = useNavigate();
+  const { account } = useParams();
+  const PRODUCT_DETAIL = getProductDetailPath(account);
 
 
-  // * 전역 상태 관리를 위한 Recoil State 가져오기
+  // * 전역 상태 관리를 위한 Recoil State
   const [userData] = useRecoilState(userDataAtom);
+  const setModalOpen = useSetRecoilState(modalState);
+  const setModalConfig = useSetRecoilState(modalConfigState);
+
   const myName = userData ? userData.accountname.trim().toLowerCase() : '';
-  const normalizedAccount = account.trim().toLowerCase();
+  const currentUser = account.trim().toLowerCase() === myName;
 
   const [deleteProd, setDeleteProd] = useState(null);
+
+  // * 상품 정보 무한스크롤 호출
+  const {
+    data: productData,
+    hasNextPage: productHasNextPage,
+    fetchNextPage: productFetchNextPage,
+  } = useApiInfiniteQuery(`/product/${account}`, "product");
 
   // * 상품 삭제
   const deleteProductMutation = useApiMutation(
@@ -41,9 +58,8 @@ export default function ProfileProduct() {
     {},
     {
       onSuccess: () => {
-        // eslint-disable-next-line no-console
         console.log('상품이 삭제되었습니다.');
-        queryClient.invalidateQueries(`/product/${account}`);
+        queryClient.invalidateQueries(PRODUCT_DETAIL);
       }
     }
   );
@@ -55,12 +71,8 @@ export default function ProfileProduct() {
   }
 
 
-  // 전역 상태 관리를 위한 Recoil State
-  const setModalOpen = useSetRecoilState(modalState);
-  const setModalConfig = useSetRecoilState(modalConfigState);
-
-  // 게시물 삭제 확인 모달
-  const setDeleteProduct = (e, id) => {
+  // * 게시물 삭제 확인 모달
+  const setDeleteConfirm = (e, id) => {
     e.stopPropagation();
     setModalConfig({
       type: "confirm",
@@ -83,7 +95,6 @@ export default function ProfileProduct() {
     setModalOpen(true);
   };
 
-
   return (
     <ProdDetailWrap>
       <h2>
@@ -91,41 +102,56 @@ export default function ProfileProduct() {
           {account}님이 판매 중인 상품
         </A11yHidden>
       </h2>
-      {data && data.product.length > 1 ? (
-        data.product.map(product => {
-          const { id, price, link, itemName, itemImage } = product;
-          return (
-            <div key={id}>
-              <Card
-                postImage={itemImage}
-                content={itemName}
-                onClick={() => {
-                  window.open(link);
-                }}
-                prod>
-                <strong>
-                  {/*  Intl객체로 원화 Formatter */}
-                  {new Intl.NumberFormat("ko", {
-                    currency: "KRW",
-                  }).format(price)}
-                  원
-                </strong>
-              </Card>
-
-              {/* 나의 프로필인지 확인하고 상품 관리버튼 노출 */}
-              {normalizedAccount === myName && (
-                <div>
-                  <Button size="sm" variant="white" onClick={() => navigate(`/product/${id}/edit`)}>
-                    수정
-                  </Button>
-                  <Button size="sm" variant="white" onClick={(e) => setDeleteProduct(e, id)}>
-                    삭제
-                  </Button>
-                </div>
-              )}
-            </div>
-          );
-        })
+      {productData ? (
+        <InfiniteScroll
+          hasMore={productHasNextPage}
+          loadMore={() => productFetchNextPage()}
+        >
+          <>
+            {productData.pages.map(page => {
+              return (
+                <React.Fragment key={uuidv4()}>
+                  {
+                    page.product.map(prod => {
+                      const { id, price, link, itemName, itemImage } = prod;
+                      const PRODUCT_EDIT = getProductEditPath(id);
+                      return (
+                        <div key={id}>
+                          <Card
+                            postImage={itemImage}
+                            content={itemName}
+                            onClick={() => {
+                              window.open(link);
+                            }}
+                            prod>
+                            <strong>
+                              {/*  Intl객체로 원화 Formatter */}
+                              {new Intl.NumberFormat("ko", {
+                                currency: "KRW",
+                              }).format(price)}
+                              원
+                            </strong>
+                          </Card>
+                          {/* 나의 프로필인지 확인하고 상품 관리버튼 노출 */}
+                          {currentUser && (
+                            <div>
+                              <Button size="sm" variant="white" onClick={() => navigate(PRODUCT_EDIT)}>
+                                수정
+                              </Button>
+                              <Button size="sm" variant="white" onClick={(e) => setDeleteConfirm(e, id)}>
+                                삭제
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })
+                  }
+                </React.Fragment>
+              )
+            })}
+          </>
+        </InfiniteScroll >
       ) : (
         <Blank btn="홈으로 바로가기">
           판매중인 상품이 없습니다.
@@ -133,11 +159,11 @@ export default function ProfileProduct() {
       )
       }
       {
-        normalizedAccount === myName && (
-          <Button size="cta" variant="primary" onClick={() => navigate(`/product/upload`)}>
+        currentUser && (
+          <Button size="cta" variant="primary" onClick={() => navigate(PRODUCT_UPLOAD)}>
             상품등록
           </Button>)
       }
-    </ProdDetailWrap >
+    </ ProdDetailWrap >
   );
 }
