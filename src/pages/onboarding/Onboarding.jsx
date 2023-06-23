@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
-import light from "../assets/images/light.svg";
-import sayno from "../assets/images/sayno.svg";
-import think from "../assets/images/think.svg";
-import Button from "../components/common/button/Button";
-import userDataAtom from "../recoil/userDataAtom";
-import { HOME, INTRO } from "../utils/config";
+import light from "../../assets/images/light.svg";
+import sayno from "../../assets/images/sayno.svg";
+import think from "../../assets/images/think.svg";
+import Button from "../../components/common/button/Button";
+import userDataAtom from "../../recoil/userDataAtom";
+import { HOME, INTRO } from "../../utils/config";
 
 import {
   SectionWrap,
