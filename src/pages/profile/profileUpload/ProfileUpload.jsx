@@ -206,7 +206,8 @@ export default function ProfileFormField({
           <Button
             type="submit"
             size="cta"
-            variant={!disabledBtn ? "primary" : "disabled"}
+            variant="primary"
+            disabled={disabledBtn && "disabled"}
           >
             회원가입
           </Button>
