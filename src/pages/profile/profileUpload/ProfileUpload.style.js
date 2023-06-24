@@ -1,6 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import { NO_PROFILE_IMAGE } from "../../../utils/config";
+import Camera from "../../../assets/images/camera.svg";
 
 export const FormStyle = styled.form`
   display: flex;
@@ -8,7 +8,9 @@ export const FormStyle = styled.form`
   flex-wrap: wrap;
   align-content: center;
   justify-content: center;
-  margin-top: 48px;
+  > section {
+    width: 100%;
+  }
 `;
 
 export const H2 = styled.h2`
@@ -35,28 +37,30 @@ export const ProfileImgInput = styled.input`
 
 export const Label = styled.label`
   position: absolute;
-  top: 70%;
-  left: 83%;
+  top: calc(50% - 2rem);
+  left: 50%;
   transform: translate(-50%, -50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 20px;
-  z-index: 2;
-`;
-
-export const ImgAddBtn = styled.button`
-  position: absolute;
-  top: 70%;
-  left: 83%;
-  transform: translate(-50%, -50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 20px;
-  background-color: var(--color-primary);
-`;
-
-export const ImgBtn = styled.img`
-  &.cameraIcon {
+  width: 3rem;
+  height: 3rem;
+  width: 10rem;
+  height: 10rem;
+  border-radius: 50%;
+  cursor: pointer;
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    top: calc(50% + 1rem);
+    left: calc(50% + 1rem);
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+  }
+  &::before {
+    background: var(--color-primary);
+  }
+  &::after {
+    background: url(${Camera}) no-repeat center/1.5rem;
     filter: invert(95%) sepia(0%) saturate(0%) hue-rotate(140deg)
       brightness(104%) contrast(107%);
   }
@@ -70,21 +74,16 @@ export const ImgFrame = styled.div`
   border: 1px solid var(--color-light);
   border-radius: 110px;
   overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 2.5rem;
 `;
 
 export const Img = styled.img`
-  position: absolute;
   display: block;
-  width: 100%;
-  height: 100%;
+  aspect-ratio: 1/1;
   object-fit: cover;
-
-  ${props =>
-    props.src === NO_PROFILE_IMAGE &&
-    css`
-      transform: scale(1.3);
-      object-fit: none;
-    `};
 `;
 
 export const ProfileImgSection = styled.section`
@@ -92,7 +91,8 @@ export const ProfileImgSection = styled.section`
 `;
 
 export const ProfileTitleSection = styled.section`
-  margin: 36.33px 0 24px 0;
+  width: 100%;
+  margin: 0 0 2.5rem;
 `;
 
 export const Div = styled.div`
