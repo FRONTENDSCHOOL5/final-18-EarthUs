@@ -62,9 +62,9 @@ export default function Router() {
             <Route element={<TabBar />}>
               <Route path="" element={<ProfileDetail />} />
               <Route path=":view" element={<ProfileDetail />} />
-              <Route path="following" element={<Follow />} />
-              <Route path="follower" element={<Follow />} />
             </Route>
+            <Route path="follower" element={<Follow />} />
+            <Route path="following" element={<Follow />} />
             <Route path="upload" element={<ProfileUpload />} />
             <Route path="edit" element={<ProfileUpload />} />
           </Route>
