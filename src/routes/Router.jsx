@@ -6,6 +6,7 @@ import Header from "../components/common/header/Header";
 import TabBar from "../components/common/tabBar/TabBar";
 import ChatList from "../pages/chat/chatList/ChatList";
 import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
+import Error404 from "../pages/error404/Error404";
 import Feed from "../pages/feed/Feed";
 import Follow from "../pages/follow/Follow";
 import Intro from "../pages/intro/Intro";
@@ -76,6 +77,9 @@ export default function Router() {
           <Route path="upload" element={<ProductUpload />} />
           <Route path=":productId/edit" element={<ProductUpload />} />
         </Route>
+
+        <Route path="*" element={<Error404 />} />
+        <Route path="/error" element={<Error404 />} />
       </Route>
     </Routes>
   );
