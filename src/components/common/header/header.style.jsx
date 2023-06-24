@@ -17,7 +17,7 @@ const Headers = styled.div`
   justify-content: space-between;
   align-items: center;
 
-  p {
+  h2 {
     flex-grow: 1;
     margin-top: 2px;
     font-size: var(--font-size-xl);

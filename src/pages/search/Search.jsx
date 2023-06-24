@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
+import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import Button from "../../components/common/button/Button";
 import UserInfo from "../../components/userInfo/UserInfo";
 import useApiMutation from "../../hooks/useApiMutation";
@@ -95,7 +96,10 @@ export default function Search() {
   }
 
   return (
-    <div>
+    <section>
+      <h2>
+        <A11yHidden>검색 결과</A11yHidden>
+      </h2>
       {limitedData &&
         limitedData.map(v => (
           <UserInfo
@@ -120,6 +124,6 @@ export default function Search() {
             </Button>
           </UserInfo>
         ))}
-    </div>
+    </section>
   );
 }

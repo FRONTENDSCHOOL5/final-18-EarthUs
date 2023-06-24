@@ -6,6 +6,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useLocation, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
+import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import Button from "../../components/common/button/Button";
 import UserInfo from "../../components/userInfo/UserInfo";
 import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
@@ -76,6 +77,11 @@ export default function Follow() {
 
   return (
     <section>
+      <h3>
+        <A11yHidden>
+          {followPage === "follower" ? "팔로워 목록" : "팔로잉 목록"}
+        </A11yHidden>
+      </h3>
       {data && (
         <InfiniteScroll hasMore={hasNextPage} loadMore={() => fetchNextPage()}>
           <Follows>

@@ -9,6 +9,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from "uuid";
 
+import A11yHidden from "../../../components/common/a11yHidden/A11yHidden";
 import Avatar from "../../../components/common/avatar/Avatar";
 import BreakLine from "../../../components/common/breakLine/BreakLine";
 import Button from "../../../components/common/button/Button";
@@ -79,7 +80,10 @@ export default function PostDetail() {
   };
 
   return (
-    <>
+    <section>
+      <h2>
+        <A11yHidden>게시물 상세 페이지</A11yHidden>
+      </h2>
       {postData && (
         <Card
           accountname={postData.post.author.accountname}
@@ -142,6 +146,6 @@ export default function PostDetail() {
           입력
         </Button>
       </CommentInput>
-    </>
+    </section>
   );
 }

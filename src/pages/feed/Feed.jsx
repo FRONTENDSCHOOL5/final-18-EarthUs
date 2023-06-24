@@ -8,6 +8,7 @@ import { useRecoilValue } from "recoil";
 import { v4 as uuidv4 } from "uuid";
 
 import Blank from "../../components/blank/Blank";
+import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import Card from "../../components/common/card/Card";
 import TabBar from "../../components/common/tabBar/TabBar";
 import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
@@ -43,7 +44,12 @@ export default function Feed() {
   } = useApiInfiniteQuery(`/post/${earthusData.accountname}/userpost`, "post");
 
   return (
-    <>
+    <section>
+      <h3>
+        <A11yHidden>
+          {isNewsletterPage ? "뉴스레터 피드 게시글" : "홈 피드 게시글"}
+        </A11yHidden>
+      </h3>
       {/* NewsLetter */}
       {isNewsletterPage && newsletterData && (
         <InfiniteScroll
@@ -129,6 +135,6 @@ export default function Feed() {
           </FeedWrap>
         </InfiniteScroll>
       )}
-    </>
+    </section>
   );
 }

@@ -7,7 +7,7 @@ const LogoImg = styled.img`
   transform: translateX(-50%);
 `;
 
-const SignWrap = styled.div`
+const SignWrap = styled.section`
   position: fixed;
   bottom: 76px;
   left: 50%;

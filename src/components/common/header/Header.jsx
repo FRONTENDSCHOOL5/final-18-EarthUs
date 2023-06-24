@@ -125,7 +125,7 @@ export default function Header() {
         {/* 홈 */}
         {pathname === "/home" && (
           <>
-            <p>Home</p>
+            <h2>Home</h2>
             <button type="button" onClick={() => navigate("/search")}>
               <img src={IconSearch} alt="계정 검색" />
             </button>
@@ -133,10 +133,10 @@ export default function Header() {
         )}
 
         {/* 뉴스레터 */}
-        {pathname === "/newsletter" && <p>뉴스레터</p>}
+        {pathname === "/newsletter" && <h2>뉴스레터</h2>}
 
         {/* 게시물 작성 */}
-        {pathname === "/post/upload" && <p>피드 업로드</p>}
+        {pathname === "/post/upload" && <h2>피드 업로드</h2>}
 
         {/* 프로필 */}
         {/* 정규표현식으로 profile url 체크 */}
@@ -163,17 +163,17 @@ export default function Header() {
         )}
 
         {/* 팔로워/팔로잉 */}
-        {pathname === `/profile/${account}/following` && <p>Following</p>}
-        {pathname === `/profile/${account}/follower` && <p>Followers</p>}
+        {pathname === `/profile/${account}/following` && <h2>Following</h2>}
+        {pathname === `/profile/${account}/follower` && <h2>Followers</h2>}
 
         {/* 상품 작성 */}
         {(pathname === "/product/upload" ||
-          pathname === `/product/${productId}/edit`) && <p>상품 업로드</p>}
+          pathname === `/product/${productId}/edit`) && <h2>상품 업로드</h2>}
 
         {/* 채팅방 */}
         {pathname === "/chat/room" && (
           <>
-            <p>상대방 이름</p>
+            <h2>상대방 이름</h2>
             <button type="button" onClick={e => setChatRoom(e)}>
               <img src={IconDots} alt="설정" />
             </button>

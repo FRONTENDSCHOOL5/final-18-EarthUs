@@ -6,6 +6,7 @@ import ImgLogo from "../../assets/images/logo.svg";
 import ImgFacebook from "../../assets/images/sns-facebook.svg";
 import ImgGoogle from "../../assets/images/sns-google.svg";
 import ImgKaKao from "../../assets/images/sns-kakao.svg";
+import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import modalConfigState from "../../recoil/modalConfigAtom";
 import modalState from "../../recoil/modalStateAtom";
 import { SIGN_IN, SIGN_UP } from "../../utils/config";
@@ -36,6 +37,9 @@ export default function Intro() {
     <>
       <LogoImg src={ImgLogo} alt="얼스어스" />
       <SignWrap>
+        <h2>
+          <A11yHidden>로그인 또는 회원가입</A11yHidden>
+        </h2>
         <P>SNS 계정으로 간편 로그인</P>
         <ButtonList>
           <li>
