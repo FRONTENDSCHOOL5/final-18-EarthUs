@@ -94,7 +94,7 @@ export default function PostDetail() {
           heartCount={postData.post.heartCount}
           commentCount={postData.post.commentCount}
           time={`${time[0]}년 ${time[1]}월 ${time[2]}일`}
-          postID={postData.post.id}
+          postId={postData.post.id}
           hearted={postData.post.hearted}
         >
           <BreakLine content={postData.post.content} />

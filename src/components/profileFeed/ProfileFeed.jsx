@@ -116,7 +116,7 @@ function ColumnView({ item }) {
       commentCount={commentCount}
       time={`${time[0]}년 ${time[1]}월 ${time[2]}일`}
       hearted={hearted}
-      postID={id}
+      postId={id}
     >
       <BreakLine content={content} />
     </Card>

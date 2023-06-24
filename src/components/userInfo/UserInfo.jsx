@@ -26,7 +26,7 @@ export default function UserInfo({
   more,
   children,
   searchKeyword,
-  postID,
+  postId,
 }) {
   // * 전역 상태 관리를 위한 Recoil State 가져오기
   const { accountParam } = useParams();
@@ -61,8 +61,8 @@ export default function UserInfo({
     },
   );
 
-  const handleDeleteFeed = postID => {
-    const url = `/post/${postID}`;
+  const handleDeleteFeed = postId => {
+    const url = `/post/${postId}`;
     setDeleteFeed(url);
     deleteFeedMutation.mutate();
   };
@@ -80,8 +80,8 @@ export default function UserInfo({
     },
   );
 
-  const handleReport = postID => {
-    const url = `/post/${postID}/report`;
+  const handleReport = postId => {
+    const url = `/post/${postId}/report`;
     setReports(url);
     setReportMutation.mutate();
   };
@@ -102,7 +102,7 @@ export default function UserInfo({
         },
         {
           label: "신고하기",
-          onClick: () => handleReport(postID),
+          onClick: () => handleReport(postId),
         },
       ],
     });
@@ -125,7 +125,7 @@ export default function UserInfo({
         },
         {
           label: "삭제",
-          onClick: () => handleDeleteFeed(postID),
+          onClick: () => handleDeleteFeed(postId),
         },
       ],
     });
@@ -142,7 +142,7 @@ export default function UserInfo({
         },
         {
           label: "수정",
-          onClick: () => navigate(`/post/${postID}/edit`),
+          onClick: () => navigate(`/post/${postId}/edit`),
         },
       ],
     });

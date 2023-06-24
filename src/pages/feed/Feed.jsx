@@ -74,10 +74,10 @@ export default function Feed() {
                         content={v.content}
                         heartCount={v.heartCount}
                         commentCount={v.commentCount}
-                        time={`${v.createdAt.slice(0, 10).split("-")[0]}년 ${
-                          v.createdAt.slice(0, 10).split("-")[1]
-                        }월 ${v.createdAt.slice(0, 10).split("-")[2]}일`}
-                        postID={v.id}
+                        time={`${v.createdAt.slice(0, 10).split("-")[0]}년 
+                        ${v.createdAt.slice(0, 10).split("-")[1]}월 
+                        ${v.createdAt.slice(0, 10).split("-")[2]}일`}
+                        postId={v.id}
                         hearted={v.hearted}
                       />
                     );
@@ -127,12 +127,10 @@ export default function Feed() {
                             content={v.content}
                             heartCount={v.heartCount}
                             commentCount={v.commentCount}
-                            time={`${
-                              v.createdAt.slice(0, 10).split("-")[0]
-                            }년 ${v.createdAt.slice(0, 10).split("-")[1]}월 ${
-                              v.createdAt.slice(0, 10).split("-")[2]
-                            }일`}
-                            postID={v.id}
+                            time={`${v.createdAt.slice(0, 10).split("-")[0]}년 
+                            ${v.createdAt.slice(0, 10).split("-")[1]}월 
+                              ${v.createdAt.slice(0, 10).split("-")[2]}일`}
+                            postId={v.id}
                             hearted={v.hearted}
                           />
                           <TabBar />
