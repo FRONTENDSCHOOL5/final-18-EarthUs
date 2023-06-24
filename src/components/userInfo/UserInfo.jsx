@@ -45,7 +45,7 @@ export default function UserInfo({
   const currentUser = account.trim().toLowerCase() === myName;
   const lastSegment = pathname.split("/").pop();
   const followSegment =
-    (more && lastSegment === "followers") || lastSegment === "following";
+    (more && lastSegment === "follower") || lastSegment === "following";
 
   // * 피드아이템 삭제
   const [deleteFeed, setDeleteFeed] = useState(null);
