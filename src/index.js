@@ -7,18 +7,26 @@ import { RecoilRoot } from "recoil";
 
 import App from "./App";
 import "./styles/font.css";
+import Loading from "./components/loading/Loading";
 
 const container = document.getElementById("root");
 const root = createRoot(container);
-
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      suspense: true,
+    },
+  },
+});
 
 root.render(
-  <BrowserRouter>
-    <RecoilRoot>
-      <QueryClientProvider client={queryClient}>
-        <App />
-      </QueryClientProvider>
-    </RecoilRoot>
-  </BrowserRouter>,
+  <React.Suspense fallback={<Loading />}>
+    <BrowserRouter>
+      <RecoilRoot>
+        <QueryClientProvider client={queryClient}>
+          <App />
+        </QueryClientProvider>
+      </RecoilRoot>
+    </BrowserRouter>
+  </React.Suspense>,
 );
