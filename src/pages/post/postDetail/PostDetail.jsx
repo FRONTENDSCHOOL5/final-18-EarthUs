@@ -7,6 +7,7 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
+import { v4 as uuidv4 } from "uuid";
 
 import Avatar from "../../../components/common/avatar/Avatar";
 import BreakLine from "../../../components/common/breakLine/BreakLine";
@@ -104,7 +105,7 @@ export default function PostDetail() {
           <CommentList ref={scrollRef}>
             {commentData.pages.map(page => {
               return (
-                <>
+                <React.Fragment key={uuidv4()}>
                   {page.comments.map(v => {
                     return (
                       <Comment
@@ -118,7 +119,7 @@ export default function PostDetail() {
                       />
                     );
                   })}
-                </>
+                </React.Fragment>
               );
             })}
           </CommentList>

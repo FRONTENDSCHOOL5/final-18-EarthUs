@@ -1,9 +1,11 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useLocation } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import { v4 as uuidv4 } from "uuid";
 
 import Blank from "../../components/blank/Blank";
 import Card from "../../components/common/card/Card";
@@ -51,7 +53,7 @@ export default function Feed() {
           <FeedWrap>
             {newsletterData.pages.map(page => {
               return (
-                <>
+                <React.Fragment key={uuidv4()}>
                   {page.post.map(v => {
                     return (
                       <Card
@@ -72,7 +74,7 @@ export default function Feed() {
                       />
                     );
                   })}
-                </>
+                </React.Fragment>
               );
             })}
           </FeedWrap>
@@ -93,12 +95,12 @@ export default function Feed() {
           <FeedWrap>
             {home.pages.map(page => {
               return (
-                <>
+                <React.Fragment key={uuidv4()}>
                   {page.posts
                     .filter(v => v.author._id !== earthusData.id)
                     .map(v => {
                       return (
-                        <>
+                        <React.Fragment key={uuidv4()}>
                           <Card
                             key={v.id}
                             accountname={v.author.accountname}
@@ -118,10 +120,10 @@ export default function Feed() {
                             hearted={v.hearted}
                           />
                           <TabBar />
-                        </>
+                        </React.Fragment>
                       );
                     })}
-                </>
+                </React.Fragment>
               );
             })}
           </FeedWrap>
