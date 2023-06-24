@@ -15,9 +15,10 @@ import PostUpload from "../pages/post/postUpload/PostUpload";
 import ProductDetail from "../pages/product/productDetail/ProductDetail";
 import ProductUpload from "../pages/product/productUpload/ProductUpload";
 import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
-import ProfileUpload from "../pages/profile/profileUpload/ProfileUpload";
+import ProfileEdit from "../pages/profile/profileEdit/ProfileEdit";
 import Search from "../pages/search/Search";
 import SignIn from "../pages/sign/SignIn";
+import SignUp from "../pages/sign/SignUp";
 import Splash from "../pages/splash/Splash";
 
 export default function Router() {
@@ -26,7 +27,7 @@ export default function Router() {
       <Route path="/" element={<Splash />} />
       <Route path="/intro" element={<Intro />} />
       <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" />
+      <Route path="/signup" element={<SignUp />} />
       <Route path="/onboarding" element={<Onboarding />} />
 
       <Route path="/" element={<Header />}>
@@ -65,8 +66,7 @@ export default function Router() {
             </Route>
             <Route path="follower" element={<Follow />} />
             <Route path="following" element={<Follow />} />
-            <Route path="upload" element={<ProfileUpload />} />
-            <Route path="edit" element={<ProfileUpload />} />
+            <Route path="edit" element={<ProfileEdit />} />
           </Route>
         </Route>
 
