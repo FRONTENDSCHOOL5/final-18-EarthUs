@@ -11,7 +11,7 @@ export const GlobalStyle = createGlobalStyle`
     `}
 `;
 
-export const Article = styled.article`
+export const MessageSection = styled.section`
   position: fixed;
   bottom: 0;
   height: 56px;

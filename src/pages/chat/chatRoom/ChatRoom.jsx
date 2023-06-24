@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 import Camera from "../../../assets/images/camera.svg";
 import ChatBubble from "../../../components/chatBubble/ChatBubble";
+import A11yHidden from "../../../components/common/a11yHidden/A11yHidden";
 import Button from "../../../components/common/button/Button";
 import useImgMutationHook from "../../../hooks/useImageUploader";
 
@@ -12,7 +13,7 @@ import {
   Label,
   ImgAddBtn,
   ImgBtn,
-  Article,
+  MessageSection,
   TextInput,
 } from "./chatRoom.style";
 
@@ -78,8 +79,9 @@ export default function ChatRoom() {
   return (
     <>
       {isChatRoom && <GlobalStyle chatRoom />}
-      <section>
-        <section>
+      <section className="wrap">
+        <A11yHidden>채팅방</A11yHidden>
+        <section className="chatbubble">
           {messages.map(message => (
             <ChatBubble
               key={message.key}
@@ -90,7 +92,7 @@ export default function ChatRoom() {
             />
           ))}
         </section>
-        <Article>
+        <MessageSection>
           <ImgSection>
             <Label htmlFor="image" aria-label="이미지 업로드하기" />
             <ImgInput
@@ -124,7 +126,7 @@ export default function ChatRoom() {
           >
             입력
           </Button>
-        </Article>
+        </MessageSection>
       </section>
     </>
   );

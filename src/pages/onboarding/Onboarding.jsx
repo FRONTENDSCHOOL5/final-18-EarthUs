@@ -5,6 +5,7 @@ import { useRecoilValue } from "recoil";
 import light from "../../assets/images/light.svg";
 import sayno from "../../assets/images/sayno.svg";
 import think from "../../assets/images/think.svg";
+import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import Button from "../../components/common/button/Button";
 import userDataAtom from "../../recoil/userDataAtom";
 import { HOME, INTRO } from "../../utils/config";
@@ -39,7 +40,7 @@ export default function Onboarding() {
   useEffect(() => {
     const timer = setTimeout(() => {
       setCurrentPage(2);
-    }, 5000);
+    }, 7000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -48,6 +49,7 @@ export default function Onboarding() {
     <>
       {currentPage === 1 && (
         <SectionWrap>
+          <A11yHidden>플랫폼 소개</A11yHidden>
           <ImgSectionOne>
             <img
               className="sayno"
@@ -202,6 +204,7 @@ export default function Onboarding() {
 
       {currentPage === 2 && (
         <SectionWrap>
+          <A11yHidden>플랫폼 소개</A11yHidden>
           <ImgSectionTwo>
             <img className="light" src={light} alt="전구 모양의 아이콘" />
             <Bulb>
