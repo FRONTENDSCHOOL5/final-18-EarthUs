@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from "react";
@@ -57,6 +58,8 @@ export default function Card({
   const handleImgError = e => {
     e.target.onerror = null;
     e.target.src = Nodata;
+    e.target.style.width = "100px";
+    e.target.style.height = "90px";
   };
 
   const queryClient = useQueryClient();
