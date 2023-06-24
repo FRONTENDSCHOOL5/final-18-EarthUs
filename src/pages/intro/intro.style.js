@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
 const LogoImg = styled.img`
-  position: relative;
-  top: 228px;
+  position: absolute;
+  top: 30%;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translate(-50%, -50%);
 `;
 
 const SignWrap = styled.section`

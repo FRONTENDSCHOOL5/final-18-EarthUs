@@ -12,7 +12,7 @@ const SplashBg = styled.div`
 
 const ImgWrap = styled.div`
   position: relative;
-  top: 228px;
+  top: 30vh;
   width: fit-content;
   margin: 0 auto;
 `;
