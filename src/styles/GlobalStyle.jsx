@@ -2,7 +2,7 @@ import { createGlobalStyle } from "styled-components";
 import normalize from "styled-normalize";
 
 const GlobalStyle = createGlobalStyle`
-${normalize}
+  ${normalize}
 
   :root {
   /* Primary */
@@ -32,10 +32,10 @@ ${normalize}
   /* font-size */
   --font-size-micro: clamp(10px, 1vw, 12px);
   --font-size-xs: clamp(12px, 1.5vw, 14px);
-  --font-size-sm: clamp(14px, 2vw, 16px);
-  --font-size-md: clamp(15px, 2vw, 17px);
-  --font-size-lg: clamp(16px, 2vw, 18px);
-  --font-size-xl: clamp(18px, 3vw, 20px);
+  --font-size-sm: clamp(14px, 2vw, 17px);
+  --font-size-md: clamp(15px, 2vw, 18px);
+  --font-size-lg: clamp(16px, 2vw, 20px);
+  --font-size-xl: clamp(18px, 3vw, 22px);
   --font-size-xxl: clamp(22px, 4vw, 26px);
   --font-size-title: clamp(32px, 5vw, 36px);
 
@@ -58,7 +58,8 @@ ${normalize}
     line-height:1.5;
     letter-spacing: -0.02rem;
     background-color: var(--color-bg);
-
+    font-family: "LINESeedKR", sans-serif;
+    font-weight: 400;
     #root {
       background-color: #fff;
       min-height: 100vh;

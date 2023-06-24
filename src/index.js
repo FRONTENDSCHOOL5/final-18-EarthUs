@@ -6,7 +6,6 @@ import { createRoot } from "react-dom/client";
 import { RecoilRoot } from "recoil";
 
 import App from "./App";
-import "./styles/font.css";
 import Loading from "./components/loading/Loading";
 
 const container = document.getElementById("root");
