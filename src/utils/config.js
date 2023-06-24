@@ -12,7 +12,6 @@ export const NO_PROFILE_IMAGE =
  * const PROFILE_FOLLOWER = getFollowerPath(account);
  */
 export const getProfileDetailPath = account => `/profile/${account}`;
-export const PROFILE_UPLOAD = `/profile/upload`;
 export const getProfileEditPath = account => `/profile/${account}/edit`;
 export const getFollowingPath = account => `/profile/${account}/following`;
 export const getFollowerPath = account => `/profile/${account}/follower`;
@@ -41,9 +40,13 @@ export const getProductEditPath = productId => `/product/${productId}/edit`;
 export const CHAT_LIST = `/chat`;
 export const CHAT_ROOM = `/chat/room`;
 
+/**
+ * @Home
+ */
 export const ONBOARDING = `/onboarding`;
 export const INTRO = `/intro`;
 export const HOME = `/home`;
+export const SEARCH = `/search`;
 
 export const SIGN_IN = `/signin`;
 export const SIGN_UP = `/signup`;
