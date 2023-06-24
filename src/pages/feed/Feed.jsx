@@ -3,7 +3,7 @@
 /* eslint-disable no-underscore-dangle */
 import React from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { v4 as uuidv4 } from "uuid";
 
@@ -15,11 +15,13 @@ import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
 import useApiQuery from "../../hooks/useApiQuery";
 import earthusDataAtom from "../../recoil/earthusDataAtom";
 import userDataAtom from "../../recoil/userDataAtom";
+import { SEARCH } from "../../utils/config";
 
 import FeedWrap from "./feed.style";
 
 export default function Feed() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
 
   const earthusData = useRecoilValue(earthusDataAtom);
   const userData = useRecoilValue(userDataAtom);
@@ -90,11 +92,15 @@ export default function Feed() {
       {/* Home */}
       {/* 팔로잉 없을 경우 */}
       {!isNewsletterPage && isFollowing && isFollowing.length === 0 && (
-        <Blank btn="유저 검색하기">유저를 검색해 팔로우 해보세요!</Blank>
+        <Blank btn="유저 검색하기" onClick={() => navigate(SEARCH)}>
+          유저를 검색해 팔로우 해보세요!
+        </Blank>
       )}
       {/* 팔로잉은 있지만 올린 게시글이 없는 경우 */}
       {!isNewsletterPage && home && home.pages[0].posts.length === 0 && (
-        <Blank btn="유저 검색하기">유저를 검색해 팔로우 해보세요!</Blank>
+        <Blank btn="유저 검색하기" onClick={() => navigate(SEARCH)}>
+          유저를 검색해 팔로우 해보세요!
+        </Blank>
       )}
       {/* 팔로잉이 있고 올린 게시글이 있는 경우 */}
       {!isNewsletterPage && home && (
