@@ -6,8 +6,10 @@ import InfiniteScroll from "react-infinite-scroller";
 import { useLocation, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
+import Blank from "../../components/blank/Blank";
 import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import Button from "../../components/common/button/Button";
+import TabBar from "../../components/common/tabBar/TabBar";
 import UserInfo from "../../components/userInfo/UserInfo";
 import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
 import useApiMutation from "../../hooks/useApiMutation";
@@ -29,6 +31,7 @@ export default function Follow() {
   const { data, hasNextPage, fetchNextPage } = useApiInfiniteQuery(
     `/profile/${account}/${followPage}`,
   );
+  console.log(data);
   // * 유저 팔로우
   // 클릭한 user의 accountname을 가져와서 해당 유저 팔로우
   const makeFollow = useApiMutation(
@@ -82,6 +85,9 @@ export default function Follow() {
           {followPage === "follower" ? "팔로워 목록" : "팔로잉 목록"}
         </A11yHidden>
       </h3>
+      {data && data.pages[0].length === 0 && (
+        <Blank btn="유저 검색하기">유저를 검색해 팔로우 해보세요!</Blank>
+      )}
       {data && (
         <InfiniteScroll hasMore={hasNextPage} loadMore={() => fetchNextPage()}>
           <Follows>
@@ -98,26 +104,29 @@ export default function Follow() {
                       isfollow,
                     } = v;
                     return (
-                      <UserInfo
-                        key={_id}
-                        account={accountname}
-                        profileImg={image}
-                        userName={username}
-                        intro={intro}
-                        more
-                      >
-                        <Button
-                          size="sm"
-                          variant={isfollow ? "white" : "primary"}
-                          onClick={() =>
-                            isfollow
-                              ? handleUnfollow(accountname)
-                              : handleFollow(accountname)
-                          }
+                      <>
+                        <UserInfo
+                          key={_id}
+                          account={accountname}
+                          profileImg={image}
+                          userName={username}
+                          intro={intro}
+                          more
                         >
-                          {isfollow ? "팔로잉" : "팔로우"}
-                        </Button>
-                      </UserInfo>
+                          <Button
+                            size="sm"
+                            variant={isfollow ? "white" : "primary"}
+                            onClick={() =>
+                              isfollow
+                                ? handleUnfollow(accountname)
+                                : handleFollow(accountname)
+                            }
+                          >
+                            {isfollow ? "팔로잉" : "팔로우"}
+                          </Button>
+                        </UserInfo>
+                        <TabBar />
+                      </>
                     );
                   })}
                 </React.Fragment>
