@@ -29,13 +29,13 @@ export default function ProfileFeed() {
       loadMore={() => feedFetchNextPage()}
     >
       <ProfileFeedWrap>
-        {feedData && (
+        {/* {feedData && ( */}
+        {feedData && feedData.pages.some(page => page.post.length !== 0) && (
           <>
             <header>
               <h2>
                 <A11yHidden>피드</A11yHidden>
               </h2>
-
               <ViewBtn to={`/profile/${account}/column`} icon={column}>
                 <A11yHidden>1열 보기</A11yHidden>
               </ViewBtn>
