@@ -156,7 +156,8 @@ export default function ProfileFormField({
             type="button"
             size="cta"
             onClick={() => emailValidMutation.mutate()}
-            variant={!disabledBtn ? "primary" : "disabled"}
+            variant="primary"
+            disabled={disabledBtn && "disabled"}
           >
             다음
           </Button>
