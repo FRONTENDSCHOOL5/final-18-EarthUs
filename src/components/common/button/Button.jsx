@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 /* eslint-disable no-nested-ternary */
 import React from "react";
 import styled, { css } from "styled-components";
@@ -20,16 +21,16 @@ const VARIANTS = {
         brightness(89%) contrast(91%);
     }
   `,
-  disabled: css`
-    --button-color: var(--color-gray-76);
-    --button-background: var(--color-bg);
-    --button-border: 1px solid var(--color-bg);
-    cursor: not-allowed;
-    pointer-events: none;
-    &::before {
-      filter: invert(0.6);
-    }
-  `,
+  // disabled: css`
+  //   --button-color: var(--color-gray-76);
+  //   --button-background: var(--color-bg);
+  //   --button-border: 1px solid var(--color-bg);
+  //   cursor: not-allowed;
+  //   pointer-events: none;
+  //   &::before {
+  //     filter: invert(0.6);
+  //   }
+  // `,
 };
 
 const SIZES = {
@@ -64,10 +65,23 @@ const SIZES = {
   `,
 };
 
-export default function Button({ size, variant, children, icon, ...props }) {
+export default function Button({
+  size,
+  variant,
+  children,
+  icon,
+  disabled,
+  ...props
+}) {
   return (
     // eslint-disable-next-line react/jsx-props-no-spreading
-    <StyledButton icon={icon} size={size} variant={variant} {...props}>
+    <StyledButton
+      icon={icon}
+      size={size}
+      variant={variant}
+      disabled={disabled}
+      {...props}
+    >
       <span>{children}</span>
     </StyledButton>
   );
@@ -92,6 +106,14 @@ const StyledButton = styled.button`
   align-items: center;
   gap: 0.5rem;
   transition: all 0.4s ease-out;
+  &:disabled {
+    --button-color: var(--color-gray-76);
+    --button-background: var(--color-bg);
+    --button-border: 1px solid var(--color-bg);
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
   &:hover {
     filter: brightness(0.9);
   }

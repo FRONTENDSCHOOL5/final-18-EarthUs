@@ -49,7 +49,7 @@ export default function ProfileFormField({
     validationFields();
   }, [userNameObj, accountNameObj]);
 
-  // 프로필 수정 페이지일 경우, 기존 유저 정보 불러오기
+  // * 프로필 수정 페이지일 경우, 기존 유저 정보 불러오기
   const { data } = useApiQuery("/user/myinfo", "get");
   useEffect(() => {
     if (data) {
@@ -128,7 +128,8 @@ export default function ProfileFormField({
       <Button
         type="submit"
         size="cta"
-        variant={!disabledBtn ? "primary" : "disabled"}
+        variant="primary"
+        disabled={disabledBtn && "disabled"}
       >
         수정
       </Button>
