@@ -36,13 +36,7 @@ export default function ProfileHeader() {
 
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
-  // eslint-disable-next-line no-underscore-dangle
-  const myId = userData && userData._id;
   const myName = userData ? userData.accountname.trim().toLowerCase() : "";
-
-  console.log("myId", myId);
-
-  // QueryClient의 캐시 무효화 기능을 사용해서 변경된 API 데이터를 화면에 동적으로 표시
   const queryClient = useQueryClient();
 
   // * 유저 언팔로우
