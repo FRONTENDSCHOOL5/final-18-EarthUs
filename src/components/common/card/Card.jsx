@@ -4,13 +4,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import SwiperCore, { Pagination, A11y } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { v4 as uuidv4 } from "uuid";
 
 import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
-import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/pagination/pagination.min.css";
+import "swiper/components/a11y/a11y.min.css";
 
 import iconComment from "../../../assets/images/comment.svg";
 import iconHeartEmpty from "../../../assets/images/heart-empty.svg";
@@ -48,6 +49,9 @@ export default function Card({
   postId,
   hearted,
 }) {
+  // * Swiper 커스터마이징
+  SwiperCore.use([Pagination, A11y]);
+
   // * 등록된 이미지가 1개 이상이라면 배열로 변환
   const multipartImages =
     typeof postImage === "string"
@@ -123,6 +127,9 @@ export default function Card({
                     />
                   </LayerIcon>
                   <Swiper
+                    pagination={{
+                      clickable: true,
+                    }}
                     className="imgWrap"
                     spaceBetween={0}
                     slidesPerView={1}
@@ -182,7 +189,14 @@ export default function Card({
         <>
           {multipartImages.length > 1 ? (
             // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
-            <Swiper className="imgWrap" spaceBetween={0} slidesPerView={1}>
+            <Swiper
+              className="imgWrap"
+              spaceBetween={0}
+              slidesPerView={1}
+              pagination={{
+                clickable: true,
+              }}
+            >
               {multipartImages.map(img => (
                 // eslint-disable-next-line react/no-array-index-key
                 <SwiperSlide key={uuidv4()}>

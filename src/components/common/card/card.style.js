@@ -18,6 +18,17 @@ const Cards = styled.article`
     border: 1px solid var(--color-light);
     background: var(--color-bg);
     margin: 0;
+    .swiper-pagination {
+      .swiper-pagination-bullet {
+        width: 1rem;
+        height: 1rem;
+        opacity: 0.5;
+      }
+      .swiper-pagination-bullet-active {
+        opacity: 1;
+        background: var(--color-primary);
+      }
+    }
   }
 `;
 
