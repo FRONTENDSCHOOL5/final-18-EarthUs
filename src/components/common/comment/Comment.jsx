@@ -88,7 +88,7 @@ export default function Comment({
   const setModalConfig = useSetRecoilState(modalConfigState);
 
   // 댓글 삭제 모달
-  const setDeleteComment = e => {
+  const deleteConfirm = e => {
     e.stopPropagation();
     setModalConfig({
       type: "confirm",
@@ -109,22 +109,9 @@ export default function Comment({
     });
     setModalOpen(true);
   };
-  const deleteCommentModal = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "bottomSheet",
-      buttons: [
-        {
-          label: "댓글 삭제하기",
-          onClick: e => setDeleteComment(e),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
 
   // 댓글 신고 모달
-  const setReportComment = e => {
+  const reportConfirm = e => {
     e.stopPropagation();
     setModalConfig({
       type: "confirm",
@@ -145,19 +132,6 @@ export default function Comment({
     });
     setModalOpen(true);
   };
-  const reportCommentModal = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "bottomSheet",
-      buttons: [
-        {
-          label: "댓글 신고하기",
-          onClick: e => setReportComment(e),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
 
   return (
     <Comments key={commentId}>
@@ -169,9 +143,7 @@ export default function Comment({
       </div>
       <button
         type="button"
-        onClick={e =>
-          IsCommentAuthorMe ? deleteCommentModal(e) : reportCommentModal(e)
-        }
+        onClick={e => (IsCommentAuthorMe ? deleteConfirm(e) : reportConfirm(e))}
       >
         <img src={iconDots} alt="더 보기" />
       </button>
