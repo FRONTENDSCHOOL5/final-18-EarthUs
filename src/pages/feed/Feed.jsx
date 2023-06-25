@@ -9,6 +9,7 @@ import { v4 as uuidv4 } from "uuid";
 
 import Blank from "../../components/blank/Blank";
 import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
+import BreakLine from "../../components/common/breakLine/BreakLine";
 import Card from "../../components/common/card/Card";
 import TabBar from "../../components/common/tabBar/TabBar";
 import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
@@ -71,7 +72,6 @@ export default function Feed() {
                         username={v.author.username}
                         id={v.author.accountname}
                         postImage={v.image}
-                        content={v.content}
                         heartCount={v.heartCount}
                         commentCount={v.commentCount}
                         time={`${v.createdAt.slice(0, 10).split("-")[0]}년 
@@ -79,7 +79,9 @@ export default function Feed() {
                         ${v.createdAt.slice(0, 10).split("-")[2]}일`}
                         postId={v.id}
                         hearted={v.hearted}
-                      />
+                      >
+                        <BreakLine content={v.content} />
+                      </Card>
                     );
                   })}
                 </React.Fragment>
@@ -124,7 +126,6 @@ export default function Feed() {
                             username={v.author.username}
                             id={v.author.accountname}
                             postImage={v.image}
-                            content={v.content}
                             heartCount={v.heartCount}
                             commentCount={v.commentCount}
                             time={`${v.createdAt.slice(0, 10).split("-")[0]}년 
@@ -132,7 +133,9 @@ export default function Feed() {
                               ${v.createdAt.slice(0, 10).split("-")[2]}일`}
                             postId={v.id}
                             hearted={v.hearted}
-                          />
+                          >
+                            <BreakLine content={v.content} />
+                          </Card>
                           <TabBar />
                         </React.Fragment>
                       );
