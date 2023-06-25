@@ -3,7 +3,7 @@
 /* eslint-disable no-console */
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 
 import Blank from "../../components/blank/Blank";
@@ -13,12 +13,14 @@ import TabBar from "../../components/common/tabBar/TabBar";
 import UserInfo from "../../components/userInfo/UserInfo";
 import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
 import useApiMutation from "../../hooks/useApiMutation";
+import { SEARCH } from "../../utils/config";
 
 import Follows from "./follow.style";
 
 export default function Follow() {
   const { pathname } = useLocation();
   const { account } = useParams();
+  const navigate = useNavigate();
 
   const followPage =
     pathname === `/profile/${account}/following` ? "following" : "follower";
@@ -86,7 +88,9 @@ export default function Follow() {
         </A11yHidden>
       </h3>
       {data && data.pages[0].length === 0 && (
-        <Blank btn="유저 검색하기">유저를 검색해 팔로우 해보세요!</Blank>
+        <Blank btn="유저 검색하기" onClick={() => navigate(SEARCH)}>
+          유저를 검색해 팔로우 해보세요!
+        </Blank>
       )}
       {data && (
         <InfiniteScroll hasMore={hasNextPage} loadMore={() => fetchNextPage()}>
