@@ -14,7 +14,13 @@ import {
   Time,
 } from "./chatPreview.style";
 
-export default function ChatPreview() {
+export default function ChatPreview({
+  chatUserName,
+  chatUserMessage,
+  profileImg,
+  showBlueRound,
+}) {
+  const chatCurrentTime = new Date().toLocaleDateString("ko-KR");
   return (
     <Link to="/chat/room">
       <Article>
@@ -22,13 +28,13 @@ export default function ChatPreview() {
           <h2>대화 목록</h2>
         </A11yHidden>
         <Section>
-          <BlueRound />
-          <Avatar size={40} />
+          {showBlueRound && <BlueRound className="blue-round" />}
+          <Avatar profileImg={profileImg} size={40} />
           <Div>
-            <Strong>애월읍 위니브 감귤농장</Strong>
-            <P>이번에 정정 언제하맨마씸?</P>
+            <Strong>{chatUserName}</Strong>
+            <P>{chatUserMessage}</P>
           </Div>
-          <Time>2023.06.16</Time>
+          <Time>{chatCurrentTime}</Time>
         </Section>
       </Article>
     </Link>
