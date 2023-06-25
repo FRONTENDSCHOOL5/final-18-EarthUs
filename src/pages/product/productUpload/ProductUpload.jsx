@@ -285,9 +285,8 @@ export default function ProductUpload() {
       <Button
         type="submit"
         size="cta"
-        variant={
-          !disabledBtn && itemName && price && link ? "primary" : "disabled"
-        }
+        variant={!disabledBtn && itemName && price && link && "primary"}
+        disabled={disabledBtn || !itemName || !price || !link}
       >
         {pathname === PRODUCT_UPLOAD ? "저장" : "수정"}
       </Button>

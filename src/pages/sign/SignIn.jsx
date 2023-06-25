@@ -114,7 +114,7 @@ export default function SignIn() {
           required
           className={
             emailError === "이메일을 입력해주세요." ||
-              pwError === "이메일 또는 비밀번호가 일치하지 않습니다."
+            pwError === "이메일 또는 비밀번호가 일치하지 않습니다."
               ? "error"
               : ""
           }
@@ -131,7 +131,8 @@ export default function SignIn() {
         />
         <Button
           size="cta"
-          variant={!disabledBtn && email && password ? "primary" : "disabled"}
+          variant={!disabledBtn && email && password && "primary"}
+          disabled={disabledBtn || !email || !password}
           type="submit"
         >
           로그인
