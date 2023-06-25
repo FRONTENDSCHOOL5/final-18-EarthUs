@@ -80,6 +80,9 @@ const Dialog = styled.div`
           > :not(div) {
             padding: 0 0 0.75rem;
           }
+          h2 {
+            margin: 0 0 0.75rem;
+          }
           div {
             width: 100%;
             display: flex;
@@ -87,7 +90,7 @@ const Dialog = styled.div`
             border-top: 1px solid var(--color-light);
             button {
               flex: 1 0 0;
-              padding: 0.75rem 0;
+              padding: 0.75rem 0 1rem;
               font-size: var(--font-size-md);
               + button {
                 border-left: 1px solid var(--color-light);
@@ -109,7 +112,7 @@ const Dialog = styled.div`
           animation: ${props => (props.open ? slideUp : slideDown)} 0.25s
             ease-out;
           h2 {
-            margin: 2rem 0 0;
+            margin: 2rem 0;
           }
           p {
             margin: 1rem 0 0;
