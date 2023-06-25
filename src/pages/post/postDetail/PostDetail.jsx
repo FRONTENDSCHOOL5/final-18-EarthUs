@@ -114,12 +114,12 @@ export default function PostDetail() {
                     return (
                       <Comment
                         key={v.id}
-                        commentID={v.id}
+                        commentId={v.id}
                         profileImg={v.author.image}
                         userName={v.author.username}
                         comment={v.content}
                         time={v.createdAt}
-                        authorID={v.author._id}
+                        authorId={v.author._id}
                       />
                     );
                   })}

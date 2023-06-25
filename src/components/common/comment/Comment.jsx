@@ -16,12 +16,12 @@ import Avatar from "../avatar/Avatar";
 import Comments from "./comment.style";
 
 export default function Comment({
-  commentID,
+  commentId,
   profileImg,
   userName,
   comment,
   time,
-  authorID,
+  authorId,
 }) {
   // 댓글 작성 시간
   const commentTime = Math.round((new Date() - Date.parse(time)) / 1000);
@@ -52,7 +52,7 @@ export default function Comment({
 
   // 댓글 삭제 API 호출
   const deleteComment = useApiMutation(
-    `/post/${postId}/comments/${commentID}`,
+    `/post/${postId}/comments/${commentId}`,
     "delete",
     {},
     {
@@ -68,7 +68,7 @@ export default function Comment({
 
   // 댓글 신고 API 호출
   const reportComment = useApiMutation(
-    `/post/${postId}/comments/${commentID}/report`,
+    `/post/${postId}/comments/${commentId}/report`,
     "post",
     {},
     {
@@ -82,7 +82,7 @@ export default function Comment({
   };
 
   const [userData] = useRecoilState(userDataAtom);
-  const IsCommentAuthorMe = userData && userData._id === authorID;
+  const IsCommentAuthorMe = userData && userData._id === authorId;
 
   const setModalOpen = useSetRecoilState(modalState);
   const setModalConfig = useSetRecoilState(modalConfigState);
@@ -160,7 +160,7 @@ export default function Comment({
   };
 
   return (
-    <Comments key={commentID}>
+    <Comments key={commentId}>
       <Avatar profileImg={profileImg} size={40} />
       <div>
         <strong>{userName}</strong>
@@ -187,6 +187,6 @@ export default function Comment({
 //   userName={v.author.username}
 //   comment={v.content}
 //   time={v.createdAt}
-//   authorID={v.author._id}
-//   commentID={v.id}
+//   authorId={v.author._id}
+//   commentId={v.id}
 // />;
