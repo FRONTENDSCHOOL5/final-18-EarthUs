@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { v4 as uuidv4 } from "uuid";
 
 import Camera from "../../../assets/images/camera.svg";
 import ChatBubble from "../../../components/chatBubble/ChatBubble";
@@ -21,7 +22,6 @@ export default function ChatRoom() {
   const [content, setContent] = useState("");
   const [uploadedImage, setUploadedImage] = useState(null);
   const [messages, setMessages] = useState([]);
-  const [messageCounter, setMessageCounter] = useState(0);
 
   const handleMessageInput = e => {
     setContent(e.target.value);
@@ -38,20 +38,15 @@ export default function ChatRoom() {
   const handlePostMessage = e => {
     e.preventDefault();
 
-    if (content.trim() === "") {
-      return; // 입력란이 비어 있을 경우 함수 실행 중지
-    }
-
     // * 시간과 함께 메시지 생성
     const currentTime = getCurrentTime();
     const newMessage = {
-      key: messageCounter,
+      key: uuidv4(),
       content,
       uploadedImage,
       time: currentTime,
     };
     setMessages(prevMessages => [...prevMessages, newMessage]);
-    setMessageCounter(prevCounter => prevCounter + 1); // 메시지가 생성될 때마다 카운터 증가
     setContent("");
     setUploadedImage(null);
     console.log("메시지가 전송되었습니다.", content);
@@ -119,9 +114,10 @@ export default function ChatRoom() {
           />
           <Button
             size="sm"
-            variant={content || uploadedImage ? "primary" : "disabled"}
+            variant={(content || uploadedImage) && "primary"}
             type="submit"
             onClick={handlePostMessage}
+            disabled={!content && !uploadedImage}
             aria-label="메시지 전송하기"
           >
             입력
