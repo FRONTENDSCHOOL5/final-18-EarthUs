@@ -45,7 +45,7 @@ export default function Card({
   children,
   handleModal,
   onClick = null,
-  postID,
+  postId,
   hearted,
 }) {
   // * 등록된 이미지가 1개 이상이라면 배열로 변환
@@ -66,7 +66,7 @@ export default function Card({
 
   // 좋아요
   const like = useApiMutation(
-    `/post/${postID}/heart`,
+    `/post/${postId}/heart`,
     "post",
     {},
     {
@@ -82,7 +82,7 @@ export default function Card({
 
   // 좋아요 취소
   const unlike = useApiMutation(
-    `/post/${postID}/unheart`,
+    `/post/${postId}/unheart`,
     "delete",
     {},
     {
@@ -107,10 +107,10 @@ export default function Card({
             userName={username}
             id={id}
             handleModal={handleModal}
-            postID={postID}
+            postId={postId}
             more
           />
-          <PostLink to={`/post/${postID}`}>
+          <PostLink to={`/post/${postId}`}>
             <>
               {/* Feed & Product 동시 사용 영역 */}
               {multipartImages.length > 1 ? (
@@ -171,7 +171,7 @@ export default function Card({
               </button>
               <span>{heartCount}</span>
             </div>
-            <Link to={`/post/${postID}`}>
+            <Link to={`/post/${postId}`}>
               <img src={iconComment} alt="댓글달기" />
               <span>{commentCount}</span>
             </Link>
