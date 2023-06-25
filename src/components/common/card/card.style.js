@@ -59,7 +59,7 @@ const Content = styled.p`
   color: var(--color-gray-46);
   strong {
     display: block;
-    font-size: var(--font-size-lg);
+    font-size: var(--font-size-md);
     color: var(--color-gray-2);
     margin: 0 0 0.5rem;
   }
