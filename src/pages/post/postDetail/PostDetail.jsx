@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable no-console */
 import React, { useEffect, useState, useRef } from "react";
@@ -139,7 +137,8 @@ export default function PostDetail() {
         />
         <Button
           size="sm"
-          variant={content ? "primary" : "disabled"}
+          variant={content && "primary"}
+          disabled={!content}
           type="submit"
           onClick={handlePostComment}
         >
