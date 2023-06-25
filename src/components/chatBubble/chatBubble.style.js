@@ -42,3 +42,15 @@ export const MessageTime = styled.div`
   font-size: var(--font-size-micro);
   margin: 6px;
 `;
+
+export const StyledMessageTime = styled.div`
+  max-width: 66%;
+  display: flex;
+  align-items: flex-end;
+`;
+
+export const BringMessageTime = styled.div`
+  color: var(--color-gray-76);
+  font-size: var(--font-size-micro);
+  margin: 6px;
+`;
