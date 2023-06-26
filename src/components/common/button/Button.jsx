@@ -21,21 +21,11 @@ const VARIANTS = {
         brightness(89%) contrast(91%);
     }
   `,
-  // disabled: css`
-  //   --button-color: var(--color-gray-76);
-  //   --button-background: var(--color-bg);
-  //   --button-border: 1px solid var(--color-bg);
-  //   cursor: not-allowed;
-  //   pointer-events: none;
-  //   &::before {
-  //     filter: invert(0.6);
-  //   }
-  // `,
 };
 
 const SIZES = {
   sm: css`
-    --button-font-size: var(--font-size-sm);
+    --button-font-size: var(--font-size-xs);
     --button-padding: 0 1rem;
     --button-height: 2.25rem;
   `,

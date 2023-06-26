@@ -68,6 +68,7 @@ const Img = styled.img`
 const Content = styled.p`
   font-size: var(--font-size-md);
   color: var(--color-gray-46);
+  margin: 24px 0;
   strong {
     display: block;
     font-size: var(--font-size-md);
