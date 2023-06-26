@@ -12,7 +12,7 @@ import useApiQuery from "../../../hooks/useApiQuery";
 import useImageUploader from "../../../hooks/useImageUploader";
 import userDataAtom from "../../../recoil/userDataAtom";
 import {
-  getProductDetailPath,
+  getProfileDetailPath,
   getProductEditPath,
   PRODUCT_UPLOAD,
   NO_IMAGE,
@@ -31,7 +31,7 @@ export default function ProductUpload() {
   const navigate = useNavigate();
   const [userData] = useRecoilState(userDataAtom);
   const myName = userData ? userData.accountname.trim().toLowerCase() : "";
-  const PRODUCT_DETAIL = getProductDetailPath(myName);
+  const PROFILE_DETAIL = getProfileDetailPath(myName);
   const PRODUCT_EDIT = getProductEditPath(productId);
 
   // 버튼 활성화 상태 관리
@@ -166,7 +166,7 @@ export default function ProductUpload() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다");
-        navigate(PRODUCT_DETAIL);
+        navigate(PROFILE_DETAIL);
       },
     },
   );
