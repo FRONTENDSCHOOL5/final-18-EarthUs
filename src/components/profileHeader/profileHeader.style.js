@@ -17,6 +17,7 @@ const ProfileHeaderWrap = styled.article`
   }
   ul {
     flex: 1 0 calc(100% - (4rem + 2rem));
+    overflow: hidden;
     li {
       margin: 0 0;
       font-size: var(--font-size-md);
