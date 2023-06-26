@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
-import React from "react";
+// import React from "react";
+import React, { Suspense } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import Header from "../components/common/header/Header";
@@ -35,7 +36,14 @@ export default function Router() {
         {/* HOME */}
         <Route path="home" element={<Feed />} />
         <Route element={<TabBar />}>
-          <Route path="search" element={<Search />} />
+          <Route
+            path="search"
+            element={
+              <Suspense fallback={null}>
+                <Search />
+              </Suspense>
+            }
+          />
           <Route path="newsletter" element={<Feed />} />
         </Route>
 
