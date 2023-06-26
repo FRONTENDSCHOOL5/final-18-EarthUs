@@ -26,8 +26,8 @@ export default function ProfileFormField({
     "",
   );
   const accountNameObj = useValidations(
-    "영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.",
-    /^[a-zA-Z0-9._]*$/,
+    "영문 소문자, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.",
+    /^[a-z0-9._]*$/,
     "",
   );
   const introObj = useValidations({});
