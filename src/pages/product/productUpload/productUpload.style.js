@@ -15,12 +15,21 @@ const InputFile = styled(Input)`
 const ImgLabel = styled.div`
   position: relative;
   width: 100%;
-  aspect-ratio: 3/2;
+  aspect-ratio: 1/1;
   margin: 8px 0 40px;
-  background-color: var(--color-bg);
-  border: 0.5px solid var(--color-light);
-  border-radius: 10px;
-  overflow: hidden;
+
+  ${({ data }) =>
+    data &&
+    css`
+      width: 100%;
+      aspect-ratio: 3/2;
+      display: inline-block;
+      position: relative;
+      background-color: var(--color-bg);
+      border: 0.5px solid var(--color-light);
+      border-radius: 10px;
+      overflow: hidden;
+    `};
 `;
 
 const Img = styled.img`

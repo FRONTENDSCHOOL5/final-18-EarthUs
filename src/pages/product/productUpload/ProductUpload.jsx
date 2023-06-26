@@ -220,7 +220,7 @@ export default function ProductUpload() {
     <form onSubmit={handleSubmit}>
       <InputFile type="file" id="itemImage" onChange={e => handleImgChange(e)}>
         이미지 등록
-        <ImgLabel>
+        <ImgLabel className="test" data={!image ? "data" : ""}>
           <Img src={itemImage} alt="상품 이미지" ref={imgPre} />
           {/* 접근성 */}
           <ImgUploadButton
