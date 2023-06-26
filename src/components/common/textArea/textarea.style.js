@@ -13,7 +13,7 @@ const TextAreaWrap = styled.textarea`
   letter-spacing: inherit;
   min-height: 10rem;
   max-height: calc(100vh - var(--size-header) - var(--size-tabBar) - 40rem);
-  overflow: scroll;
+  overflow-y: scroll;
 
   &::placeholder {
     color: var(--color-dark);
