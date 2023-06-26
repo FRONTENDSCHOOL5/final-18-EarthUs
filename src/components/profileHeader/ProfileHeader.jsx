@@ -14,7 +14,7 @@ import {
   getProfileDetailPath,
   getFollowingPath,
   getFollowerPath,
-  CHAT_LIST,
+  CHAT_ROOM,
   PRODUCT_UPLOAD,
 } from "../../utils/config";
 import A11yHidden from "../common/a11yHidden/A11yHidden";
@@ -156,7 +156,7 @@ export default function ProfileHeader() {
               size="sm"
               variant="primary"
               type="button"
-              onClick={() => navigate(CHAT_LIST)}
+              onClick={() => navigate(CHAT_ROOM)}
             >
               메시지
             </Button>
