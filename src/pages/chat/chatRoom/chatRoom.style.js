@@ -1,5 +1,7 @@
 import styled, { createGlobalStyle, css } from "styled-components";
 
+import camera from "../../../assets/images/camera.svg";
+
 export const GlobalStyle = createGlobalStyle`
   ${props =>
     props.chatRoom &&
@@ -20,14 +22,16 @@ export const MessageSection = styled.section`
   margin-left: calc(-1 * var(--size-gap));
   display: flex;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: space-between;
+  padding: 0 var(--size-gap);
+  gap: 0.5rem;
   background-color: var(--color-white);
   border-top: 1px solid var(--color-light);
 `;
 
 export const TextInput = styled.input`
   width: 70%;
-  margin-left: 36px;
+  flex: 1 0 0;
 
   &::placeholder {
     color: var(--color-dark);
@@ -42,6 +46,10 @@ export const Section = styled.section`
 
 export const ImgSection = styled.section`
   position: relative;
+  width: 2.5rem;
+  height: 2.5rem;
+  flex: 0 1 2.5rem;
+  border-radius: 50%;
 `;
 
 export const ImgInput = styled.input`
@@ -49,34 +57,24 @@ export const ImgInput = styled.input`
   height: 0;
   padding: 0;
   overflow: hidden;
-  border: 0;
+  border: 1px solid #0ff;
 `;
 
 export const Label = styled.label`
   position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(0%, -50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   z-index: 2;
-`;
-
-export const ImgAddBtn = styled.button`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(0%, -50%);
-  width: 36px;
-  height: 36px;
-  border-radius: 20px;
   background-color: var(--color-light);
-`;
-
-export const ImgBtn = styled.img`
-  &.cameraIcon {
-    filter: invert(95%) sepia(0%) saturate(0%) hue-rotate(140deg)
-      brightness(104%) contrast(107%);
+  border-radius: 50%;
+  ::before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background: url(${camera}) no-repeat center / 1.5rem;
+    filter: invert(1);
   }
 `;
