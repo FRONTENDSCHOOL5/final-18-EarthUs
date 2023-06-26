@@ -24,7 +24,7 @@ export default function PostUpload({ profileImage, setProfileImage }) {
   const navigate = useNavigate();
   const POST_EDIT = getPostEditPath(postId);
 
-  const [editImageData, setEditImageData] = useState(NO_PROFILE_IMAGE);
+  const [editImageData, setEditImageData] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(pathname === POST_UPLOAD);
 
   // * 게시물 유효성 검사
