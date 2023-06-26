@@ -129,21 +129,23 @@ export default function PostDetail() {
       )}
       <CommentInput>
         <Avatar profileImg={userData && userData.image} size={40} />
-        <input
-          type="text"
-          value={content}
-          placeholder="댓글 입력하기"
-          onChange={handleCommentInput}
-        />
-        <Button
-          size="sm"
-          variant={content && "primary"}
-          disabled={!content}
-          type="submit"
-          onClick={handlePostComment}
-        >
-          입력
-        </Button>
+        <form>
+          <input
+            type="text"
+            value={content}
+            placeholder="댓글 입력하기"
+            onChange={handleCommentInput}
+          />
+          <Button
+            size="sm"
+            variant={content && "primary"}
+            disabled={!content}
+            type="submit"
+            onClick={handlePostComment}
+          >
+            입력
+          </Button>
+        </form>
       </CommentInput>
     </section>
   );

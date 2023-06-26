@@ -58,12 +58,19 @@ const CommentInput = styled.article`
   justify-content: space-between;
   align-items: center;
 
-  input {
+  form {
     flex-grow: 1;
-  }
+    display: flex;
+    gap: 8px;
 
-  button {
-    flex-shrink: 0;
+    input {
+      flex-grow: 1;
+      width: 100%;
+    }
+
+    button {
+      flex-shrink: 0;
+    }
   }
 `;
 
