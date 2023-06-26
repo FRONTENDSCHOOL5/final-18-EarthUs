@@ -41,6 +41,7 @@ const Users = styled.article`
 const UserHeader = styled(Link)`
   display: flex;
   gap: 8px;
+  align-items: center;
   flex-grow: 1;
   overflow: hidden;
   ${({ disabled }) => {
