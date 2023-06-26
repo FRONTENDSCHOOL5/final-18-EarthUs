@@ -44,6 +44,7 @@ export default function UserInfo({
 
   const currentUser = account.trim().toLowerCase() === myName;
   const lastSegment = pathname.split("/").pop();
+  const SEARCH = pathname.includes("search");
   const followSegment =
     (more && lastSegment === "follower") || lastSegment === "following";
 
@@ -192,7 +193,7 @@ export default function UserInfo({
   // Link 랜더링 조건부 출력
   function renderLinkContent() {
     // Search 페이지 하이라이트 관련
-    if (pathname === "/search") {
+    if (SEARCH) {
       const regex = new RegExp(searchKeyword, "gi");
       const userNameWithHighlight = userName.replace(
         regex,
@@ -239,7 +240,7 @@ export default function UserInfo({
 
       {currentUser ? null : children}
 
-      {!followSegment ? (
+      {!followSegment && !SEARCH ? (
         // 기존 피드 게시물에서 수정/삭제/신고 모달
         <button
           type="button"
@@ -247,7 +248,7 @@ export default function UserInfo({
         >
           <img src={iconDots} alt="More" />
         </button>
-      ) : !currentUser ? (
+      ) : !currentUser && !SEARCH ? (
         // 팔로우페이지에서 알림설정 모달
         <button
           type="button"
