@@ -78,13 +78,13 @@ export default function ChatRoom() {
         <A11yHidden>채팅방</A11yHidden>
         <section className="bringBubble">
           <ChatBubble
-            profileImg=""
-            bringMessage="옷을 인생을 그러므로 없으면 것은 이상은 것은 우리의 위하여, 뿐이다. 이상의 청춘의 뼈 따뜻한 그들의 그와 약동하다. 대고, 못할 넣는 풍부하게 뛰노는 인생의 힘있다."
+            profileImg="https://api.mandarin.weniv.co.kr/1687740917238.jpg"
+            bringMessage="안녕하세요. 제로웨이스트 라이프스타일 브랜드 디어얼스입니다."
             isReceived
           />
           <ChatBubble
-            profileImg=""
-            bringMessage="원하는 물건 있으신가용?"
+            profileImg="https://api.mandarin.weniv.co.kr/1687740917238.jpg"
+            bringMessage="문의 남겨주셔서 메세지 드려요! 원하는 물건이 있으실까요? :)"
             isReceived
           />
         </section>

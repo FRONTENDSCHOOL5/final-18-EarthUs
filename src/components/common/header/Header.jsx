@@ -173,7 +173,7 @@ export default function Header() {
         {/* 채팅방 */}
         {pathname === "/chat/room" && (
           <>
-            <h2>상대방 이름</h2>
+            <h2>디어얼스</h2>
             <button type="button" onClick={e => setChatRoom(e)}>
               <img src={IconDots} alt="설정" />
             </button>
