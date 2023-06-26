@@ -76,6 +76,10 @@ const PostImageField = React.memo(function PostImageField({
       alert("이미지 파일만 업로드 가능합니다.");
       return;
     }
+
+    // 이미지 파일 입력값 재설정
+    e.target.value = null;
+
     uploadPostImage.mutate(imageFiles);
   };
 
