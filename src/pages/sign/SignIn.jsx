@@ -102,6 +102,7 @@ export default function SignIn() {
   return (
     <section>
       <H2>로그인</H2>
+      <SignUpLink to={SIGN_UP}>처음 오셨다면 간편 회원가입 하세요!</SignUpLink>
       <form onSubmit={handleSignIn}>
         <Input
           type="text"
@@ -138,7 +139,6 @@ export default function SignIn() {
           로그인
         </Button>
       </form>
-      <SignUpLink to={SIGN_UP}>처음 오셨다면 간편 회원가입 하세요!</SignUpLink>
     </section>
   );
 }
