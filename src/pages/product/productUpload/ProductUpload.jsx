@@ -48,12 +48,12 @@ export default function ProductUpload() {
   const [priceError, setPriceError] = useState("");
   const [linkError, setLinkError] = useState("");
 
-  // * 게시물 유효성 검사
+  // * 상품 등록 유효성 검사
   const validationFields = e => {
     const currentValue = e.target.value;
     const itemNameRegExp =
-      /^[가-힣a-zA-Z0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]+$/;
-    const spclCharRegExp = /^[가-힣a-zA-Z0-9~.,_%+\(\)]+$/;
+      /^[\s가-힣a-zA-Z0-9\{\}\[\]\/?.,;:|\)*~`!^\-_+<>@\#$%&\\\=\(\'\"]+$/s;
+    const spclCharRegExp = /^[\s가-힣a-zA-Z0-9~.,_%+\(\)\[\]]+$/;
     const linkRegExp =
       /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)?$/;
 
@@ -64,10 +64,10 @@ export default function ProductUpload() {
           setItemNameError("상품명을 작성해주세요.");
           setDisabledBtn(true);
         } else if (!itemNameRegExp.test(currentValue)) {
-          setItemNameError("자음 또는 모음, 공백으로 설정이 불가합니다.");
+          setItemNameError("자음 또는 모음으로 설정이 불가합니다.");
           setDisabledBtn(true);
         } else if (!spclCharRegExp.test(currentValue)) {
-          setItemNameError("특수문자는 .,~_%+()만 사용 가능합니다.");
+          setItemNameError("특수문자는 .,~_%+()[]만 사용 가능합니다.");
           setDisabledBtn(true);
         } else if (currentValue.length < 2) {
           setItemNameError("2글자 이상 작성해주세요.");
@@ -244,7 +244,7 @@ export default function ProductUpload() {
         onChange={validationFields}
         label="상품명"
         placeholder="2~15자 이내여야 합니다."
-        maxLength={10}
+        maxLength={15}
         minLength={2}
         required
       />
