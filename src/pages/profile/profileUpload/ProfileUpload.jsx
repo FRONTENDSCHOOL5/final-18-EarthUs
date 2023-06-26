@@ -31,8 +31,8 @@ export default function ProfileFormField({
     /^[a-zA-Z0-9._]{6,}$/,
   );
   const userNameObj = useValidations(
-    "자음 또는 모음으로 이름 설정이 불가합니다.",
-    /^[가-힣a-zA-Z\s]*$/,
+    "자음 또는 모음, 특수문자를 사용할 수 없습니다.",
+    /^[가-힣a-zA-Z\d\s]*$/,
   );
   const accountNameObj = useValidations(
     "영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.",
