@@ -12,7 +12,6 @@ export const StyledField = styled.div`
 `;
 
 export const StyledLabel = styled.label`
-  font-family: "LINE Seed KR";
   font-size: var(--font-size-xs);
   font-weight: 700;
   color: var(--color-gray-76);
@@ -28,7 +27,6 @@ export const StyledInput = styled.input`
 
   &::placeholder {
     color: var(--color-dark);
-    font-family: "LINE Seed KR";
     font-size: var(--font-size-md);
   }
 

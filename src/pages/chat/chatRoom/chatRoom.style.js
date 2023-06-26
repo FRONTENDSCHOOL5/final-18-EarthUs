@@ -1,5 +1,4 @@
-import { createGlobalStyle, css } from "styled-components";
-import styled from "styled-components";
+import styled, { createGlobalStyle, css } from "styled-components";
 
 export const GlobalStyle = createGlobalStyle`
   ${props =>
@@ -32,7 +31,6 @@ export const TextInput = styled.input`
 
   &::placeholder {
     color: var(--color-dark);
-    font-family: "LINE Seed KR";
     font-size: var(--font-size-xs);
   }
 `;
