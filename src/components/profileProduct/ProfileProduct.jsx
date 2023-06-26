@@ -20,7 +20,7 @@ export default function ProfileProduct() {
 
   return (
     <ProfileProductList>
-      {data && data.product.length > 1 ? (
+      {data && data.product.length !== 0 ? (
         <>
           <header>
             <h2>판매 중인 상품</h2>
