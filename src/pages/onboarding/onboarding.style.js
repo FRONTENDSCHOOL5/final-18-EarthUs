@@ -95,6 +95,7 @@ const H2 = styled.h2`
   font-size: var(--font-size-title);
   color: var(--color-black);
   animation: ${floatAnimation} 1s ease-in-out;
+  margin: 0 0 1rem;
 `;
 
 const P = styled.p`
