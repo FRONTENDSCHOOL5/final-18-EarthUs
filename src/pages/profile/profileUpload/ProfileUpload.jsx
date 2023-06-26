@@ -32,7 +32,7 @@ export default function ProfileFormField({
   );
   const userNameObj = useValidations(
     "자음 또는 모음으로 이름 설정이 불가합니다.",
-    /^[가-힣a-zA-Zs]*$/,
+    /^[가-힣a-zA-Z\s]*$/,
   );
   const accountNameObj = useValidations(
     "영문, 숫자, 밑줄 및 마침표만 사용할 수 있습니다.",
