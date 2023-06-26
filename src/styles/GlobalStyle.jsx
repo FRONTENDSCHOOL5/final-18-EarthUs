@@ -60,6 +60,7 @@ const GlobalStyle = createGlobalStyle`
     background-color: var(--color-bg);
     font-family: "LINESeedKR", sans-serif;
     font-weight: 400;
+    overflow-y: scroll;
     #root {
       background-color: #fff;
       min-height: 100vh;
