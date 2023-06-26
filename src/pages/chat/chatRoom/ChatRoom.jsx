@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
 
-import Camera from "../../../assets/images/camera.svg";
+// import Camera from "../../../assets/images/camera.svg";
 import ChatBubble from "../../../components/chatBubble/ChatBubble";
 import A11yHidden from "../../../components/common/a11yHidden/A11yHidden";
 import Button from "../../../components/common/button/Button";
@@ -12,8 +12,6 @@ import {
   ImgSection,
   ImgInput,
   Label,
-  ImgAddBtn,
-  ImgBtn,
   MessageSection,
   TextInput,
 } from "./chatRoom.style";
@@ -101,16 +99,26 @@ export default function ChatRoom() {
         </section>
         <MessageSection>
           <ImgSection>
-            <Label htmlFor="image" aria-label="이미지 업로드하기" />
+            <Label
+              htmlFor="image"
+              aria-label="이미지 업로드하기"
+              role="button"
+              tabIndex={0}
+              onKeyDown={e => {
+                if (e.key === "" || e.key === "Enter") {
+                  e.preventDefault();
+                  e.target.click();
+                }
+              }}
+            />
             <ImgInput
               type="file"
               id="image"
               accept="image/*"
+              tabIndex={-1}
               onChange={handleImgUpload}
             />
-            <ImgAddBtn type="submit">
-              <ImgBtn src={Camera} className="cameraIcon" alt="" />
-            </ImgAddBtn>
+            {/* <ImgAddBtn type="submit" /> */}
           </ImgSection>
           <TextInput
             type="text"
