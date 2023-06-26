@@ -14,6 +14,25 @@ const Users = styled.article`
       margin-bottom: 24px;
     `}
 
+  mark::before,
+  mark::after {
+    clip-path: inset(100%);
+    clip: rect(1px, 1px, 1px, 1px);
+    height: 1px;
+    overflow: hidden;
+    position: absolute;
+    white-space: nowrap;
+    width: 1px;
+  }
+
+  mark::before {
+    content: " [강조 시작] ";
+  }
+
+  mark::after {
+    content: " [강조 끝] ";
+  }
+
   .highlight {
     background-color: transparent;
     color: var(--color-primary);
