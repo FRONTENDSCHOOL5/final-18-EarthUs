@@ -15,6 +15,7 @@ export default function Input({
   onChange,
   error,
   children,
+  noMargin,
   ...props
 }) {
   const handleChange = e => {
@@ -24,7 +25,7 @@ export default function Input({
   const fieldClass = error ? "error" : "";
 
   return (
-    <StyledField>
+    <StyledField noMargin={noMargin}>
       <StyledLabel htmlFor={id}>
         {label}
         {children}
