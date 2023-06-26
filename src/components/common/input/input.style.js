@@ -1,9 +1,14 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 export const StyledField = styled.div`
   width: 100%;
-  min-height: 8rem;
   position: relative;
+  min-height: 8rem;
+  ${({ noMargin }) =>
+    noMargin &&
+    css`
+      min-height: auto;
+    `}
 `;
 
 export const StyledLabel = styled.label`

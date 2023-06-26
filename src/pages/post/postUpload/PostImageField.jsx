@@ -116,6 +116,7 @@ const PostImageField = React.memo(function PostImageField({
         multiple
         data={!apiImg.length ? "data" : ""}
         tabIndex={-1}
+        noMargin
       >
         <A11yHidden>이미지 등록</A11yHidden>
         {/* 이미지 등록 */}
