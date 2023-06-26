@@ -17,18 +17,17 @@ const ImgLabel = styled.div`
   width: 100%;
   aspect-ratio: 1/1;
   margin: 8px 0 40px;
+  border: 0.5px solid var(--color-light);
+  border-radius: 10px;
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
 
   ${({ data }) =>
     data &&
     css`
-      width: 100%;
       aspect-ratio: 3/2;
-      display: inline-block;
-      position: relative;
       background-color: var(--color-bg);
-      border: 0.5px solid var(--color-light);
-      border-radius: 10px;
-      overflow: hidden;
     `};
 `;
 
