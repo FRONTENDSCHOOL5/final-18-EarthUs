@@ -89,6 +89,7 @@ const StyledButton = styled.button`
   color: var(--button-color);
   padding: var(--button-padding);
   height: var(--button-height);
+  line-height: var(--button-height);
   font-size: var(--button-font-size);
   border-radius: 0.25rem;
   display: inline-flex;
