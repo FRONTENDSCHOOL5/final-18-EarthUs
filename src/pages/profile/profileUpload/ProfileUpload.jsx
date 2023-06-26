@@ -42,7 +42,7 @@ export default function ProfileFormField({
 
   // 유효성 검사 실행
   const step1Inputs = [emailObj, passwordObj];
-  const step2Inputs = [userNameObj, accountNameObj, introObj];
+  const step2Inputs = [userNameObj, accountNameObj];
 
   const validationFields = stepInputs => {
     let valid = true;
@@ -61,7 +61,7 @@ export default function ProfileFormField({
     } else if (step === 2) {
       validationFields(step2Inputs);
     }
-  }, [step, emailObj, passwordObj, userNameObj, accountNameObj, introObj]);
+  }, [step, emailObj, passwordObj, userNameObj, accountNameObj]);
 
   // * 회원가입 API 호출
   const uploadProfileMutation = useApiMutation(

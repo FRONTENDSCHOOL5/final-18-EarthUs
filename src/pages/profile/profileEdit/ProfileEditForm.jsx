@@ -33,7 +33,7 @@ export default function ProfileFormField({
   const introObj = useValidations({});
 
   // 유효성 검사 실행
-  const inputs = [userNameObj, accountNameObj, introObj];
+  const inputs = [userNameObj, accountNameObj];
   const validationFields = () => {
     let valid = true;
     inputs.forEach(input => {
