@@ -82,6 +82,7 @@ export default function ProfileFormField({
           "프로필 수정 요청에 실패했습니다.",
           error.response.data.message,
         );
+        accountNameObj.setError(error.response.data.message);
       },
     },
   );
