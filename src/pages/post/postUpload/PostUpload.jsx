@@ -139,6 +139,7 @@ export default function PostUpload({ profileImage, setProfileImage }) {
           value={contentObj.value}
           error={contentObj.error}
           onChange={contentObj.onChange}
+          maxLength={500}
           label="내용"
           placeholder="내용을 입력하세요."
           required
