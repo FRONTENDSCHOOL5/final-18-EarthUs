@@ -49,6 +49,13 @@ const Users = styled.article`
     p {
       font-size: var(--font-size-xs);
       color: var(--color-gray-76);
+      overflow: hidden;
+      white-space: normal;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      word-break: break-all;
     }
   }
 

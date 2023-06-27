@@ -32,11 +32,11 @@ const GlobalStyle = createGlobalStyle`
   /* font-size */
   --font-size-micro: clamp(10px, 1vw, 12px);
   --font-size-xs: clamp(12px, 1.5vw, 14px);
-  --font-size-sm: clamp(14px, 2vw, 17px);
-  --font-size-md: clamp(15px, 2vw, 18px);
-  --font-size-lg: clamp(16px, 2vw, 20px);
-  --font-size-xl: clamp(18px, 3vw, 22px);
-  --font-size-xxl: clamp(22px, 4vw, 26px);
+  --font-size-sm: clamp(14px, 2vw, 16px);
+  --font-size-md: clamp(15px, 2vw, 17px);
+  --font-size-lg: clamp(16px, 2vw, 18px);
+  --font-size-xl: clamp(18px, 3vw, 20px);
+  --font-size-xxl: clamp(22px, 4vw, 24px);
   --font-size-title: clamp(32px, 5vw, 36px);
 
   /* size */
@@ -88,20 +88,26 @@ const GlobalStyle = createGlobalStyle`
     padding: 0;
   }
 
-  input, button {
+  input, textarea, button {
     background-color: transparent;
+    letter-spacing: inherit;
     border: none;
     outline: none;
     font: inherit;
-    letter-spacing: inherit;
     padding: 0;
     margin: 0;
-    cursor: pointer;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    border-radius: 0;
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
   }
 
-  button {
+  a, button {
   cursor: pointer;
   font:inherit;
+  color: inherit;
   }
 
   button:focus-visible{
