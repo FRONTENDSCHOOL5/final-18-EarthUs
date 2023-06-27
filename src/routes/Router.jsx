@@ -43,6 +43,7 @@ export default function Router() {
           {/* HOME */}
           <Route path="home" element={<Feed />} />
           <Route element={<TabBar />}>
+            {/* SEARCH */}
             <Route
               path="search"
               element={
@@ -51,6 +52,7 @@ export default function Router() {
                 </Suspense>
               }
             />
+            {/* NEWSLETTER */}
             <Route path="newsletter" element={<Feed />} />
           </Route>
 
@@ -61,6 +63,7 @@ export default function Router() {
               <Route path="list" element={<ChatList />} />
             </Route>
             <Route path="room" element={<ChatRoom />} />
+            <Route path="*" element={<Error404 />} />
           </Route>
 
           {/* POST */}
@@ -68,24 +71,33 @@ export default function Router() {
             <Route path=":postId">
               <Route path="" element={<PostDetail />} />
               <Route path="edit" element={<PostUpload />} />
+              <Route path="*" element={<Error404 />} />
             </Route>
             <Route path="upload" element={<PostUpload />} />
           </Route>
 
           {/* PROFILE */}
           <Route path="profile/*" element={<Outlet />}>
-            <Route path=":account/*" element={<ProfileDetail />}>
+            <Route path=":account/*" element={<Outlet />}>
+              <Route element={<TabBar />}>
+                <Route path="" element={<ProfileDetail />} />
+                <Route path="*" element={<Error404 />} />
+              </Route>
               <Route path="follower" element={<Follow />} />
               <Route path="following" element={<Follow />} />
               <Route path="edit" element={<ProfileEdit />} />
+              <Route path="product" element={<ProductDetail />} />
+              <Route path="*" element={<Error404 />} />
             </Route>
           </Route>
 
           {/* PRODUCT */}
           <Route path="product/*" element={<Outlet />}>
-            <Route path=":account" element={<ProductDetail />} />
             <Route path="upload" element={<ProductUpload />} />
-            <Route path=":productId/edit" element={<ProductUpload />} />
+            <Route path=":productId/*" element={<Outlet />}>
+              <Route path="edit" element={<ProductUpload />} />
+              <Route path="*" element={<Error404 />} />
+            </Route>
           </Route>
         </Route>
 
