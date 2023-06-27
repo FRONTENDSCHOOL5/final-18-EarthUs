@@ -3,7 +3,6 @@ import styled from "styled-components";
 import arrow from "../../assets/images/chevron-right.svg";
 
 const ProfileProductList = styled.article`
-  padding: 0 0 2rem;
   header {
     display: flex;
     align-items: center;
