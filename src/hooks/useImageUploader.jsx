@@ -11,7 +11,6 @@ import { BASE_URL } from "../utils/config";
  * const { mutation: uploadSampleImage, image } =useImgMutationHook(apiUrl);
  */
 export default function useImageUploader(apiUrl) {
-  // eslint-disable-next-line no-unused-vars
   const [image, setImage] = useState("");
 
   const executeImageUpload = async files => {
@@ -33,22 +32,14 @@ export default function useImageUploader(apiUrl) {
       console.error("이미지 등록에 실패했습니다.", error);
     },
     onSuccess: data => {
-      console.log("이미지 등록에 성공했습니다.");
-      console.log("data:", { ...data });
+      console.log("이미지 등록에 성공했습니다.:", { ...data });
 
       // ! 이미지가 배열인지 확인 후 조건식 실행
       let filenames;
       if (Array.isArray(data)) {
         filenames = data.map(d => d.filename);
-        console.table("filenames:", filenames);
       } else {
         filenames = [data.filename];
-        console.table("filename:", data.filename);
-      }
-
-      // 이미지 주소가 없으면 종료.
-      if (!filenames.every(Boolean)) {
-        console.log("이미지 주소를 찾을 수 없습니다.");
       }
 
       // ! 이미지 주소를 BASE_URL과 조합해서 image 상태에 저장.
@@ -56,7 +47,6 @@ export default function useImageUploader(apiUrl) {
         .map(filename => `${BASE_URL}/${filename}`)
         .join(",");
       setImage(apiImg);
-      console.log("image:", apiImg);
     },
   });
 
