@@ -87,7 +87,7 @@ export default function Follow() {
           {followPage === "follower" ? "팔로워 목록" : "팔로잉 목록"}
         </A11yHidden>
       </h3>
-      {data && data.pages[0].length === 0 && (
+      {data && data.pages && data.pages[0].length === 0 && (
         <Blank btn="유저 검색하기" onClick={() => navigate(SEARCH)}>
           유저를 검색해 팔로우 해보세요!
         </Blank>
