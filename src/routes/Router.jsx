@@ -74,11 +74,7 @@ export default function Router() {
 
           {/* PROFILE */}
           <Route path="profile/*" element={<Outlet />}>
-            <Route path=":account/*" element={<Outlet />}>
-              <Route element={<TabBar />}>
-                <Route path="" element={<ProfileDetail />} />
-                <Route path=":view" element={<ProfileDetail />} />
-              </Route>
+            <Route path=":account/*" element={<ProfileDetail />}>
               <Route path="follower" element={<Follow />} />
               <Route path="following" element={<Follow />} />
               <Route path="edit" element={<ProfileEdit />} />
