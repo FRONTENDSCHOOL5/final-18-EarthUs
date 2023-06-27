@@ -19,10 +19,14 @@ export const getFollowerPath = account => `/profile/${account}/follower`;
 /**
  * @Post
  * const { postId } = useParams();
+ * const POST_DETAIL = getPostDetailPath(postId);
  * const POST_EDIT = getPostEditPath(postId);
+ * const POST_REPORT = getPostReportPath(postId);
  */
 export const POST_UPLOAD = `/post/upload`;
+export const getPostDetailPath = postId => `/post/${postId}`;
 export const getPostEditPath = postId => `/post/${postId}/edit`;
+export const getPostReportPath = postId => `/post/${postId}/report`;
 
 /**
  * @Product
@@ -31,7 +35,7 @@ export const getPostEditPath = postId => `/post/${postId}/edit`;
  * const PRODUCT_EDIT = getProductEditPath(productId);
  */
 export const PRODUCT_UPLOAD = `/product/upload`;
-export const getProductDetailPath = account => `/product/${account}`;
+export const getProductDetailPath = account => `/profile/${account}/product`;
 export const getProductEditPath = productId => `/product/${productId}/edit`;
 
 /**
