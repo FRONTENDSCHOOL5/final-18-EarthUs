@@ -1,6 +1,5 @@
-/* eslint-disable no-undef */
-/* eslint-disable no-shadow */
 /* eslint-disable prettier/prettier */
+/* eslint-disable no-shadow */
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
@@ -13,6 +12,20 @@ import modalConfigState from "../../../recoil/modalConfigAtom";
 import modalState from "../../../recoil/modalStateAtom";
 import privateDataAtom from "../../../recoil/privateDataAtom";
 import userDataAtom from "../../../recoil/userDataAtom";
+import {
+  getProductDetailPath,
+  getProfileEditPath,
+  getFollowingPath,
+  getFollowerPath,
+  getProductEditPath,
+  PRODUCT_UPLOAD,
+  CHAT_LIST,
+  CHAT_ROOM,
+  HOME,
+  SEARCH,
+  NEWS_LETTER,
+  POST_UPLOAD,
+} from "../../../utils/config";
 
 import {
   Headers,
@@ -22,11 +35,15 @@ import {
 } from "./header.style";
 
 export default function Header() {
-  const location = useLocation();
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { account, productId } = useParams();
 
+  const PRODUCT_DETAIL = getProductDetailPath(account);
+  const PROFILE_EDIT = getProfileEditPath(account);
+  const PROFILE_FOLLOWING = getFollowingPath(account);
+  const PROFILE_FOLLOWER = getFollowerPath(account);
+  const PRODUCT_EDIT = getProductEditPath(productId);
   // * 검색 이벤트
   const [searchKeyword, setSearchKeyword] = useState("");
 
@@ -66,7 +83,7 @@ export default function Header() {
           label: "취소",
           onClick: e => {
             e.stopPropagation();
-            setModalOpen(false); // close modal
+            setModalOpen(false);
           },
         },
         {
@@ -80,15 +97,15 @@ export default function Header() {
   const setProfileModal = e => {
     e.stopPropagation();
     setModalConfig({
-      type: "bottomSheet", // "confirm" or "bottomSheet"
+      type: "bottomSheet",
       buttons: [
         {
           label: "판매중인 상품 보기",
-          onClick: () => navigate(`/product/${account}`),
+          onClick: () => navigate(PRODUCT_DETAIL),
         },
         {
           label: "프로필 수정",
-          onClick: () => navigate(`/profile/${account}/edit`),
+          onClick: () => navigate(PROFILE_EDIT),
         },
         {
           label: "로그아웃",
@@ -107,7 +124,7 @@ export default function Header() {
       buttons: [
         {
           label: "채팅방 나가기",
-          onClick: () => navigate(`/chat/list`),
+          onClick: () => navigate(CHAT_LIST),
         },
       ],
     });
@@ -123,33 +140,33 @@ export default function Header() {
         </button>
 
         {/* 홈 */}
-        {pathname === "/home" && (
+        {pathname === HOME && (
           <>
             <h2>Home</h2>
-            <button type="button" onClick={() => navigate("/search")}>
+            <button type="button" onClick={() => navigate(SEARCH)}>
               <img src={IconSearch} alt="계정 검색" />
             </button>
           </>
         )}
 
         {/* 뉴스레터 */}
-        {pathname === "/newsletter" && <h2>뉴스레터</h2>}
+        {pathname === NEWS_LETTER && <h2>뉴스레터</h2>}
 
         {/* 게시물 작성 */}
-        {pathname === "/post/upload" && <h2>피드 업로드</h2>}
+        {pathname === POST_UPLOAD && <h2>피드 업로드</h2>}
 
         {/* 프로필 */}
         {/* 정규표현식으로 profile url 체크 */}
         {pathname.match(
-          new RegExp(`^/profile/${myName}(/|/column/?|/grid/?)?$`),
+          new RegExp(`^/profile/${myName}(/?)?$`),
         ) && (
-          <button type="button" onClick={e => setProfileModal(e)}>
-            <img src={IconDots} alt="설정" />
-          </button>
-        )}
+            <button type="button" onClick={e => setProfileModal(e)}>
+              <img src={IconDots} alt="설정" />
+            </button>
+          )}
 
         {/* 검색 */}
-        {pathname === "/search" && (
+        {pathname === SEARCH && (
           <SearchInputDiv>
             <SearchInput
               type="search"
@@ -163,15 +180,16 @@ export default function Header() {
         )}
 
         {/* 팔로워/팔로잉 */}
-        {pathname === `/profile/${account}/following` && <h2>Following</h2>}
-        {pathname === `/profile/${account}/follower` && <h2>Followers</h2>}
+        {pathname === PROFILE_FOLLOWING && <h2>Following</h2>}
+        {pathname === PROFILE_FOLLOWER && <h2>Followers</h2>}
 
         {/* 상품 작성 */}
-        {(pathname === "/product/upload" ||
-          pathname === `/product/${productId}/edit`) && <h2>상품 업로드</h2>}
+        {(pathname === PRODUCT_UPLOAD || pathname === PRODUCT_EDIT) && (
+          <h2>상품 업로드</h2>
+        )}
 
         {/* 채팅방 */}
-        {pathname === "/chat/room" && (
+        {pathname === CHAT_ROOM && (
           <>
             <h2>디어얼스</h2>
             <button type="button" onClick={e => setChatRoom(e)}>
