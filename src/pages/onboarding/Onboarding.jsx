@@ -6,7 +6,7 @@ import sayno from "../../assets/images/sayno.svg";
 import think from "../../assets/images/think.svg";
 import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import Button from "../../components/common/button/Button";
-import { HOME, INTRO } from "../../utils/config";
+import { INTRO } from "../../utils/config";
 
 import {
   SectionWrap,
