@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 import React, { useEffect, useState, useRef } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from "uuid";
@@ -23,16 +23,27 @@ import { CommentInput, CommentList, Line } from "./postDetail.style";
 export default function PostDetail() {
   const [userData] = useRecoilState(userDataAtom);
 
+  const navigate = useNavigate();
   const { postId } = useParams();
 
   const { data: postData } = useApiQuery(`/post/${postId}`, "get");
-  const time = postData && postData.post.createdAt.slice(0, 10).split("-");
+  const time =
+    postData &&
+    postData.post &&
+    postData.post.createdAt.slice(0, 10).split("-");
 
   const {
     data: commentData,
     hasNextPage: commentHasNextPage,
     fetchNextPage: commentFetchNextPage,
   } = useApiInfiniteQuery(`/post/${postId}/comments`, "comments");
+
+  // 404 에러 처리
+  useEffect(() => {
+    if (postData && postData.response && postData.response.status === 404) {
+      navigate("/error");
+    }
+  }, [postData, navigate]);
 
   const [content, setContent] = useState("");
 
@@ -77,6 +88,11 @@ export default function PostDetail() {
     setSend(true);
   };
 
+  // data가 없으면 null 반환
+  if (!postData || !postData.post) return null;
+  const { author, image, heartCount, commentCount, id, hearted } =
+    postData.post;
+
   return (
     <section>
       <h2>
@@ -84,16 +100,16 @@ export default function PostDetail() {
       </h2>
       {postData && (
         <Card
-          accountname={postData.post.author.accountname}
-          profileImage={postData.post.author.image}
-          username={postData.post.author.username}
-          id={postData.post.author.accountname}
-          postImage={postData.post.image}
-          heartCount={postData.post.heartCount}
-          commentCount={postData.post.commentCount}
+          accountname={author.accountname}
+          profileImage={author.image}
+          username={author.username}
+          id={author.accountname}
+          postImage={image}
+          heartCount={heartCount}
+          commentCount={commentCount}
           time={`${time[0]}년 ${time[1]}월 ${time[2]}일`}
-          postId={postData.post.id}
-          hearted={postData.post.hearted}
+          postId={id}
+          hearted={hearted}
         >
           <BreakLine content={postData.post.content} />
         </Card>

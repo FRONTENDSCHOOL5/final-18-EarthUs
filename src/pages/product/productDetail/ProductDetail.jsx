@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 // import React from "react";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
@@ -46,6 +46,20 @@ export default function ProfileProduct() {
     hasNextPage: productHasNextPage,
     fetchNextPage: productFetchNextPage,
   } = useApiInfiniteQuery(`/product/${account}`, "product");
+  console.log(productData);
+
+  // 404 에러 처리
+  useEffect(() => {
+    if (
+      productData &&
+      productData.pages &&
+      productData.pages[0] &&
+      productData.pages[0].response &&
+      productData.pages[0].response.status === 404
+    ) {
+      navigate("/error");
+    }
+  }, [productData, navigate]);
 
   // * 상품 삭제
   const deleteProductMutation = useApiMutation(
@@ -90,6 +104,8 @@ export default function ProfileProduct() {
     setModalOpen(true);
   };
 
+  if (!productData || !productData.pages) return null;
+
   return (
     <ProdDetailWrap>
       <h2>
@@ -100,57 +116,57 @@ export default function ProfileProduct() {
           hasMore={productHasNextPage}
           loadMore={() => productFetchNextPage()}
         >
-          <>
-            {productData.pages.map(page => {
+          {productData.pages &&
+            productData.pages.map(page => {
               return (
                 <React.Fragment key={uuidv4()}>
-                  {page.product.map(prod => {
-                    const { id, price, link, itemName, itemImage } = prod;
-                    const PRODUCT_EDIT = getProductEditPath(id);
-                    return (
-                      <div key={id}>
-                        <Card
-                          postImage={itemImage}
-                          content={itemName}
-                          onClick={() => {
-                            window.open(link);
-                          }}
-                          prod
-                        >
-                          <strong>
-                            {/*  Intl객체로 원화 Formatter */}
-                            {new Intl.NumberFormat("ko", {
-                              currency: "KRW",
-                            }).format(price)}
-                            원
-                          </strong>
-                        </Card>
-                        {/* 나의 프로필인지 확인하고 상품 관리버튼 노출 */}
-                        {currentUser && (
-                          <div>
-                            <Button
-                              size="sm"
-                              variant="white"
-                              onClick={() => navigate(PRODUCT_EDIT)}
-                            >
-                              수정
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="white"
-                              onClick={e => setDeleteConfirm(e, id)}
-                            >
-                              삭제
-                            </Button>
-                          </div>
-                        )}
-                      </div>
-                    );
-                  })}
+                  {page.product &&
+                    page.product.map(prod => {
+                      const { id, price, link, itemName, itemImage } = prod;
+                      const PRODUCT_EDIT = getProductEditPath(id);
+                      return (
+                        <div key={id}>
+                          <Card
+                            postImage={itemImage}
+                            content={itemName}
+                            onClick={() => {
+                              window.open(link);
+                            }}
+                            prod
+                          >
+                            <strong>
+                              {/*  Intl객체로 원화 Formatter */}
+                              {new Intl.NumberFormat("ko", {
+                                currency: "KRW",
+                              }).format(price)}
+                              원
+                            </strong>
+                          </Card>
+                          {/* 나의 프로필인지 확인하고 상품 관리버튼 노출 */}
+                          {currentUser && (
+                            <div>
+                              <Button
+                                size="sm"
+                                variant="white"
+                                onClick={() => navigate(PRODUCT_EDIT)}
+                              >
+                                수정
+                              </Button>
+                              <Button
+                                size="sm"
+                                variant="white"
+                                onClick={e => setDeleteConfirm(e, id)}
+                              >
+                                삭제
+                              </Button>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
                 </React.Fragment>
               );
             })}
-          </>
         </InfiniteScroll>
       ) : (
         <Blank btn="홈으로 바로가기">판매중인 상품이 없습니다.</Blank>
