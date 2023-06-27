@@ -86,7 +86,12 @@ export default function ChatRoom() {
             isReceived
           />
         </section>
-        <section className="sendBubble">
+        <section
+          className="sendBubble"
+          role="log"
+          aria-live="polite"
+          aria-label="Chat"
+        >
           {messages.map(message => (
             <ChatBubble
               key={message.key}
