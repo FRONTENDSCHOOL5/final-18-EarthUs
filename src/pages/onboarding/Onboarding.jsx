@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useRecoilValue } from "recoil";
 
 import light from "../../assets/images/light.svg";
 import sayno from "../../assets/images/sayno.svg";
 import think from "../../assets/images/think.svg";
 import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
 import Button from "../../components/common/button/Button";
-import userDataAtom from "../../recoil/userDataAtom";
 import { HOME, INTRO } from "../../utils/config";
 
 import {
@@ -21,15 +19,10 @@ import {
 
 export default function Onboarding() {
   const [currentPage, setCurrentPage] = useState(1);
-  const userData = useRecoilValue(userDataAtom);
   const navigate = useNavigate();
 
   const handleNavigate = () => {
-    if (userData.token) {
-      navigate(HOME);
-    } else {
-      navigate(INTRO);
-    }
+    navigate(INTRO);
   };
 
   const nextPage = () => {
