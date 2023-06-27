@@ -95,47 +95,48 @@ export default function Follow() {
       {data && (
         <InfiniteScroll hasMore={hasNextPage} loadMore={() => fetchNextPage()}>
           <Follows>
-            {data.pages.map((page, i) => {
-              return (
-                <React.Fragment key={i}>
-                  {page.map(v => {
-                    const {
-                      _id,
-                      accountname,
-                      image,
-                      username,
-                      intro,
-                      isfollow,
-                    } = v;
-                    return (
-                      <>
-                        <UserInfo
-                          key={_id}
-                          account={accountname}
-                          profileImg={image}
-                          userName={username}
-                          intro={intro}
-                          more
-                        >
-                          <Button
-                            size="sm"
-                            variant={isfollow ? "white" : "primary"}
-                            onClick={() =>
-                              isfollow
-                                ? handleUnfollow(accountname)
-                                : handleFollow(accountname)
-                            }
+            {data.pages &&
+              data.pages.map((page, i) => {
+                return (
+                  <React.Fragment key={i}>
+                    {page.map(v => {
+                      const {
+                        _id,
+                        accountname,
+                        image,
+                        username,
+                        intro,
+                        isfollow,
+                      } = v;
+                      return (
+                        <>
+                          <UserInfo
+                            key={_id}
+                            account={accountname}
+                            profileImg={image}
+                            userName={username}
+                            intro={intro}
+                            more
                           >
-                            {isfollow ? "팔로잉" : "팔로우"}
-                          </Button>
-                        </UserInfo>
-                        <TabBar />
-                      </>
-                    );
-                  })}
-                </React.Fragment>
-              );
-            })}
+                            <Button
+                              size="sm"
+                              variant={isfollow ? "white" : "primary"}
+                              onClick={() =>
+                                isfollow
+                                  ? handleUnfollow(accountname)
+                                  : handleFollow(accountname)
+                              }
+                            >
+                              {isfollow ? "팔로잉" : "팔로우"}
+                            </Button>
+                          </UserInfo>
+                          <TabBar />
+                        </>
+                      );
+                    })}
+                  </React.Fragment>
+                );
+              })}
           </Follows>
         </InfiniteScroll>
       )}
