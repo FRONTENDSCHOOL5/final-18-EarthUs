@@ -1,5 +1,5 @@
 /* eslint-disable no-console */
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -33,6 +33,12 @@ export default function ProfileHeader() {
 
   // * 커스텀 훅을 통한 API 호출으로 유저 정보 표시
   const { data } = useApiQuery(`/profile/${account}`, "get");
+  // 404 에러 처리
+  useEffect(() => {
+    if (data && data.response && data.response.status === 404) {
+      navigate("/error");
+    }
+  }, [data, navigate]);
 
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
@@ -90,7 +96,7 @@ export default function ProfileHeader() {
   };
 
   // data가 없으면 null 반환
-  if (!data) return null;
+  if (!data || !data.profile) return null;
   const {
     image,
     username,
@@ -102,86 +108,88 @@ export default function ProfileHeader() {
   } = data.profile;
 
   return (
-    <ProfileHeaderWrap>
-      <h2>
-        <A11yHidden>회원 정보</A11yHidden>
-      </h2>
-      <Avatar profileImg={image} size={64} />
-      <ul>
-        <li className="share">
-          <h3>
-            <span>@{accountname}</span>
-            {username}
-          </h3>
-          <button type="button" onClick={setShareConfirm}>
-            <A11yHidden>공유하기</A11yHidden>
-          </button>
-        </li>
-        <li className="intro">{intro}</li>
-        <li className="follow">
-          <Link to={PROFILE_FOLLOWER}>
-            팔로워
-            <strong>
-              {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
-                followerCount,
-              )}
-            </strong>
-          </Link>
-          <Link to={PROFILE_FOLLOWING}>
-            팔로잉
-            <strong>
-              {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
-                followingCount,
-              )}
-            </strong>
-          </Link>
-        </li>
-      </ul>
+    data && (
+      <ProfileHeaderWrap>
+        <h2>
+          <A11yHidden>회원 정보</A11yHidden>
+        </h2>
+        <Avatar profileImg={image} size={64} />
+        <ul>
+          <li className="share">
+            <h3>
+              <span>@{accountname}</span>
+              {username}
+            </h3>
+            <button type="button" onClick={setShareConfirm}>
+              <A11yHidden>공유하기</A11yHidden>
+            </button>
+          </li>
+          <li className="intro">{intro}</li>
+          <li className="follow">
+            <Link to={PROFILE_FOLLOWER}>
+              팔로워
+              <strong>
+                {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
+                  followerCount,
+                )}
+              </strong>
+            </Link>
+            <Link to={PROFILE_FOLLOWING}>
+              팔로잉
+              <strong>
+                {new Intl.NumberFormat("ko", { currency: "KRW" }).format(
+                  followingCount,
+                )}
+              </strong>
+            </Link>
+          </li>
+        </ul>
 
-      <ProfileButtonArea>
-        {/* account와 accountname이 동일하지 않다면 실행 () */}
-        {account.trim().toLowerCase() !== myName ? (
-          <>
-            {/* isfollow 여부에 따라 버튼 조건부 노출 */}
-            <Button
-              size="sm"
-              variant={isfollow ? "white" : "primary"}
-              onClick={() =>
-                isfollow ? getUnfollow.mutate() : getFollow.mutate()
-              }
-            >
-              {isfollow ? "언팔로우" : "팔로우"}
-            </Button>
-            <Button
-              size="sm"
-              variant="primary"
-              type="button"
-              onClick={() => navigate(CHAT_ROOM)}
-            >
-              메시지
-            </Button>
-          </>
-        ) : (
-          <>
-            <Button
-              size="sm"
-              variant="white"
-              type="button"
-              onClick={() => navigate(PROFILE_EDIT)}
-            >
-              프로필 수정
-            </Button>
-            <Button
-              size="sm"
-              variant="white"
-              type="button"
-              onClick={() => navigate(PRODUCT_UPLOAD)}
-            >
-              상품 업로드
-            </Button>
-          </>
-        )}
-      </ProfileButtonArea>
-    </ProfileHeaderWrap>
+        <ProfileButtonArea>
+          {/* account와 accountname이 동일하지 않다면 실행 () */}
+          {account.trim().toLowerCase() !== myName ? (
+            <>
+              {/* isfollow 여부에 따라 버튼 조건부 노출 */}
+              <Button
+                size="sm"
+                variant={isfollow ? "white" : "primary"}
+                onClick={() =>
+                  isfollow ? getUnfollow.mutate() : getFollow.mutate()
+                }
+              >
+                {isfollow ? "언팔로우" : "팔로우"}
+              </Button>
+              <Button
+                size="sm"
+                variant="primary"
+                type="button"
+                onClick={() => navigate(CHAT_ROOM)}
+              >
+                메시지
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                size="sm"
+                variant="white"
+                type="button"
+                onClick={() => navigate(PROFILE_EDIT)}
+              >
+                프로필 수정
+              </Button>
+              <Button
+                size="sm"
+                variant="white"
+                type="button"
+                onClick={() => navigate(PRODUCT_UPLOAD)}
+              >
+                상품 업로드
+              </Button>
+            </>
+          )}
+        </ProfileButtonArea>
+      </ProfileHeaderWrap>
+    )
   );
 }

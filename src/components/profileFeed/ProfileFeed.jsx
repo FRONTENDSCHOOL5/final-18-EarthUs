@@ -29,39 +29,42 @@ export default function ProfileFeed() {
       loadMore={() => feedFetchNextPage()}
     >
       <ProfileFeedWrap>
-        {/* {feedData && ( */}
-        {feedData && feedData.pages.some(page => page.post.length !== 0) && (
-          <>
-            <header>
-              <h2>
-                <A11yHidden>피드</A11yHidden>
-              </h2>
-              <ViewBtn to={`/profile/${account}/column`} icon={column}>
-                <A11yHidden>1열 보기</A11yHidden>
-              </ViewBtn>
-              <ViewBtn to={`/profile/${account}/grid`} icon={grid}>
-                <A11yHidden>3열 보기</A11yHidden>
-              </ViewBtn>
-            </header>
+        {feedData &&
+          feedData.pages &&
+          feedData.pages.some(page =>
+            page.post ? page.post.length !== 0 : false,
+          ) && (
+            <>
+              <header>
+                <h2>
+                  <A11yHidden>피드</A11yHidden>
+                </h2>
+                <ViewBtn to={`/profile/${account}/column`} icon={column}>
+                  <A11yHidden>1열 보기</A11yHidden>
+                </ViewBtn>
+                <ViewBtn to={`/profile/${account}/grid`} icon={grid}>
+                  <A11yHidden>3열 보기</A11yHidden>
+                </ViewBtn>
+              </header>
 
-            {/* view 값에 따라 1열 또는 3열로 표기 */}
-            <FeedView view={view}>
-              {feedData.pages.map(page => {
-                return (
-                  <React.Fragment key={uuidv4()}>
-                    {page.post.map(item =>
-                      view === "grid" ? (
-                        <GridView key={item.id} item={item} layer={layer} />
-                      ) : (
-                        <ColumnView key={item.id} item={item} />
-                      ),
-                    )}
-                  </React.Fragment>
-                );
-              })}
-            </FeedView>
-          </>
-        )}
+              {/* view 값에 따라 1열 또는 3열로 표기 */}
+              <FeedView view={view}>
+                {feedData.pages.map(page => {
+                  return (
+                    <React.Fragment key={uuidv4()}>
+                      {page.post.map(item =>
+                        view === "grid" ? (
+                          <GridView key={item.id} item={item} layer={layer} />
+                        ) : (
+                          <ColumnView key={item.id} item={item} />
+                        ),
+                      )}
+                    </React.Fragment>
+                  );
+                })}
+              </FeedView>
+            </>
+          )}
       </ProfileFeedWrap>
     </InfiniteScroll>
   );
