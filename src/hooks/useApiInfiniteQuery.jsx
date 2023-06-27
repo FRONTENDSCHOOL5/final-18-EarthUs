@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 
 import { useInfiniteQuery } from "@tanstack/react-query";
@@ -19,16 +20,23 @@ export default function useApiInfiniteQuery(apiUrl, keyName = null) {
 
   const executeInfiniteQuery = async ({ pageParam = { skip: 0 } }) => {
     const { skip } = pageParam;
-    const headers = {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    const res = await axios.get(
-      `${BASE_URL + apiUrl}?limit=${LIMIT}&skip=${skip}`,
-      { headers },
-    );
-
-    return res.data;
+    try {
+      const headers = {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      const res = await axios.get(
+        `${BASE_URL + apiUrl}?limit=${LIMIT}&skip=${skip}`,
+        { headers },
+      );
+      if (res.status === 200) {
+        console.log("요청에 성공했습니다.");
+        console.table(res.data);
+        return res.data;
+      }
+    } catch (error) {
+      return error;
+    }
   };
 
   const { data, hasNextPage, fetchNextPage, isLoading, isError } =
@@ -36,7 +44,9 @@ export default function useApiInfiniteQuery(apiUrl, keyName = null) {
       getNextPageParam: (lastPage, allPages) => {
         const resKey = keyName;
         if (
-          keyName ? lastPage[resKey].length < LIMIT : lastPage.length < LIMIT
+          keyName
+            ? lastPage[resKey] && lastPage[resKey].length < LIMIT
+            : lastPage && lastPage.length < LIMIT
         ) {
           return undefined;
         }

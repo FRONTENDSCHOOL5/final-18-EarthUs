@@ -1,3 +1,4 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -21,37 +22,35 @@ export default function useApiQuery(
   const token = privateData || "";
 
   const executeQuery = async () => {
-    const headers = {
-      "Content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    };
-    const res = await axios({
-      url: BASE_URL + apiUrl,
-      method: "",
-      headers,
-      data: body,
-      enabled: true,
-    });
-    console.log("요청에 성공했습니다.");
-    console.table(res.data);
+    try {
+      const headers = {
+        "Content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      };
+      const res = await axios({
+        url: BASE_URL + apiUrl,
+        method: "",
+        headers,
+        data: body,
+        enabled: true,
+      });
+      if (res.status === 200) {
+        console.log("요청에 성공했습니다.");
+        console.table(res.data);
 
-    return res.data;
+        return res.data;
+      }
+    } catch (error) {
+      return error;
+    }
   };
 
-  const { isLoading, error, data } = useQuery(
-    [apiUrl, method, body],
-    executeQuery,
-    {
-      // 브라우저 화면을 이탈했다가 다시 포커스할 때 refetch 방지
-      refetchOnWindowFocus: false,
-      // enabled: true면 쿼리 실행, false면 쿼리 실행 안함
-      enabled,
-    },
-  );
-  if (error) {
-    console.error("요청에 실패했습니다.");
-  }
-
+  const { isLoading, error, data } = useQuery([apiUrl], executeQuery, {
+    // 브라우저 화면을 이탈했다가 다시 포커스할 때 refetch 방지
+    refetchOnWindowFocus: false,
+    // enabled: true면 쿼리 실행, false면 쿼리 실행 안함
+    enabled,
+  });
   return { isLoading, error, data };
 }
 
