@@ -16,22 +16,26 @@ export default function TabBar() {
   const [userData] = useRecoilState(userDataAtom);
   const myName = userData && userData.accountname ? userData.accountname : "";
 
+  const scrollTop = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <>
       <Nav>
         <MenuList>
-          <TabMenu>
+          <TabMenu onClick={() => scrollTop()}>
             <Links to="/home">
               <img src={iconHome} alt="" />홈
             </Links>
           </TabMenu>
-          <TabMenu>
+          <TabMenu onClick={() => scrollTop()}>
             <Links to="/chat/list">
               <img src={iconChat} alt="" />
               채팅
             </Links>
           </TabMenu>
-          <TabMenu>
+          <TabMenu onClick={() => scrollTop()}>
             <Links to="/newsletter">
               <img src={iconNewsletter} alt="" />
               뉴스레터
@@ -43,7 +47,7 @@ export default function TabBar() {
               게시물 작성
             </Links>
           </TabMenu>
-          <TabMenu>
+          <TabMenu onClick={() => scrollTop()}>
             <Links to={`/profile/${myName}`}>
               <img src={iconUser} alt="" />
               프로필
