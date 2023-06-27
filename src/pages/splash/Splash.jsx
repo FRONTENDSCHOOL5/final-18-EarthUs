@@ -14,7 +14,7 @@ export default function Splash() {
   const userData = useRecoilValue(userDataAtom);
   const navigate = useNavigate();
 
-  userData.token
+  userData && userData.token
     ? setTimeout(() => {
         navigate(HOME);
       }, 5000)
