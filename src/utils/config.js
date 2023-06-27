@@ -50,6 +50,7 @@ export const CHAT_ROOM = `/chat/room`;
 export const ONBOARDING = `/onboarding`;
 export const INTRO = `/intro`;
 export const HOME = `/home`;
+export const NEWS_LETTER = `/newsletter`;
 export const SEARCH = `/search`;
 
 export const SIGN_IN = `/signin`;
