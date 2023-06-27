@@ -7,7 +7,6 @@ import iconEdit from "../../../assets/images/edit.svg";
 import iconHome from "../../../assets/images/home.svg";
 import iconNewsletter from "../../../assets/images/newsletter.svg";
 import iconUser from "../../../assets/images/user.svg";
-import useScrollToTop from "../../../hooks/useScrollTop";
 import userDataAtom from "../../../recoil/userDataAtom";
 
 import { Links, TabMenu, MenuList, Nav } from "./tabBar.style";
@@ -16,8 +15,6 @@ export default function TabBar() {
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
   const myName = userData && userData.accountname ? userData.accountname : "";
-
-  useScrollToTop();
 
   return (
     <>
