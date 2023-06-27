@@ -1,5 +1,4 @@
 /* eslint-disable consistent-return */
-import { NavLink } from "react-router-dom";
 import styled, { css } from "styled-components";
 
 const ProfileFeedWrap = styled.article`
@@ -24,9 +23,8 @@ const FeedView = styled.div`
   > article {
     flex: 1 0 100%;
   }
-
-  ${({ view }) =>
-    view === "grid" &&
+  ${({ currentMode }) =>
+    currentMode === "grid" &&
     css`
       gap: 1rem;
       img {
@@ -47,16 +45,18 @@ const FeedView = styled.div`
     `}
 `;
 
-const ViewBtn = styled(NavLink)`
+const ViewBtn = styled.button`
   display: inline-block;
   width: 3rem;
   height: 3rem;
   background: url(${props => props.icon}) no-repeat center/1.5rem;
   filter: invert(0.7);
 
-  &.active {
-    filter: invert(0);
-  }
+  ${({ active }) =>
+    active &&
+    css`
+      filter: invert(0);
+    `}
 `;
 
 export { ProfileFeedWrap, FeedView, ViewBtn };
