@@ -92,6 +92,7 @@ const Dialog = styled.div`
               flex: 1 0 0;
               padding: 0.75rem 0 1rem;
               font-size: var(--font-size-md);
+              color: var(--color-gray-2);
               + button {
                 border-left: 1px solid var(--color-light);
               }
@@ -123,6 +124,7 @@ const Dialog = styled.div`
               width: 100%;
               display: block;
               padding: 1rem;
+              color: var(--color-gray-2);
               :hover {
                 background: var(--color-light);
               }
