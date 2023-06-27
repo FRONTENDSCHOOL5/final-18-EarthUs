@@ -9,6 +9,7 @@ import "swiper/swiper-bundle.min.css";
 import "swiper/swiper.min.css";
 import "swiper/components/navigation/navigation.min.css";
 import "swiper/components/pagination/pagination.min.css";
+import { getProductDetailPath } from "../../utils/config";
 import A11yHidden from "../common/a11yHidden/A11yHidden";
 import Card from "../common/card/Card";
 
@@ -17,14 +18,14 @@ import ProfileProductList from "./profileProduct.style";
 export default function ProfileProduct() {
   const { account } = useParams();
   const { data } = useApiQuery(`/product/${account}?limit=4`, "get");
-
+  const PRODUCT_DETAIL = getProductDetailPath(account);
   return (
     <ProfileProductList>
       {data && data.product && data.product.length !== 0 ? (
         <>
           <header>
             <h2>판매 중인 상품</h2>
-            <Link to={`/product/${account}`}>
+            <Link to={PRODUCT_DETAIL}>
               <A11yHidden>{account}님의 판매 중인 상품 더보기</A11yHidden>
             </Link>
           </header>

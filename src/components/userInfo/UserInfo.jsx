@@ -12,7 +12,14 @@ import useApiMutation from "../../hooks/useApiMutation";
 import modalConfigState from "../../recoil/modalConfigAtom";
 import modalState from "../../recoil/modalStateAtom";
 import userDataAtom from "../../recoil/userDataAtom";
-import { getFollowingPath, getFollowerPath } from "../../utils/config";
+import {
+  getPostDetailPath,
+  getPostEditPath,
+  getPostReportPath,
+  getFollowingPath,
+  getFollowerPath,
+  getProfileDetailPath,
+} from "../../utils/config";
 import Avatar from "../common/avatar/Avatar";
 
 import { Users, UserHeader } from "./userInfo.style";
@@ -42,6 +49,13 @@ export default function UserInfo({
       ? userData.accountname.trim().toLowerCase()
       : "";
 
+  const PROFILE_DETAIL = getProfileDetailPath(account);
+  const PROFILE_FOLLOWER = getFollowerPath(accountParam);
+  const PROFILE_FOLLOWING = getFollowingPath(accountParam);
+  const POST_EDIT = getPostEditPath(postId);
+  const POST_DETAIL = getPostDetailPath(postId);
+  const POST_REPORT = getPostReportPath(postId);
+
   const currentUser = account.trim().toLowerCase() === myName;
   const lastSegment = pathname.split("/").pop();
   const SEARCH = pathname.includes("search");
@@ -57,13 +71,13 @@ export default function UserInfo({
     {
       onSuccess: () => {
         console.log("게시물이 삭제되었습니다.");
-        queryClient.invalidateQueries(`/profile/${account}`);
+        queryClient.invalidateQueries(PROFILE_DETAIL);
       },
     },
   );
 
   const handleDeleteFeed = postId => {
-    const url = `/post/${postId}`;
+    const url = POST_DETAIL;
     setDeleteFeed(url);
     deleteFeedMutation.mutate();
   };
@@ -82,7 +96,7 @@ export default function UserInfo({
   );
 
   const handleReport = postId => {
-    const url = `/post/${postId}/report`;
+    const url = POST_REPORT;
     setReports(url);
     setReportMutation.mutate();
   };
@@ -143,7 +157,7 @@ export default function UserInfo({
         },
         {
           label: "수정",
-          onClick: () => navigate(`/post/${postId}/edit`),
+          onClick: () => navigate(POST_EDIT),
         },
       ],
     });
@@ -161,14 +175,14 @@ export default function UserInfo({
           label: "해제",
           onClick: e => {
             e.stopPropagation();
-            setModalOpen(false); // close modal
+            setModalOpen(false);
           },
         },
         {
           label: "설정",
           onClick: e => {
             e.stopPropagation();
-            setModalOpen(false); // close modal
+            setModalOpen(false);
           },
         },
       ],
@@ -229,9 +243,7 @@ export default function UserInfo({
   return (
     <Users isSearch={pathname === "/search"}>
       {!currentUser ? (
-        <UserHeader to={`/profile/${account}`}>
-          {renderLinkContent()}
-        </UserHeader>
+        <UserHeader to={PROFILE_DETAIL}>{renderLinkContent()}</UserHeader>
       ) : (
         <UserHeader to="#" disabled>
           {renderLinkContent()}
