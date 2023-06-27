@@ -5,6 +5,7 @@ import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
+import { v4 as uuidv4 } from "uuid";
 
 import Blank from "../../components/blank/Blank";
 import A11yHidden from "../../components/common/a11yHidden/A11yHidden";
@@ -96,9 +97,9 @@ export default function Follow() {
         <InfiniteScroll hasMore={hasNextPage} loadMore={() => fetchNextPage()}>
           <Follows>
             {data.pages &&
-              data.pages.map((page, i) => {
+              data.pages.map(page => {
                 return (
-                  <React.Fragment key={i}>
+                  <React.Fragment key={uuidv4()}>
                     {page.map(v => {
                       const {
                         _id,
@@ -109,7 +110,7 @@ export default function Follow() {
                         isfollow,
                       } = v;
                       return (
-                        <>
+                        <React.Fragment key={uuidv4()}>
                           <UserInfo
                             key={_id}
                             account={accountname}
@@ -131,7 +132,7 @@ export default function Follow() {
                             </Button>
                           </UserInfo>
                           <TabBar />
-                        </>
+                        </React.Fragment>
                       );
                     })}
                   </React.Fragment>
