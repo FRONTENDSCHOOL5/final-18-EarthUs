@@ -23,67 +23,74 @@ import SignIn from "../pages/sign/SignIn";
 import SignUp from "../pages/sign/SignUp";
 import Splash from "../pages/splash/Splash";
 
+import InitRoute from "./InitRoute";
+import PrivateRoute from "./PrivateRoute";
+
 export default function Router() {
   return (
     <Routes>
       <Route path="/" element={<Splash />} />
-      <Route path="/intro" element={<Intro />} />
-      <Route path="/signin" element={<SignIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/onboarding" element={<Onboarding />} />
 
-      <Route path="/" element={<Header />}>
-        {/* HOME */}
-        <Route path="home" element={<Feed />} />
-        <Route element={<TabBar />}>
-          <Route
-            path="search"
-            element={
-              <Suspense fallback={null}>
-                <Search />
-              </Suspense>
-            }
-          />
-          <Route path="newsletter" element={<Feed />} />
-        </Route>
+      <Route element={<InitRoute />}>
+        <Route path="/intro" element={<Intro />} />
+        <Route path="/onboarding" element={<Onboarding />} />
+        <Route path="/signin" element={<SignIn />} />
+        <Route path="/signup" element={<SignUp />} />
+      </Route>
 
-        {/* CHAT */}
-        <Route path="chat/*" element={<Outlet />}>
+      <Route element={<PrivateRoute />}>
+        <Route path="/" element={<Header />}>
+          {/* HOME */}
+          <Route path="home" element={<Feed />} />
           <Route element={<TabBar />}>
-            <Route path="" element={<ChatList />} />
-            <Route path="list" element={<ChatList />} />
+            <Route
+              path="search"
+              element={
+                <Suspense fallback={null}>
+                  <Search />
+                </Suspense>
+              }
+            />
+            <Route path="newsletter" element={<Feed />} />
           </Route>
-          <Route path="room" element={<ChatRoom />} />
-        </Route>
 
-        {/* POST */}
-        <Route path="post/*" element={<Outlet />}>
-          <Route path=":postId">
-            <Route path="" element={<PostDetail />} />
-            <Route path="edit" element={<PostUpload />} />
-          </Route>
-          <Route path="upload" element={<PostUpload />} />
-        </Route>
-
-        {/* PROFILE */}
-        <Route path="profile/*" element={<Outlet />}>
-          <Route path="" element={<SignIn />} />
-          <Route path=":account/*" element={<Outlet />}>
+          {/* CHAT */}
+          <Route path="chat/*" element={<Outlet />}>
             <Route element={<TabBar />}>
-              <Route path="" element={<ProfileDetail />} />
-              <Route path=":view" element={<ProfileDetail />} />
+              <Route path="" element={<ChatList />} />
+              <Route path="list" element={<ChatList />} />
             </Route>
-            <Route path="follower" element={<Follow />} />
-            <Route path="following" element={<Follow />} />
-            <Route path="edit" element={<ProfileEdit />} />
+            <Route path="room" element={<ChatRoom />} />
           </Route>
-        </Route>
 
-        {/* PRODUCT */}
-        <Route path="product/*" element={<Outlet />}>
-          <Route path=":account" element={<ProductDetail />} />
-          <Route path="upload" element={<ProductUpload />} />
-          <Route path=":productId/edit" element={<ProductUpload />} />
+          {/* POST */}
+          <Route path="post/*" element={<Outlet />}>
+            <Route path=":postId">
+              <Route path="" element={<PostDetail />} />
+              <Route path="edit" element={<PostUpload />} />
+            </Route>
+            <Route path="upload" element={<PostUpload />} />
+          </Route>
+
+          {/* PROFILE */}
+          <Route path="profile/*" element={<Outlet />}>
+            <Route path=":account/*" element={<Outlet />}>
+              <Route element={<TabBar />}>
+                <Route path="" element={<ProfileDetail />} />
+                <Route path=":view" element={<ProfileDetail />} />
+              </Route>
+              <Route path="follower" element={<Follow />} />
+              <Route path="following" element={<Follow />} />
+              <Route path="edit" element={<ProfileEdit />} />
+            </Route>
+          </Route>
+
+          {/* PRODUCT */}
+          <Route path="product/*" element={<Outlet />}>
+            <Route path=":account" element={<ProductDetail />} />
+            <Route path="upload" element={<ProductUpload />} />
+            <Route path=":productId/edit" element={<ProductUpload />} />
+          </Route>
         </Route>
 
         <Route path="*" element={<Error404 />} />
