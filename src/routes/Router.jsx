@@ -81,7 +81,6 @@ export default function Router() {
             <Route path=":account/*" element={<Outlet />}>
               <Route element={<TabBar />}>
                 <Route path="" element={<ProfileDetail />} />
-                <Route path="*" element={<Error404 />} />
               </Route>
               <Route path="follower" element={<Follow />} />
               <Route path="following" element={<Follow />} />
