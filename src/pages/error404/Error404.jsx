@@ -11,7 +11,7 @@ export default function Error404() {
 
   return (
     <Blank
-      btn={token ? "메인 페이지로 이동" : "로그인으로 이동"}
+      btn={token ? "홈으로 이동하기" : "로그인으로 이동하기"}
       onClick={() => (token ? navigate("/") : navigate(SIGN_IN))}
     >
       {token
