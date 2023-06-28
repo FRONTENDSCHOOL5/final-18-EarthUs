@@ -439,7 +439,7 @@ earth_us
 # 7. 트러블 슈팅
 
 - [은지] [검색 기능 최적화를 위한 debouncing 적용](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#2%EF%B8%8F%E2%83%A3-%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94%EB%A5%BC-%EC%9C%84%ED%95%9C-debouncing-%EC%A0%81%EC%9A%A9)
-- [지수] [무한스크롤 구현](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#useapiinfinitequery)
+- [지수] [useInfiniteQuery의 queryFn 파라미터 사용](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#useapiinfinitequery)
 - [신애] [ReactQuery를 활용한 ServerState 제어](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#1%EF%B8%8F%E2%83%A3-reactquery%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-serverstate-%EC%A0%9C%EC%96%B4)
 
 <br>
