@@ -26,6 +26,7 @@ export default function PostUpload({ profileImage, setProfileImage }) {
 
   const [editImageData, setEditImageData] = useState("");
   const [disabledBtn, setDisabledBtn] = useState(pathname === POST_UPLOAD);
+  const [apiImg, setApiImg] = useState([]);
 
   // * 게시물 유효성 검사
   // 유효성 검사 객체 생성
@@ -64,6 +65,14 @@ export default function PostUpload({ profileImage, setProfileImage }) {
     if (data) {
       contentObj.validate(data.post.content);
       pathname === POST_EDIT && setEditImageData(data.post.image);
+      if (pathname === POST_EDIT) {
+        setEditImageData(data.post.image);
+        if (data.post.image) {
+          setApiImg(data.post.image.split(","));
+        } else {
+          setApiImg("");
+        }
+      }
     }
   }, [data]);
 
@@ -81,6 +90,7 @@ export default function PostUpload({ profileImage, setProfileImage }) {
       onSuccess: ({ post }) => {
         console.log("게시물 수정이 완료되었습니다.");
         navigate(`/profile/${post.author.accountname}`);
+        post.refetch();
       },
       onerror: error => {
         console.warn(
@@ -131,6 +141,8 @@ export default function PostUpload({ profileImage, setProfileImage }) {
         POST_EDIT={POST_EDIT}
         editImageData={editImageData}
         setEditImageData={setEditImageData}
+        apiImg={apiImg}
+        setApiImg={setApiImg}
       />
       <form onSubmit={handleUploadPost}>
         <TextArea
