@@ -27,7 +27,7 @@ export default function ProfileFormField({
     /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
   );
   const passwordObj = useValidations(
-    "영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.",
+    "비밀번호를 6자리 이상 입력해주세요.",
     /^[a-zA-Z0-9._]{6,}$/,
   );
   const userNameObj = useValidations(
