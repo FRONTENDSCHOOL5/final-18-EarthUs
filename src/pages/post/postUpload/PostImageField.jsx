@@ -2,7 +2,8 @@
 /* eslint-disable no-console */
 /* eslint-disable no-alert */
 import React, { useState, useEffect } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import { v4 as uuidv4 } from "uuid";
 
 import A11yHidden from "../../../components/common/a11yHidden/A11yHidden";
@@ -16,27 +17,11 @@ import { InputPrevWrap, ImgLabel, ImgUploadButton } from "./postUpload.style";
 const PostImageField = React.memo(function PostImageField({
   editImageData,
   setEditImageData,
-  POST_EDIT,
+  apiImg,
+  setApiImg,
 }) {
   const { pathname } = useLocation();
-  const { postId } = useParams();
-
-  const [apiImg, setApiImg] = useState([]);
-
-  // * 게시물 수정 페이지일 경우, 기존 유저 정보 불러오기
-  const { data: apiData } = useApiQuery(
-    `/post/${postId}`,
-    "get",
-    {},
-    pathname === POST_EDIT,
-  );
-  useEffect(() => {
-    if (apiData) {
-      if (apiData && apiData.post && apiData.post.image) {
-        setApiImg(apiData.post.image.split(","));
-      }
-    }
-  }, [apiData]);
+  const queryClient = useQueryClient();
 
   // * 이미지 업로드 Hook 호출
   const { mutation: uploadPostImage, image } =
@@ -92,10 +77,11 @@ const PostImageField = React.memo(function PostImageField({
   }, [image, pathname]);
 
   // * 이미지 삭제
+
   const handleDelete = selectImgFile => {
-    setApiImg(apiImg.filter(img => img !== selectImgFile));
-    setEditImageData(image);
-    console.log(editImageData);
+    const updatedApiImg = apiImg.filter(img => img !== selectImgFile);
+    setApiImg(updatedApiImg);
+    setEditImageData(updatedApiImg.join(","));
   };
 
   return (
