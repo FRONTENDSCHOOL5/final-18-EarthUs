@@ -114,7 +114,7 @@
 ### 3-2. 협업 방식 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%A4%9D-%ED%98%91%EC%97%85-%ED%99%98%EA%B2%BD#2%EF%B8%8F%E2%83%A3-%ED%98%91%EC%97%85-%EB%B0%A9%EC%8B%9D)
 - 매일 아침 9시 데일리 스크럼 진행
 - Git Flow 브랜치 전략 사용
-- 디스코드 웹훅을 사용해서 Gitgub 활동 알림
+- 디스코드 웹훅을 사용해서 github 활동 알림
 - 피그마 디자인 시스템 사용 [(자세히 보기)](https://www.figma.com/file/NoUy639Gyvmg4VlEDZo5Eh/%F0%9F%8C%8E-EarthUs?type=design&node-id=75643%3A2114&mode=design&t=rPWxx0vlBcwpuYbp-1)
 
 <br>
@@ -325,7 +325,7 @@ earth_us
 | :------: | :------: | :------: |
 | ![심은지](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb397f5fc-d3a4-496a-a865-67315dd5876a%2FUntitled.png?table=block&id=e229c596-d4c0-4e67-81e8-92066b0fe613&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2) | ![윤지수](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd394a23e-1e06-4b77-9448-1d0204edaad4%2FUntitled.png?table=block&id=cd353067-f0e4-4d90-b27b-c1392a20d448&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2) | ![정신애](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd73a3cff-97fa-4298-b187-849c09766a5f%2FUntitled.png?table=block&id=148f1e9f-7206-4b75-a53d-b639b0edace5&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2) |
 |Team Leader <br> Semantic Markup Leader|Documentation Leader <br> Web Accessibility Leader|Design Leader <br> Optimization Leader|
-|[깃허브](https://github.com/planted-ji) \| [Blog](https://velog.io/@simej1214)|[깃허브](https://github.com/yoonmallang22) \| [Blog](https://velog.io/@yoonmallang)|[깃허브](https://github.com/JAYCODE-git) \| [Blog](https://jaycode.tistory.com/)|
+|[github](https://github.com/planted-ji) \| [Blog](https://velog.io/@simej1214)|[github](https://github.com/yoonmallang22) \| [Blog](https://velog.io/@yoonmallang)|[github](https://github.com/JAYCODE-git) \| [Blog](https://jaycode.tistory.com/)|
 
 <br>
 <br>
