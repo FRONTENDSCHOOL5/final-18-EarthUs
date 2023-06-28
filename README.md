@@ -395,7 +395,7 @@ earth_us
 
 # 6. 핵심 기술
 
-### 6-1. 상태관리 라이브러리 도입 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5#1%EF%B8%8F%E2%83%A3-%EC%83%81%ED%83%9C%EA%B4%80%EB%A6%AC-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC-%EB%8F%84%EC%9E%85)
+### 6-1. 상태관리 라이브러리 도입 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EC%88%A0#4%EF%B8%8F%E2%83%A3-%EC%9B%B9-%EC%A0%91%EA%B7%BC%EC%84%B1)
 
 - 상태 관리를 하나의 라이브러리로만 진행하는 것이 아니라 각각의 라이브러리의 장점을 살려
   Client State를 관리하는 `Recoil`과 ServerState를 관리하는 `ReactQuery`를 조합하는 전략을 시행.
@@ -403,7 +403,7 @@ earth_us
 <br>
 <br>
 
-### 6-2. API 호출을 위한 커스텀 훅 제작 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5#2%EF%B8%8F%E2%83%A3-api-%ED%98%B8%EC%B6%9C%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%BB%A4%EC%8A%A4%ED%85%80-%ED%9B%85-%EC%A0%9C%EC%9E%91)
+### 6-2. API 호출을 위한 커스텀 훅 제작 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EC%88%A0#2%EF%B8%8F%E2%83%A3-api-%ED%98%B8%EC%B6%9C%EC%9D%84-%EC%9C%84%ED%95%9C-%EC%BB%A4%EC%8A%A4%ED%85%80-%ED%9B%85-%EC%A0%9C%EC%9E%91)
 
 - 사용자에게 데이터를 보여주는 `get` 메서드를 실행하는 경우 `useQuery` 기능을 실행.
 - 사용자가 입력한 값을 전송하는 `Post` `Put` 메서드를 실행하는 경우 `useMutation` 기능을 실행.
@@ -413,18 +413,17 @@ earth_us
 <br>
 <br>
 
-### 6-3. 시맨틱 마크업 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5#3%EF%B8%8F%E2%83%A3-%EC%8B%9C%EB%A7%A8%ED%8B%B1-%EB%A7%88%ED%81%AC%EC%97%85)
+### 6-3. 시맨틱 마크업 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EC%88%A0#3%EF%B8%8F%E2%83%A3-%EC%8B%9C%EB%A7%A8%ED%8B%B1-%EB%A7%88%ED%81%AC%EC%97%85)
 
 - 검색 API를 통한 기능 구현에서 일치하는 검색어를 표현할 때 사용자의 현재 활동과 연관이 있는 부분에 주의를 끌기 위해 사용하는 `<mark>`로 하이라이트 표현.
 
 <br>
 <br>
 
-### 6-4. 웹 접근성 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EB%8A%A5#4%EF%B8%8F%E2%83%A3-%EC%9B%B9-%EC%A0%91%EA%B7%BC%EC%84%B1)
+### 6-4. 웹 접근성 [(자세히 보기)](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%94%A5-%ED%95%B5%EC%8B%AC-%EA%B8%B0%EC%88%A0#4%EF%B8%8F%E2%83%A3-%EC%9B%B9-%EC%A0%91%EA%B7%BC%EC%84%B1)
 
-- 인풋 탭으로 넘어가는거
-- 이미지 슬라이드
-- 모달
+- swiper slide 탭으로 페이지 전환 가능.
+- 모달이 열렸을 때 모달 안에서 포커스 잃지 않고 이동.
 - 일치하는 검색어에 적용되는 하이라이트 기능을 청각적인 강조로 추가 구현.
 - 실시간으로 업데이트 되는 채팅 메세지를 인식해 스크린 리더로 읽어주는 기능 구현.
 
@@ -439,9 +438,9 @@ earth_us
 
 # 7. 트러블 슈팅
 
-- [은지] [api 호출 최적화를 위한 debouncing 적용](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#3-%EB%94%94%EB%B0%94%EC%9A%B4%EC%8B%B1)
-- [지수] [무한스크롤 구현](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#2-useinfiniteapiquery-%EC%BB%A4%EC%8A%A4%ED%85%80-%ED%9B%85-%EC%A0%9C%EC%9E%91)
-- [신애] [ReactQuery를 활용한 ServerState 제어](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#1-reactquery%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-serverstate-%EC%A0%9C%EC%96%B4)
+- [은지] [검색 기능 최적화를 위한 debouncing 적용](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#2%EF%B8%8F%E2%83%A3-%EA%B2%80%EC%83%89-%EA%B8%B0%EB%8A%A5-%EC%B5%9C%EC%A0%81%ED%99%94%EB%A5%BC-%EC%9C%84%ED%95%9C-debouncing-%EC%A0%81%EC%9A%A9)
+- [지수] [무한스크롤 구현](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#2%EF%B8%8F%E2%83%A3-%EB%AC%B4%ED%95%9C%EC%8A%A4%ED%81%AC%EB%A1%A4-%EA%B5%AC%ED%98%84)
+- [신애] [ReactQuery를 활용한 ServerState 제어](https://github.com/FRONTENDSCHOOL5/final-18-EarthUs/wiki/%F0%9F%92%A5-%ED%8A%B8%EB%9F%AC%EB%B8%94-%EC%8A%88%ED%8C%85#1%EF%B8%8F%E2%83%A3-reactquery%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-serverstate-%EC%A0%9C%EC%96%B4)
 
 <br>
 <br>
