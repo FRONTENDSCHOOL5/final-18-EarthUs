@@ -36,6 +36,7 @@ export default function ProductUpload() {
 
   // 버튼 활성화 상태 관리
   const [disabledBtn, setDisabledBtn] = useState(pathname === PRODUCT_UPLOAD);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   // 인풋필드 상태 저장
   const [itemImage, setItemImage] = useState(NO_IMAGE);
@@ -166,6 +167,7 @@ export default function ProductUpload() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다");
+        setIsSubmit(false);
         navigate(PROFILE_DETAIL);
       },
     },
@@ -201,14 +203,24 @@ export default function ProductUpload() {
     {
       onSuccess: () => {
         console.log("요청에 성공했습니다");
+        setIsSubmit(false);
         navigate(-1);
       },
     },
   );
 
   const handleSubmit = e => {
+    // 기본 이벤트 제거
     e.preventDefault();
+    e.stopPropagation();
 
+    // 중복 클릭 방지
+    if (isSubmit) {
+      return;
+    }
+    setIsSubmit(true);
+
+    // 게시물 업로드 API 호출
     if (pathname === PRODUCT_UPLOAD) {
       uploadProduct.mutate();
     } else if (pathname === PRODUCT_EDIT) {

@@ -1,3 +1,4 @@
+/* eslint-disable no-promise-executor-return */
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-console */
 /* eslint-disable no-unused-vars */
@@ -25,8 +26,9 @@ export default function PostUpload({ profileImage, setProfileImage }) {
   const POST_EDIT = getPostEditPath(postId);
 
   const [editImageData, setEditImageData] = useState("");
-  const [disabledBtn, setDisabledBtn] = useState(pathname === POST_UPLOAD);
   const [apiImg, setApiImg] = useState([]);
+  const [disabledBtn, setDisabledBtn] = useState(pathname === POST_UPLOAD);
+  const [isSubmit, setIsSubmit] = useState(false);
 
   // * 게시물 유효성 검사
   // 유효성 검사 객체 생성
@@ -88,15 +90,9 @@ export default function PostUpload({ profileImage, setProfileImage }) {
     },
     {
       onSuccess: ({ post }) => {
-        console.log("게시물 수정이 완료되었습니다.");
+        setIsSubmit(false);
         navigate(`/profile/${post.author.accountname}`);
         post.refetch();
-      },
-      onerror: error => {
-        console.warn(
-          "게시물 수정 요청에 실패했습니다.",
-          error.response.data.message,
-        );
       },
     },
   );
@@ -113,18 +109,28 @@ export default function PostUpload({ profileImage, setProfileImage }) {
     },
     {
       onSuccess: ({ post }) => {
-        console.log("게시물 등록이 완료되었습니다.");
+        setIsSubmit(false);
         navigate(`/profile/${post.author.accountname}`);
       },
     },
   );
 
   // * 게시물 업로드
-  const handleUploadPost = e => {
+  const handleUploadPost = async e => {
+    // 기본 이벤트 제거
     e.preventDefault();
-    validationFields();
+    e.stopPropagation();
 
-    console.log("clicked");
+    // 중복 클릭 방지
+    if (isSubmit) {
+      return;
+    }
+
+    // 유효성 검사
+    validationFields();
+    setIsSubmit(true);
+
+    // 게시물 업로드 API 호출
     if (pathname === POST_UPLOAD) {
       uploadPostMutation.mutate();
     } else if (pathname === POST_EDIT) {
