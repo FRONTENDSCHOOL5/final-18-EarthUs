@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import { v4 as uuidv4 } from "uuid";
 
 import iconDots from "../../assets/images/dots.svg";
 import useApiMutation from "../../hooks/useApiMutation";
@@ -218,26 +219,14 @@ export default function UserInfo({
         <>
           <Avatar profileImg={profileImg} size={40} />
           <div>
-            <strong
-              // eslint-disable-next-line react/no-danger
-              dangerouslySetInnerHTML={{ __html: userNameWithHighlight }}
-            />
+            <span dangerouslySetInnerHTML={{ __html: userNameWithHighlight }} />
             {id ? <p>@{account}</p> : ""}
           </div>
         </>
       );
     }
 
-    return (
-      <>
-        <Avatar profileImg={profileImg} size={40} />
-        <div>
-          <strong>{userName}</strong>
-          {intro ? <p>{intro}</p> : ""}
-          {id ? <p>@{account}</p> : ""}
-        </div>
-      </>
-    );
+    return null;
   }
 
   return (
