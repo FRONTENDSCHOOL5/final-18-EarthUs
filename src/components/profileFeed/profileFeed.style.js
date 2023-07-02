@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import styled, { css } from "styled-components";
 
-const ProfileFeedWrap = styled.article`
+export const ProfileFeedWrap = styled.article`
   width: 100%;
   padding: 1.5rem 0;
 
@@ -15,7 +15,7 @@ const ProfileFeedWrap = styled.article`
   }
 `;
 
-const FeedView = styled.div`
+export const FeedView = styled.div`
   gap: 2rem;
   display: flex;
   flex-wrap: wrap;
@@ -27,25 +27,49 @@ const FeedView = styled.div`
     currentMode === "grid" &&
     css`
       gap: 1rem;
-      img {
-        aspect-ratio: 1/1;
-        object-fit: cover;
-        border-radius: 0.25rem;
-      }
       a {
-        flex: 0 1 calc((100% - 2rem) / 3);
-        display: inline-block;
+        flex: 1 0 calc((100% - 2rem) / 3);
+        width: 100%;
+        height: 100%;
+        aspect-ratio: 1/1;
+        border-radius: 0.5rem;
+        background: var(--color-bg);
+        border: 1px solid var(--color-light);
+        overflow: hidden;
+        object-fit: cover;
         position: relative;
+
         span {
           position: absolute;
           right: 0.5rem;
           top: 0.5rem;
+          img {
+            border: none;
+          }
         }
       }
     `}
 `;
 
-const ViewBtn = styled.button`
+export const Img = styled.img`
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+
+  ${({ hasError }) =>
+    hasError &&
+    css`
+      width: 100px;
+      height: 90px;
+      object-fit: contain;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    `}
+`;
+
+export const ViewBtn = styled.button`
   display: inline-block;
   width: 3rem;
   height: 3rem;
@@ -58,5 +82,3 @@ const ViewBtn = styled.button`
       filter: invert(0);
     `}
 `;
-
-export { ProfileFeedWrap, FeedView, ViewBtn };
