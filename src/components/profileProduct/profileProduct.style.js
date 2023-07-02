@@ -23,8 +23,8 @@ const ProfileProductList = styled.article`
   .swiper-container {
     margin: 0 calc(var(--size-gap) * -1);
     .swiper-wrapper {
-      align-items: center;
-      p {
+      figcaption {
+        align-items: center;
         white-space: nowrap;
         text-overflow: ellipsis;
         overflow: hidden;
