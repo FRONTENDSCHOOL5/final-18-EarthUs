@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 /* eslint-disable react/jsx-props-no-spreading */
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import SwiperCore, { Pagination, A11y } from "swiper";
@@ -23,13 +23,13 @@ import UserInfo from "../../userInfo/UserInfo";
 
 import {
   Cards,
-  Content,
   Img,
-  Imgs,
+  ImgWrap,
   PostLink,
   Reaction,
   Time,
   LayerIcon,
+  FigureWrap,
 } from "./card.style";
 
 export default function Card({
@@ -59,11 +59,11 @@ export default function Card({
       : [postImage];
 
   // * 이미지가 로드되지 않았을 때 onError 이벤트 핸들러 실행
+  const [hasImageError, setHasImageError] = useState(false);
   const handleImgError = e => {
     e.target.onerror = null;
     e.target.src = Nodata;
-    e.target.style.width = "100px";
-    e.target.style.height = "90px";
+    setHasImageError(true);
   };
 
   const queryClient = useQueryClient();
@@ -119,7 +119,7 @@ export default function Card({
               {/* Feed & Product 동시 사용 영역 */}
               {multipartImages.length > 1 ? (
                 // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
-                <>
+                <FigureWrap>
                   <LayerIcon>
                     <img
                       src={layer}
@@ -130,40 +130,46 @@ export default function Card({
                     pagination={{
                       clickable: true,
                     }}
-                    className="imgWrap"
                     spaceBetween={0}
                     slidesPerView={1}
                   >
                     {multipartImages.map(img => (
                       // eslint-disable-next-line react/no-array-index-key
                       <SwiperSlide key={uuidv4()}>
-                        <Imgs
+                        <Img
                           src={img}
-                          alt="게시물 이미지"
+                          alt=""
                           onError={handleImgError}
+                          hasError={hasImageError}
                         />
                       </SwiperSlide>
                     ))}
                   </Swiper>
-                </>
+                  <figcaption>
+                    {content && <strong>{content}</strong>}
+                    {children}
+                  </figcaption>
+                </FigureWrap>
               ) : (
                 // postImage가 1개라면 기존의 figure 리턴
                 postImage && (
-                  <figure className="imgWrap">
-                    <figcaption>{content}</figcaption>
-                    <Img
-                      src={postImage}
-                      alt="게시물 이미지"
-                      onError={handleImgError}
-                    />
-                  </figure>
+                  <FigureWrap>
+                    <ImgWrap>
+                      <Img
+                        src={postImage}
+                        alt=""
+                        onError={handleImgError}
+                        hasError={hasImageError}
+                      />
+                    </ImgWrap>
+                    <figcaption>
+                      {content && <strong>{content}</strong>}
+                      {children}
+                    </figcaption>
+                  </FigureWrap>
                 )
               )}
             </>
-            <Content>
-              <span>{content}</span>
-              {children}
-            </Content>
           </PostLink>
           <Reaction>
             <div>
@@ -186,47 +192,53 @@ export default function Card({
           <Time>{time}</Time>
         </>
       ) : (
-        <>
+        <FigureWrap>
           {multipartImages.length > 1 ? (
             // 유저가 등록한 이미지가 1개 이상이라면 Swiper 리턴
-            <Swiper
-              className="imgWrap"
-              spaceBetween={0}
-              slidesPerView={1}
-              pagination={{
-                clickable: true,
-              }}
-            >
-              {multipartImages.map(img => (
-                // eslint-disable-next-line react/no-array-index-key
-                <SwiperSlide key={uuidv4()}>
-                  <Imgs
-                    src={img}
-                    alt="게시물 이미지"
-                    onError={handleImgError}
-                  />
-                </SwiperSlide>
-              ))}
-            </Swiper>
+            <>
+              <Swiper
+                spaceBetween={0}
+                slidesPerView={1}
+                pagination={{
+                  clickable: true,
+                }}
+              >
+                {multipartImages.map(img => (
+                  <SwiperSlide key={uuidv4()}>
+                    <Img
+                      src={img}
+                      alt=""
+                      onError={handleImgError}
+                      hasError={hasImageError}
+                    />
+                  </SwiperSlide>
+                ))}
+              </Swiper>
+              <figcaption>
+                {content && content}
+                {children}
+              </figcaption>
+            </>
           ) : (
             // postImage가 1개라면 기존의 figure 리턴
             postImage && (
-              <figure className="imgWrap">
-                <figcaption>{content}</figcaption>
-                <Img
-                  src={postImage}
-                  alt="게시물 이미지"
-                  onError={handleImgError}
-                />
-              </figure>
+              <>
+                <ImgWrap>
+                  <Img
+                    src={postImage}
+                    alt=""
+                    onError={handleImgError}
+                    hasError={hasImageError}
+                  />
+                </ImgWrap>
+                <figcaption>
+                  {content && content}
+                  {children}
+                </figcaption>
+              </>
             )
           )}
-
-          <Content>
-            <span>{content}</span>
-            {children}
-          </Content>
-        </>
+        </FigureWrap>
       )}
     </Cards>
   );

@@ -7,13 +7,14 @@ import { v4 as uuidv4 } from "uuid";
 
 import grid from "../../assets/images/grid-view.svg";
 import layer from "../../assets/images/layer-image.svg";
+import Nodata from "../../assets/images/no-data.svg";
 import column from "../../assets/images/spred-view.svg";
 import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
 import A11yHidden from "../common/a11yHidden/A11yHidden";
 import BreakLine from "../common/breakLine/BreakLine";
 import Card from "../common/card/Card";
 
-import { ProfileFeedWrap, ViewBtn, FeedView } from "./profileFeed.style";
+import { ProfileFeedWrap, ViewBtn, FeedView, Img } from "./profileFeed.style";
 
 export default function ProfileFeed() {
   const { account } = useParams();
@@ -86,6 +87,14 @@ export default function ProfileFeed() {
 }
 
 function GridView({ item }) {
+  // * 이미지가 로드되지 않았을 때 onError 이벤트 핸들러 실행
+  const [hasImageError, setHasImageError] = useState(false);
+  const handleImgError = e => {
+    e.target.onerror = null;
+    e.target.src = Nodata;
+    setHasImageError(true);
+  };
+
   const { id, image } = item;
   // * 등록된 이미지가 1개 이상이라면 배열로 변환
   const multipartImages =
@@ -96,7 +105,13 @@ function GridView({ item }) {
   return (
     image && (
       <Link to={`/post/${id}/`} key={id}>
-        <img key={id} src={multipartImages[0]} alt="게시물 이미지" />
+        <Img
+          key={id}
+          src={multipartImages[0]}
+          alt=""
+          onError={handleImgError}
+          hasError={hasImageError}
+        />
         {multipartImages.length > 1 && (
           <span>
             <img
