@@ -152,8 +152,8 @@ export default function Card({
                 </FigureWrap>
               ) : (
                 // postImage가 1개라면 기존의 figure 리턴
-                postImage && (
-                  <FigureWrap>
+                <FigureWrap>
+                  {postImage && (
                     <ImgWrap>
                       <Img
                         src={postImage}
@@ -162,12 +162,12 @@ export default function Card({
                         hasError={hasImageError}
                       />
                     </ImgWrap>
-                    <figcaption>
-                      {content && <strong>{content}</strong>}
-                      {children}
-                    </figcaption>
-                  </FigureWrap>
-                )
+                  )}
+                  <figcaption>
+                    {content && <strong>{content}</strong>}
+                    {children}
+                  </figcaption>
+                </FigureWrap>
               )}
             </>
           </PostLink>
@@ -221,22 +221,20 @@ export default function Card({
             </>
           ) : (
             // postImage가 1개라면 기존의 figure 리턴
-            postImage && (
-              <>
-                <ImgWrap>
-                  <Img
-                    src={postImage}
-                    alt=""
-                    onError={handleImgError}
-                    hasError={hasImageError}
-                  />
-                </ImgWrap>
-                <figcaption>
-                  {content && content}
-                  {children}
-                </figcaption>
-              </>
-            )
+            <>
+              <ImgWrap>
+                <Img
+                  src={postImage}
+                  alt=""
+                  onError={handleImgError}
+                  hasError={hasImageError}
+                />
+              </ImgWrap>
+              <figcaption>
+                {content && content}
+                {children}
+              </figcaption>
+            </>
           )}
         </FigureWrap>
       )}
