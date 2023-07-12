@@ -28,7 +28,7 @@ export const FeedView = styled.div`
     css`
       gap: 1rem;
       a {
-        flex: 1 0 calc((100% - 2rem) / 3);
+        flex: 0 1 calc((100% - 2rem) / 3);
         width: 100%;
         height: 100%;
         aspect-ratio: 1/1;
