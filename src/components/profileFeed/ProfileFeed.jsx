@@ -2,19 +2,17 @@
 /* eslint-disable no-shadow */
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroller";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
 import grid from "../../assets/images/grid-view.svg";
-import layer from "../../assets/images/layer-image.svg";
-import Nodata from "../../assets/images/no-data.svg";
 import column from "../../assets/images/spred-view.svg";
 import useApiInfiniteQuery from "../../hooks/useApiInfiniteQuery";
 import A11yHidden from "../common/a11yHidden/A11yHidden";
-import BreakLine from "../common/breakLine/BreakLine";
-import Card from "../common/card/Card";
+import ColumnView from "../View/ColumnView";
+import GridView from "../View/GridView";
 
-import { ProfileFeedWrap, ViewBtn, FeedView, Img } from "./profileFeed.style";
+import { ProfileFeedWrap, ViewBtn, FeedView } from "./profileFeed.style";
 
 export default function ProfileFeed() {
   const { account } = useParams();
@@ -70,7 +68,7 @@ export default function ProfileFeed() {
                     <React.Fragment key={uuidv4()}>
                       {page.post.map(item =>
                         currentMode === "grid" ? (
-                          <GridView key={item.id} item={item} layer={layer} />
+                          <GridView key={item.id} item={item} />
                         ) : (
                           <ColumnView key={item.id} item={item} />
                         ),
@@ -83,75 +81,5 @@ export default function ProfileFeed() {
           )}
       </ProfileFeedWrap>
     </InfiniteScroll>
-  );
-}
-
-function GridView({ item }) {
-  // * 이미지가 로드되지 않았을 때 onError 이벤트 핸들러 실행
-  const [hasImageError, setHasImageError] = useState(false);
-  const handleImgError = e => {
-    e.target.onerror = null;
-    e.target.src = Nodata;
-    setHasImageError(true);
-  };
-
-  const { id, image } = item;
-  // * 등록된 이미지가 1개 이상이라면 배열로 변환
-  const multipartImages =
-    typeof image === "string"
-      ? image.trim().replace(/\s+/g, "").split(",")
-      : [image];
-
-  return (
-    image && (
-      <Link to={`/post/${id}/`} key={id}>
-        <Img
-          key={id}
-          src={multipartImages[0]}
-          alt=""
-          onError={handleImgError}
-          hasError={hasImageError}
-        />
-        {multipartImages.length > 1 && (
-          <span>
-            <img
-              src={layer}
-              alt={`${multipartImages.length}장의 게시물 이미지`}
-            />
-          </span>
-        )}
-      </Link>
-    )
-  );
-}
-
-function ColumnView({ item }) {
-  const {
-    id,
-    image,
-    content,
-    author,
-    heartCount,
-    hearted,
-    commentCount,
-    createdAt,
-  } = item;
-  const time = createdAt.slice(0, 10).split("-");
-  return (
-    <Card
-      key={id}
-      id={id}
-      accountname={author.accountname}
-      profileImage={author.image}
-      username={author.username}
-      postImage={image}
-      heartCount={heartCount}
-      commentCount={commentCount}
-      time={`${time[0]}년 ${time[1]}월 ${time[2]}일`}
-      hearted={hearted}
-      postId={id}
-    >
-      <BreakLine content={content} />
-    </Card>
   );
 }
