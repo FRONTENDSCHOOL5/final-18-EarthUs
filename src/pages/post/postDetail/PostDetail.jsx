@@ -134,6 +134,7 @@ export default function PostDetail() {
                         comment={v.content}
                         time={v.createdAt}
                         authorId={v.author._id}
+                        accountName={v.author.accountname}
                       />
                     );
                   })}

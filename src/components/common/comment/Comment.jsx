@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 /* eslint-disable no-underscore-dangle */
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { useRecoilState, useSetRecoilState } from "recoil";
 
@@ -11,6 +11,7 @@ import useApiMutation from "../../../hooks/useApiMutation";
 import modalConfigState from "../../../recoil/modalConfigAtom";
 import modalState from "../../../recoil/modalStateAtom";
 import userDataAtom from "../../../recoil/userDataAtom";
+import { getProfileDetailPath } from "../../../utils/config";
 import Avatar from "../avatar/Avatar";
 
 import Comments from "./comment.style";
@@ -22,7 +23,11 @@ export default function Comment({
   comment,
   time,
   authorId,
+  accountName,
 }) {
+  // const navigate = useNavigate();
+  const PROFILE_DETAIL = getProfileDetailPath(accountName);
+
   // 댓글 작성 시간
   const commentTime = Math.round((new Date() - Date.parse(time)) / 1000);
 
@@ -135,9 +140,17 @@ export default function Comment({
 
   return (
     <Comments key={commentId}>
-      <Avatar profileImg={profileImg} size={40} />
+      <Link to={PROFILE_DETAIL}>
+        <Avatar
+          profileImg={profileImg}
+          size={40}
+          // onClick={() => navigate(PROFILE_DETAIL)}
+        />
+      </Link>
       <div>
-        <strong>{userName}</strong>
+        <Link to={PROFILE_DETAIL}>
+          <strong>{userName}</strong>
+        </Link>
         <span>{getTime()}</span>
         <p>{comment}</p>
       </div>
