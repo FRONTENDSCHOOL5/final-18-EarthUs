@@ -85,41 +85,13 @@ export default function Modal() {
 }
 
 // ✅ Usage
-// // 1. Recoil import 경로에 맞게 수정
-// import { useSetRecoilState } from "recoil";
-// import modalConfigState from "../../recoil/modalConfigAtom";
-// import modalState from "../../recoil/modalStateAtom";
+// // 1. useModal Hook 호출
+// const { setModal, setModalOpen } = useModal();
 
-// // 2. 전역 상태 관리를 위한 Recoil State
-// const setModalOpen = useSetRecoilState(modalState);
-// const setModalConfig = useSetRecoilState(modalConfigState);
-
-// // 3. 모달 데이터 사용 (함수명 중복되지 않도록 반드시 변경)
-// const setSampleModalData = () => { // 이벤트 사용하면 'e' 인자 추가. 아니면 생략
-//   e.stopPropagation();  // 이벤트 사용하면 stopPropagation. 아니면 생략
-//   setModalConfig({
-//     type: "confirm",    // "confirm" or "bottomSheet"
-//     title: "타이틀메시지를 작성해주세요?",
-//     body: "",
-//     buttons: [
-//       {
-//         label: "취소",
-//         onClick: () => setModalOpen(false), // 모달 닫기
-//       },
-//       {
-//         label: "로그아웃",
-//         onClick: () => logout(),
-//       },
-//     ],
-//   });
-//   setModalOpen(true);
-// };
-//
-// // 4-1. Confirm 모달 버튼 Return
-//   <button button type="button" onClick={ setSampleModalData } >
-//      <A11yHidden>모달 열기 버튼 제목을 설정하세요.</A11yHidden>
-//   </button>
-// // 4-2. BottomSheet에서 Confirm을 한번 더 띄우는 경우 핸들러함수 실행
-//   <button button type="button" onClick={e => setSampleModalData(e)}>
-//      <A11yHidden>모달 열기 버튼 제목을 설정하세요.</A11yHidden>
-//   </button>
+// // 2. 모달 트리거 설정
+// <button
+//   type="button"
+//   onClick={e => setSampleModalData(e, setModal, setModalOpen)}
+// >
+//   모달 열기 버튼
+// </button>;
