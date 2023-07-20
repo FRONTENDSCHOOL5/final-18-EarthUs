@@ -7,7 +7,7 @@ const GlobalStyle = createGlobalStyle`
   :root {
   /* Primary */
   --color-primary: #4CA2DA;
-  --color-secondary: #7C9CB0;
+  --color-secondary: #006ebd;
   --color-tertiary: #F2F7FA;
 
   /* Semantic Color */
