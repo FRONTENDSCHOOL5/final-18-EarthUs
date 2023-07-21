@@ -3,13 +3,12 @@
 /* eslint-disable no-unused-vars */
 import React, { useState } from "react";
 import { Outlet, useLocation, useNavigate, useParams } from "react-router-dom";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import IconCherovonL from "../../../assets/images/chevron-left.svg";
 import IconDots from "../../../assets/images/dots.svg";
 import IconSearch from "../../../assets/images/search.svg";
-import modalConfigState from "../../../recoil/modalConfigAtom";
-import modalState from "../../../recoil/modalStateAtom";
+import useModal from "../../../hooks/useModal";
 import privateDataAtom from "../../../recoil/privateDataAtom";
 import userDataAtom from "../../../recoil/userDataAtom";
 import {
@@ -27,6 +26,7 @@ import {
   POST_UPLOAD,
 } from "../../../utils/config";
 
+import { setChatRoom, setProfileModal } from "./header.modal";
 import {
   Headers,
   SearchInput,
@@ -38,6 +38,7 @@ export default function Header() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const { account, productId } = useParams();
+  const { setModal, setModalOpen } = useModal();
 
   const PRODUCT_DETAIL = getProductDetailPath(account);
   const PROFILE_EDIT = getProfileEditPath(account);
@@ -68,69 +69,6 @@ export default function Header() {
     navigate("/signin");
   };
 
-  // * 전역 상태 관리를 위한 Recoil State 가져오기
-  const setModalOpen = useSetRecoilState(modalState);
-  const setModalConfig = useSetRecoilState(modalConfigState);
-
-  // * 프로필 모달 데이터
-  const setLogout = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "confirm",
-      title: "로그아웃하시겠어요?",
-      buttons: [
-        {
-          label: "취소",
-          onClick: e => {
-            e.stopPropagation();
-            setModalOpen(false);
-          },
-        },
-        {
-          label: "로그아웃",
-          onClick: () => handleSignOut(),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-  const setProfileModal = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "bottomSheet",
-      buttons: [
-        {
-          label: "판매중인 상품 보기",
-          onClick: () => navigate(PRODUCT_DETAIL),
-        },
-        {
-          label: "프로필 수정",
-          onClick: () => navigate(PROFILE_EDIT),
-        },
-        {
-          label: "로그아웃",
-          onClick: e => setLogout(e),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-
-  // * 채팅방 모달 데이터
-  const setChatRoom = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "bottomSheet",
-      buttons: [
-        {
-          label: "채팅방 나가기",
-          onClick: () => navigate(CHAT_LIST),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-
   return (
     <>
       <Headers>
@@ -157,13 +95,24 @@ export default function Header() {
 
         {/* 프로필 */}
         {/* 정규표현식으로 profile url 체크 */}
-        {pathname.match(
-          new RegExp(`^/profile/${myName}(/?)?$`),
-        ) && (
-            <button type="button" onClick={e => setProfileModal(e)}>
-              <img src={IconDots} alt="설정" />
-            </button>
-          )}
+        {pathname.match(new RegExp(`^/profile/${myName}(/?)?$`)) && (
+          <button
+            type="button"
+            onClick={e =>
+              setProfileModal(
+                e,
+                navigate,
+                handleSignOut,
+                setModal,
+                setModalOpen,
+                PRODUCT_DETAIL,
+                PROFILE_EDIT,
+              )
+            }
+          >
+            <img src={IconDots} alt="설정" />
+          </button>
+        )}
 
         {/* 검색 */}
         {pathname === SEARCH && (
@@ -192,7 +141,10 @@ export default function Header() {
         {pathname === CHAT_ROOM && (
           <>
             <h2>디어얼스</h2>
-            <button type="button" onClick={e => setChatRoom(e)}>
+            <button
+              type="button"
+              onClick={e => setChatRoom(e, CHAT_LIST, setModal, setModalOpen)}
+            >
               <img src={IconDots} alt="설정" />
             </button>
           </>
