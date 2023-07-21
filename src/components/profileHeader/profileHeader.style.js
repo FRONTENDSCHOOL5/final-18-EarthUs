@@ -33,7 +33,7 @@ const ProfileHeaderWrap = styled.article`
     h3 {
       flex: 1 1 calc(100% - 2.5rem);
       span {
-        color: var(--color-secondary);
+        color: var(--color-primary);
         font-size: var(--font-size-sm);
         display: block;
         font-weight: 400;

@@ -2,12 +2,11 @@
 import React, { useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import useApiMutation from "../../hooks/useApiMutation";
 import useApiQuery from "../../hooks/useApiQuery";
-import modalConfigState from "../../recoil/modalConfigAtom";
-import modalState from "../../recoil/modalStateAtom";
+import useModal from "../../hooks/useModal";
 import userDataAtom from "../../recoil/userDataAtom";
 import {
   getProfileEditPath,
@@ -21,11 +20,14 @@ import A11yHidden from "../common/a11yHidden/A11yHidden";
 import Avatar from "../common/avatar/Avatar";
 import Button from "../common/button/Button";
 
+import setShareConfirm from "./profileHeader.modal";
 import { ProfileHeaderWrap, ProfileButtonArea } from "./profileHeader.style";
 
 export default function ProfileHeader() {
   const { account } = useParams();
   const navigate = useNavigate();
+  const { setModal, setModalOpen } = useModal();
+
   const PROFILE_EDIT = getProfileEditPath(account);
   const PROFILE_DETAIL = getProfileDetailPath(account);
   const PROFILE_FOLLOWING = getFollowingPath(account);
@@ -74,27 +76,6 @@ export default function ProfileHeader() {
     },
   );
 
-  // * 전역 상태 관리를 위한 Recoil State
-  const setModalOpen = useSetRecoilState(modalState);
-  const setModalConfig = useSetRecoilState(modalConfigState);
-
-  // * 공유하기 모달 데이터
-  const setShareConfirm = () => {
-    // 이벤트 사용하면 'e' 인자 추가. 아니면 생략
-    setModalConfig({
-      type: "confirm",
-      title: "공유하기",
-      body: "준비중",
-      buttons: [
-        {
-          label: "닫기",
-          onClick: () => setModalOpen(false),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-
   // data가 없으면 null 반환
   if (!data || !data.profile) return null;
   const {
@@ -120,7 +101,10 @@ export default function ProfileHeader() {
               <span>@{accountname}</span>
               {username}
             </h3>
-            <button type="button" onClick={setShareConfirm}>
+            <button
+              type="button"
+              onClick={e => setShareConfirm(e, setModal, setModalOpen)}
+            >
               <A11yHidden>공유하기</A11yHidden>
             </button>
           </li>
