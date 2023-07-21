@@ -49,17 +49,18 @@ const Links = styled(NavLink)`
   }
 
   &.active {
-    color: var(--color-secondary);
+    color: var(--color-primary);
+    font-weight: 700;
 
     img {
-      filter: invert(29%) sepia(72%) saturate(4728%) hue-rotate(190deg)
-        brightness(90%) contrast(101%);
+      filter: invert(36%) sepia(93%) saturate(1033%) hue-rotate(183deg)
+        brightness(88%) contrast(89%);
     }
     &::before {
       content: "";
       width: 100%;
       height: 4px;
-      background-color: var(--color-secondary);
+      background-color: var(--color-primary);
       position: absolute;
       top: -1px;
       left: 0;
