@@ -4,16 +4,16 @@
 import React from "react";
 import { Link, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import iconDots from "../../../assets/images/dots.svg";
 import useApiMutation from "../../../hooks/useApiMutation";
-import modalConfigState from "../../../recoil/modalConfigAtom";
-import modalState from "../../../recoil/modalStateAtom";
+import useModal from "../../../hooks/useModal";
 import userDataAtom from "../../../recoil/userDataAtom";
 import { getProfileDetailPath } from "../../../utils/config";
 import Avatar from "../avatar/Avatar";
 
+import { deleteConfirm, reportConfirm } from "./comment.modal";
 import Comments from "./comment.style";
 
 export default function Comment({
@@ -25,6 +25,8 @@ export default function Comment({
   authorId,
   accountName,
 }) {
+  const { setModal, setModalOpen } = useModal();
+
   // const navigate = useNavigate();
   const PROFILE_DETAIL = getProfileDetailPath(accountName);
 
@@ -89,55 +91,6 @@ export default function Comment({
   const [userData] = useRecoilState(userDataAtom);
   const IsCommentAuthorMe = userData && userData._id === authorId;
 
-  const setModalOpen = useSetRecoilState(modalState);
-  const setModalConfig = useSetRecoilState(modalConfigState);
-
-  // 댓글 삭제 모달
-  const deleteConfirm = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "confirm",
-      title: "댓글을 삭제할까요?",
-      buttons: [
-        {
-          label: "취소",
-          onClick: e => {
-            e.stopPropagation();
-            setModalOpen(false); // close modal
-          },
-        },
-        {
-          label: "삭제",
-          onClick: () => handleDeleteComment(),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-
-  // 댓글 신고 모달
-  const reportConfirm = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "confirm",
-      title: "댓글을 신고할까요?",
-      buttons: [
-        {
-          label: "취소",
-          onClick: e => {
-            e.stopPropagation();
-            setModalOpen(false); // close modal
-          },
-        },
-        {
-          label: "신고",
-          onClick: () => handleReportComment(),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-
   return (
     <Comments key={commentId}>
       <Link to={PROFILE_DETAIL}>
@@ -156,7 +109,11 @@ export default function Comment({
       </div>
       <button
         type="button"
-        onClick={e => (IsCommentAuthorMe ? deleteConfirm(e) : reportConfirm(e))}
+        onClick={e =>
+          IsCommentAuthorMe
+            ? deleteConfirm(e, handleDeleteComment, setModal, setModalOpen)
+            : reportConfirm(e, handleReportComment, setModal, setModalOpen)
+        }
       >
         <img src={iconDots} alt="더 보기" />
       </button>
