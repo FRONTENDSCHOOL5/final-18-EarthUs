@@ -1,30 +1,30 @@
 /* eslint-disable no-undef */
-// import React from "react";
-import React, { Suspense } from "react";
+/* eslint-disable-next-line import/first */
+import React, { Suspense, lazy } from "react";
 import { Routes, Route, Outlet } from "react-router-dom";
 
-import Header from "../components/common/header/Header";
-import TabBar from "../components/common/tabBar/TabBar";
-import ChatList from "../pages/chat/chatList/ChatList";
-import ChatRoom from "../pages/chat/chatRoom/ChatRoom";
-import Error404 from "../pages/error404/Error404";
-import Feed from "../pages/feed/Feed";
-import Follow from "../pages/follow/Follow";
-import Intro from "../pages/intro/Intro";
-import Onboarding from "../pages/onboarding/Onboarding";
-import PostDetail from "../pages/post/postDetail/PostDetail";
-import PostUpload from "../pages/post/postUpload/PostUpload";
-import ProductDetail from "../pages/product/productDetail/ProductDetail";
-import ProductUpload from "../pages/product/productUpload/ProductUpload";
-import ProfileDetail from "../pages/profile/profileDetail/ProfileDetail";
-import ProfileEdit from "../pages/profile/profileEdit/ProfileEdit";
-import Search from "../pages/search/Search";
-import SignIn from "../pages/sign/SignIn";
-import SignUp from "../pages/sign/SignUp";
-import Splash from "../pages/splash/Splash";
+const Header = lazy(() => import("../components/common/header/Header"));
+const TabBar = lazy(() => import("../components/common/tabBar/TabBar"));
+const ChatList = lazy(() => import("../pages/chat/chatList/ChatList"));
+const ChatRoom = lazy(() => import("../pages/chat/chatRoom/ChatRoom"));
+const Error404 = lazy(() => import("../pages/error404/Error404"));
+const Feed = lazy(() => import("../pages/feed/Feed"));
+const Follow = lazy(() => import("../pages/follow/Follow"));
+const Intro = lazy(() => import("../pages/intro/Intro"));
+const Onboarding = lazy(() => import("../pages/onboarding/Onboarding"));
+const PostDetail = lazy(() => import("../pages/post/postDetail/PostDetail"));
+const PostUpload = lazy(() => import("../pages/post/postUpload/PostUpload"));
+const ProductDetail = lazy(() => import("../pages/product/productDetail/ProductDetail"));
+const ProductUpload = lazy(() => import("../pages/product/productUpload/ProductUpload"));
+const ProfileDetail = lazy(() => import("../pages/profile/profileDetail/ProfileDetail"));
+const ProfileEdit = lazy(() => import("../pages/profile/profileEdit/ProfileEdit"));
+const Search = lazy(() => import("../pages/search/Search"));
+const SignIn = lazy(() => import("../pages/sign/SignIn"));
+const SignUp = lazy(() => import("../pages/sign/SignUp"));
+const Splash = lazy(() => import("../pages/splash/Splash"));
 
-import InitRoute from "./InitRoute";
-import PrivateRoute from "./PrivateRoute";
+const InitRoute = lazy(() => import("./InitRoute"));
+const PrivateRoute = lazy(() => import("./PrivateRoute"));
 
 export default function Router() {
   return (
