@@ -31,7 +31,7 @@
     "build-and-serve": "npm run build && npm run serve"
   },
   "eslintConfig": {
-    "parser": "babel-eslint",
+    "parser": "@babel/eslint-parser",
     "extends": [
       "react-app",
       "react-app/jest"
