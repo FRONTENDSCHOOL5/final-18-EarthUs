@@ -14,10 +14,18 @@ const Intro = lazy(() => import("../pages/intro/Intro"));
 const Onboarding = lazy(() => import("../pages/onboarding/Onboarding"));
 const PostDetail = lazy(() => import("../pages/post/postDetail/PostDetail"));
 const PostUpload = lazy(() => import("../pages/post/postUpload/PostUpload"));
-const ProductDetail = lazy(() => import("../pages/product/productDetail/ProductDetail"));
-const ProductUpload = lazy(() => import("../pages/product/productUpload/ProductUpload"));
-const ProfileDetail = lazy(() => import("../pages/profile/profileDetail/ProfileDetail"));
-const ProfileEdit = lazy(() => import("../pages/profile/profileEdit/ProfileEdit"));
+const ProductDetail = lazy(() =>
+  import("../pages/product/productDetail/ProductDetail"),
+);
+const ProductUpload = lazy(() =>
+  import("../pages/product/productUpload/ProductUpload"),
+);
+const ProfileDetail = lazy(() =>
+  import("../pages/profile/profileDetail/ProfileDetail"),
+);
+const ProfileEdit = lazy(() =>
+  import("../pages/profile/profileEdit/ProfileEdit"),
+);
 const Search = lazy(() => import("../pages/search/Search"));
 const SignIn = lazy(() => import("../pages/sign/SignIn"));
 const SignUp = lazy(() => import("../pages/sign/SignUp"));
