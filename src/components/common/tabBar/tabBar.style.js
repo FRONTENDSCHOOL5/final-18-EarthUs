@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import styled from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 const Nav = styled.nav`
   position: fixed;
@@ -27,6 +27,22 @@ const TabMenu = styled.li`
   cursor: pointer;
 `;
 
+const bounceAnimation = keyframes`
+    0% {
+    transform: scaleX(.9) scaleY(.9);
+}
+
+  19% {
+    transform: scaleX(1.1) scaleY(1.1);
+}
+  48% {
+    transform: scaleX(.95) scaleY(.95);
+}
+  100% {
+    transform: scaleX(1) scaleY(1);
+}
+`;
+
 const Links = styled(NavLink)`
   display: block;
   text-align: center;
@@ -44,6 +60,8 @@ const Links = styled(NavLink)`
     width: 18px;
     height: 18px;
     margin-bottom: 6px;
+    transition: transform 0.1s ease;
+
     filter: invert(75%) sepia(43%) saturate(5%) hue-rotate(100deg)
       brightness(89%) contrast(88%);
   }
@@ -53,9 +71,19 @@ const Links = styled(NavLink)`
     font-weight: 700;
 
     img {
+      transform: scaleX(0.9) scaleY(0.9);
+      animation: none;
+
       filter: invert(36%) sepia(93%) saturate(1033%) hue-rotate(183deg)
         brightness(88%) contrast(89%);
     }
+
+    img:not(:active) {
+      will-change: transform;
+      animation: ${bounceAnimation} 0.7s ease;
+      transform-origin: 50% 50%;
+    }
+
     &::before {
       content: "";
       width: 100%;
