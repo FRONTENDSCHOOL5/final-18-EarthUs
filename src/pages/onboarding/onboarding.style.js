@@ -89,6 +89,7 @@ const SectionWrap = styled.section`
   justify-items: center;
   align-items: center;
   text-align: center;
+  margin: calc((var(--size-header) + 1.5rem) * -1);
 `;
 
 const H2 = styled.h2`
