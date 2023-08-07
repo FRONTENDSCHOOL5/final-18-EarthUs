@@ -59,6 +59,11 @@ const SearchInput = styled.input`
   &::-webkit-search-results-decoration {
     opacity: 0;
   }
+  /* IOS */
+  -webkit-appearance: searchfield;
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+  }
 `;
 
 const SearchInputDiv = styled.div`
