@@ -28,19 +28,18 @@ const TabMenu = styled.li`
 `;
 
 const bounceAnimation = keyframes`
-    0% {
-    transform: scaleX(.9) scaleY(.9);
-}
-
+  0% {
+    transform: scaleX(1) scaleY(1);
+  }
   19% {
     transform: scaleX(1.1) scaleY(1.1);
-}
+  }
   48% {
     transform: scaleX(.95) scaleY(.95);
-}
+  }
   100% {
     transform: scaleX(1) scaleY(1);
-}
+  }
 `;
 
 const Links = styled(NavLink)`
@@ -71,9 +70,6 @@ const Links = styled(NavLink)`
     font-weight: 700;
 
     img {
-      transform: scaleX(0.9) scaleY(0.9);
-      animation: none;
-
       filter: invert(36%) sepia(93%) saturate(1033%) hue-rotate(183deg)
         brightness(88%) contrast(89%);
     }
