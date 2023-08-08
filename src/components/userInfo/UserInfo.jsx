@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-nested-ternary */
 /* eslint-disable no-console */
 /* eslint-disable no-shadow */
@@ -5,12 +6,11 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 
 import iconDots from "../../assets/images/dots.svg";
 import useApiMutation from "../../hooks/useApiMutation";
-import modalConfigState from "../../recoil/modalConfigAtom";
-import modalState from "../../recoil/modalStateAtom";
+import useModal from "../../hooks/useModal";
 import userDataAtom from "../../recoil/userDataAtom";
 import {
   getPostDetailPath,
@@ -22,6 +22,12 @@ import {
 } from "../../utils/config";
 import Avatar from "../common/avatar/Avatar";
 
+import {
+  reportConfirm,
+  deleteConfirm,
+  deleteCardModal,
+  notificationsModal,
+} from "./userInfo.modal";
 import { Users, UserHeader } from "./userInfo.style";
 
 export default function UserInfo({
@@ -35,23 +41,19 @@ export default function UserInfo({
   searchKeyword,
   postId,
 }) {
-  // * 전역 상태 관리를 위한 Recoil State 가져오기
+  const { setModal, setModalOpen } = useModal();
   const { accountParam } = useParams();
   const { pathname } = useLocation();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
   const [userData] = useRecoilState(userDataAtom);
-  const setModalOpen = useSetRecoilState(modalState);
-  const setModalConfig = useSetRecoilState(modalConfigState);
   const myName =
     userData && userData.accountname
       ? userData.accountname.trim().toLowerCase()
       : "";
 
   const PROFILE_DETAIL = getProfileDetailPath(account);
-  const PROFILE_FOLLOWER = getFollowerPath(accountParam);
-  const PROFILE_FOLLOWING = getFollowingPath(accountParam);
   const POST_EDIT = getPostEditPath(postId);
   const POST_DETAIL = getPostDetailPath(postId);
   const POST_REPORT = getPostReportPath(postId);
@@ -99,109 +101,6 @@ export default function UserInfo({
     const url = POST_REPORT;
     setReports(url);
     setReportMutation.mutate();
-  };
-
-  // * 신고하기 모달
-  const reportConfirm = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "confirm",
-      title: "게시물을 신고하시겠어요?",
-      buttons: [
-        {
-          label: "취소",
-          onClick: e => {
-            e.stopPropagation();
-            setModalOpen(false);
-          },
-        },
-        {
-          label: "신고하기",
-          onClick: () => handleReport(postId),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-
-  // * 수정/삭제 모달
-  const deleteConfirm = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "confirm",
-      title: "파일을 삭제하시겠어요?",
-      buttons: [
-        {
-          label: "취소",
-          onClick: e => {
-            e.stopPropagation();
-            setModalOpen(false);
-          },
-        },
-        {
-          label: "삭제",
-          onClick: () => handleDeleteFeed(postId),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-  const deleteCardModal = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "bottomSheet",
-      buttons: [
-        {
-          label: "삭제",
-          onClick: e => deleteConfirm(e),
-        },
-        {
-          label: "수정",
-          onClick: () => navigate(POST_EDIT),
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-
-  // * 알림설정 모달
-  const manageNotifications = e => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "confirm",
-      title: "알림을 설정할까요?",
-      buttons: [
-        {
-          label: "해제",
-          onClick: e => {
-            e.stopPropagation();
-            setModalOpen(false);
-          },
-        },
-        {
-          label: "설정",
-          onClick: e => {
-            e.stopPropagation();
-            setModalOpen(false);
-          },
-        },
-      ],
-    });
-    setModalOpen(true);
-  };
-  const manageNotificationsModal = (e, accountname) => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "bottomSheet",
-      title: `@${accountname}`,
-      buttons: [
-        {
-          label: "알림 관리",
-          onClick: e => manageNotifications(e),
-        },
-      ],
-    });
-    setModalOpen(true);
   };
 
   // Link 랜더링 조건부 출력
@@ -255,7 +154,20 @@ export default function UserInfo({
         // 기존 피드 게시물에서 수정/삭제/신고 모달
         <button
           type="button"
-          onClick={currentUser ? deleteCardModal : reportConfirm}
+          onClick={e =>
+            currentUser
+              ? deleteCardModal(
+                  e,
+                  navigate,
+                  postId,
+                  deleteConfirm,
+                  setModal,
+                  setModalOpen,
+                  handleDeleteFeed,
+                  POST_EDIT,
+                )
+              : reportConfirm(e, handleReport, postId, setModal, setModalOpen)
+          }
         >
           <img src={iconDots} alt="More" />
         </button>
@@ -263,7 +175,7 @@ export default function UserInfo({
         // 팔로우페이지에서 알림설정 모달
         <button
           type="button"
-          onClick={e => manageNotificationsModal(e, account)}
+          onClick={e => notificationsModal(e, account, setModal, setModalOpen)}
         >
           <img src={iconDots} alt="More" />
         </button>

@@ -17,8 +17,8 @@ const VARIANTS = {
     --button-background: var(--color-white);
     --button-border: 1px solid var(--color-light);
     &::before {
-      filter: invert(62%) sepia(98%) saturate(1363%) hue-rotate(176deg)
-        brightness(89%) contrast(91%);
+      filter: invert(36%) sepia(93%) saturate(1033%) hue-rotate(183deg)
+        brightness(88%) contrast(89%);
     }
   `,
 };

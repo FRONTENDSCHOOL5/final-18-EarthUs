@@ -8,6 +8,8 @@ import UserInfo from "../../components/userInfo/UserInfo";
 import useApiMutation from "../../hooks/useApiMutation";
 import useApiQuery from "../../hooks/useApiQuery";
 
+import SearchResult from "./Search.style";
+
 export default function Search() {
   const location = useLocation();
   const { account } = useParams();
@@ -16,6 +18,7 @@ export default function Search() {
   const searchKeyword = searchParams.get("keyword") || "";
 
   const [debouncedKeyword, setDebouncedKeyword] = useState("");
+  const [resultsToShow, setResultsToShow] = useState(12);
   const [timer, setTimer] = useState(null);
 
   // * 바운싱 현상 해결
@@ -23,7 +26,7 @@ export default function Search() {
     clearTimeout(timer); // 이전 타이머 클리어
     const newTimer = setTimeout(() => {
       setDebouncedKeyword(searchKeyword);
-    }, 500);
+    }, 700);
     setTimer(newTimer);
 
     return () => {
@@ -87,10 +90,14 @@ export default function Search() {
     makeUnfollow.mutate();
   };
 
+  const handleLoadMore = () => {
+    setResultsToShow(prevResults => prevResults + 12);
+  };
+
   // * data 배열 정의
   let limitedData = [];
   if (Array.isArray(data)) {
-    limitedData = data.slice(0, 12);
+    limitedData = data.slice(0, resultsToShow);
   } else {
     return null;
   }
@@ -124,6 +131,11 @@ export default function Search() {
             </Button>
           </UserInfo>
         ))}
+      {data && data.length > resultsToShow && (
+        <SearchResult onClick={handleLoadMore} type="button">
+          더 보기
+        </SearchResult>
+      )}
     </section>
   );
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { Outlet } from "react-router-dom";
+import React, { useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import { useRecoilState } from "recoil";
 
 import iconChat from "../../../assets/images/chat.svg";
@@ -15,16 +15,26 @@ export default function TabBar() {
   // * 유저데이터를 가져오기 위한 userDataAtom 사용
   const [userData] = useRecoilState(userDataAtom);
   const myName = userData && userData.accountname ? userData.accountname : "";
+  const location = useLocation();
+
+  const [activeTab, setActiveTab] = useState(location.pathname);
 
   const scrollTop = () => {
     window.scrollTo(0, 0);
+  };
+
+  const handleTabClick = path => {
+    if (activeTab !== path) {
+      setActiveTab(path);
+      scrollTop();
+    }
   };
 
   return (
     <>
       <Nav>
         <MenuList>
-          <TabMenu onClick={() => scrollTop()}>
+          <TabMenu onClick={() => handleTabClick("/home")}>
             <Links to="/home">
               <img src={iconHome} alt="" />홈
             </Links>
@@ -35,7 +45,7 @@ export default function TabBar() {
               채팅
             </Links>
           </TabMenu>
-          <TabMenu onClick={() => scrollTop()}>
+          <TabMenu onClick={() => handleTabClick("/newsletter")}>
             <Links to="/newsletter">
               <img src={iconNewsletter} alt="" />
               뉴스레터

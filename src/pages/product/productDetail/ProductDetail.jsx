@@ -1,10 +1,11 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-console */
 // import React from "react";
 import React, { useState, useEffect } from "react";
 import InfiniteScroll from "react-infinite-scroller";
 import { useNavigate, useParams } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
-import { useRecoilState, useSetRecoilState } from "recoil";
+import { useRecoilState } from "recoil";
 import { v4 as uuidv4 } from "uuid";
 
 import Blank from "../../../components/blank/Blank";
@@ -13,8 +14,7 @@ import Button from "../../../components/common/button/Button";
 import Card from "../../../components/common/card/Card";
 import useApiInfiniteQuery from "../../../hooks/useApiInfiniteQuery";
 import useApiMutation from "../../../hooks/useApiMutation";
-import modalConfigState from "../../../recoil/modalConfigAtom";
-import modalState from "../../../recoil/modalStateAtom";
+import useModal from "../../../hooks/useModal";
 import userDataAtom from "../../../recoil/userDataAtom";
 import {
   PRODUCT_UPLOAD,
@@ -22,18 +22,19 @@ import {
   getProductEditPath,
 } from "../../../utils/config";
 
+import setDeleteConfirm from "./productDetail.modal";
 import ProdDetailWrap from "./productDetail.style";
 
 export default function ProfileProduct() {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { account } = useParams();
+  const { setModal, setModalOpen } = useModal();
+
   const PRODUCT_DETAIL = getProductDetailPath(account);
 
   // * 전역 상태 관리를 위한 Recoil State
   const [userData] = useRecoilState(userDataAtom);
-  const setModalOpen = useSetRecoilState(modalState);
-  const setModalConfig = useSetRecoilState(modalConfigState);
 
   const myName = userData ? userData.accountname.trim().toLowerCase() : "";
   const currentUser = account.trim().toLowerCase() === myName;
@@ -78,30 +79,6 @@ export default function ProfileProduct() {
     const url = `/product/${prodId}`;
     setDeleteProd(url);
     deleteProductMutation.mutate();
-  };
-
-  // * 게시물 삭제 확인 모달
-  const setDeleteConfirm = (e, id) => {
-    e.stopPropagation();
-    setModalConfig({
-      type: "confirm",
-      title: "게시물을 삭제하시겠어요?",
-      body: "",
-      buttons: [
-        {
-          label: "취소",
-          onClick: eventInner => {
-            eventInner.stopPropagation();
-            setModalOpen(false);
-          },
-        },
-        {
-          label: "삭제",
-          onClick: () => handleDeleteFeed(id),
-        },
-      ],
-    });
-    setModalOpen(true);
   };
 
   if (!productData || !productData.pages) return null;
@@ -155,7 +132,15 @@ export default function ProfileProduct() {
                               <Button
                                 size="sm"
                                 variant="white"
-                                onClick={e => setDeleteConfirm(e, id)}
+                                onClick={e =>
+                                  setDeleteConfirm(
+                                    e,
+                                    id,
+                                    handleDeleteFeed,
+                                    setModal,
+                                    setModalOpen,
+                                  )
+                                }
                               >
                                 삭제
                               </Button>

@@ -14,12 +14,12 @@ const Headers = styled.div`
   background-color: var(--color-white);
   border-bottom: 1px solid var(--color-light);
   display: flex;
+  gap: 4px;
   justify-content: space-between;
   align-items: center;
 
   h2 {
     flex-grow: 1;
-    margin-top: 2px;
     font-size: var(--font-size-xl);
     font-weight: 700;
     color: var(--color-black);
@@ -38,7 +38,6 @@ const SearchInput = styled.input`
   width: 100%;
   flex-grow: 1;
   height: 40px;
-  margin-left: 4px;
   padding: 0 16px 0 16px;
   background: var(--color-bg);
   border-radius: 40px;
@@ -46,7 +45,6 @@ const SearchInput = styled.input`
   &::placeholder {
     font-size: var(--font-size-sm);
     color: var(--color-gray-76);
-    line-height: var(--font-size-sm);
   }
 
   /* IE */
@@ -61,6 +59,11 @@ const SearchInput = styled.input`
   &::-webkit-search-results-decoration {
     opacity: 0;
   }
+  /* IOS */
+  -webkit-appearance: searchfield;
+  &::-webkit-search-cancel-button {
+    -webkit-appearance: searchfield-cancel-button;
+  }
 `;
 
 const SearchInputDiv = styled.div`
@@ -73,8 +76,8 @@ const SearchInputSpan = styled.span`
   transform: translate(-9px, 8px);
   top: 0;
   right: 0;
-  height: 23px;
-  padding-right: 23px;
+  height: 24px;
+  padding-right: 24px;
   pointer-events: none;
   background: url(${IconClose});
 `;

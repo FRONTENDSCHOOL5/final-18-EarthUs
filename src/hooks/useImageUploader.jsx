@@ -1,7 +1,9 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable no-console */
 import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import imageCompression from "browser-image-compression";
 
 import { BASE_URL } from "../utils/config";
 
@@ -13,13 +15,37 @@ import { BASE_URL } from "../utils/config";
 export default function useImageUploader(apiUrl) {
   const [image, setImage] = useState("");
 
+  // ! 이미지를 서버에 전송
   const executeImageUpload = async files => {
+    // 서버에 전송될 데이터를 담는 역할을 하는 인스턴스 생성.
     const formData = new FormData();
 
-    // ! 이미지가 파일인지 배열인지 확인 후 조건식 실행
+    // 이미지가 파일인지 배열인지 확인 후 조건식 실행
     const filesArray = Array.isArray(files) ? files : [files];
-    filesArray.forEach(file => {
-      formData.append("image", file);
+
+    // 이미지 최대 압축 용량, 해상도 옵션 지정
+    const compressOption = {
+      maxSizeMB: 1,
+      maxWidthOrHeight: 1040,
+    };
+
+    // Promise.all을 사용해 배열의 모든 파일 압축을 병렬로 실행
+    const compressedFiles = await Promise.all(
+      filesArray.map(async file => {
+        // browser-image-compression 라이브러리를 사용해 파일 압축
+        const compressedBlob = await imageCompression(file, compressOption);
+        // 압축된 파일을 새로운 File 객체로 생성
+        const compressedFile = new File([compressedBlob], file.name, {
+          type: file.type,
+          lastModified: file.lastModified,
+        });
+        return compressedFile;
+      }),
+    );
+
+    // 압축된 파일들을 formData에 추가
+    compressedFiles.forEach(compressedFile => {
+      formData.append("image", compressedFile);
     });
 
     // axios로 formData 전송해서 응답 반환
