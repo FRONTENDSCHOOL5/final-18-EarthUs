@@ -83,7 +83,7 @@ const Dialog = styled.div`
           h2 {
             margin: 0 0 0.75rem;
           }
-          div {
+          div.button-wrap {
             width: 100%;
             display: flex;
             gap: 0;
