@@ -80,4 +80,40 @@ const ProfileButtonArea = styled.div`
   }
 `;
 
-export { ProfileHeaderWrap, ProfileButtonArea };
+const ShareButtons = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0 32px var(--size-gap);
+`;
+
+const KakaoShareButton = styled.button`
+  background-color: #fde500;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  img {
+    filter: invert(12%) sepia(13%) saturate(1767%) hue-rotate(314deg)
+      brightness(91%) contrast(95%);
+  }
+`;
+
+const UrlShareButton = styled.button`
+  user-select: none;
+  border: 0;
+  padding: 0;
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: var(--font-size-md);
+  font-weight: 700;
+`;
+
+export {
+  ProfileHeaderWrap,
+  ProfileButtonArea,
+  ShareButtons,
+  KakaoShareButton,
+  UrlShareButton,
+};

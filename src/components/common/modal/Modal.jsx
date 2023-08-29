@@ -70,8 +70,8 @@ export default function Modal() {
         open
       >
         {modalConfig.title && <h2>{modalConfig.title}</h2>}
-        {modalConfig.body && <p>{modalConfig.body}</p>}
-        <div ref={modal}>
+        {modalConfig.body ? modalConfig.body : ""}
+        <div className="button-wrap" ref={modal}>
           {modalConfig.buttons.map((button, index) => (
             // <button type="button" key={index} onClick={button.onClick}>
             <button type="button" key={index} onClick={e => button.onClick(e)}>
