@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import useApiMutation from "../../hooks/useApiMutation";
 import useApiQuery from "../../hooks/useApiQuery";
 import useModal from "../../hooks/useModal";
+import useScript from "../../hooks/useScript";
 import userDataAtom from "../../recoil/userDataAtom";
 import {
   getProfileEditPath,
@@ -27,6 +28,26 @@ export default function ProfileHeader() {
   const { account } = useParams();
   const navigate = useNavigate();
   const { setModal, setModalOpen } = useModal();
+  const currentUrl = window.location.href;
+  const status = useScript("https://developers.kakao.com/sdk/js/kakao.js");
+
+  // kakao sdk 초기화하기
+  // status가 변경될 때마다 실행되며, status가 ready일 때 초기화 시도.
+  useEffect(() => {
+    if (status === "ready" && window.Kakao) {
+      // 중복 initialization 방지
+      if (!window.Kakao.isInitialized()) {
+        // javascript key를 이용하여 initialize
+        window.Kakao.init("05b3a9097cbe6c981e32a37ca018e864");
+      }
+    }
+  }, [status]);
+
+  const handleKakaoButton = () => {
+    window.Kakao.Link.sendScrap({
+      requestUrl: currentUrl,
+    });
+  };
 
   const PROFILE_EDIT = getProfileEditPath(account);
   const PROFILE_DETAIL = getProfileDetailPath(account);
@@ -103,7 +124,9 @@ export default function ProfileHeader() {
             </h3>
             <button
               type="button"
-              onClick={e => setShareConfirm(e, setModal, setModalOpen)}
+              onClick={e => {
+                setShareConfirm(e, setModal, setModalOpen, handleKakaoButton);
+              }}
             >
               <A11yHidden>공유하기</A11yHidden>
             </button>
