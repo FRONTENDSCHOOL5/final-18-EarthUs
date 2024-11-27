@@ -1,6 +1,6 @@
 # EarthUs
 
-![얼스어스](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F81769b02-3b9e-425b-ae88-d2b5e299771f%2FCover.jpg?table=block&id=8dd8f77e-25c4-443d-9020-345f2d360ea2&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2)
+![얼스어스](https://drive.google.com/uc?export=view&id=1SmetxlJZSEjCiGzzisTikj2CupTKYGYo)
 
 ### 🌎 우리의 지구를 함께 지켜요!
 
@@ -122,7 +122,7 @@
 
 <br>
   
-![협업방식](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F7b5a64a7-26c8-414b-9982-bb20ceed219c%2FUntitled.png?table=block&id=9d21b2b1-663b-4158-9f98-07189b9e9ee6&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2)
+![협업방식](https://drive.google.com/uc?export=view&id=1OCjFqkVxEwE11xM7uhY4IEpJVpiy4WaX)
 
 <br>
 <br>
@@ -134,7 +134,7 @@
 
 <br>
 
-![프로젝트 관리 및 이슈](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5403128c-e25c-438e-8634-2db75bd6d33e%2FUntitled.png?id=050483b2-9079-4ee0-a997-d68858af6bd8&table=block&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2)
+![프로젝트 관리 및 이슈](https://drive.google.com/uc?export=view&id=1Hc6i9rGLt1AuE1w8k_swRHmrVbRldOJF)
 
 <br>
 <br>
@@ -324,7 +324,7 @@ earth_us
 
 |심은지|윤지수|정신애|
 | :------: | :------: | :------: |
-| ![심은지](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fb397f5fc-d3a4-496a-a865-67315dd5876a%2FUntitled.png?table=block&id=e229c596-d4c0-4e67-81e8-92066b0fe613&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2) | ![윤지수](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd394a23e-1e06-4b77-9448-1d0204edaad4%2FUntitled.png?table=block&id=cd353067-f0e4-4d90-b27b-c1392a20d448&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2) | ![정신애](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fd73a3cff-97fa-4298-b187-849c09766a5f%2FUntitled.png?table=block&id=148f1e9f-7206-4b75-a53d-b639b0edace5&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2) |
+| ![심은지](https://drive.google.com/uc?export=view&id=1CyvAMxgAiPJmA6tgayvFEO73ngSBnqPS) | ![윤지수](https://drive.google.com/uc?export=view&id=1CxQblOLBS36gbMJgTbRrAR1qpaww1MAS) | ![정신애](https://drive.google.com/uc?export=view&id=18qFgJBSBO6-lc9wDQdAU2HTaYZbQS1iD) |
 |Team Leader <br> Semantic Markup Leader|Documentation Leader <br> Web Accessibility Leader|Design Leader <br> Optimization Leader|
 |[github](https://github.com/planted-ji) \| [Blog](https://velog.io/@simej1214)|[github](https://github.com/yoonmallang22) \| [Blog](https://velog.io/@yoonmallang)|[github](https://github.com/fe-jay) \| [Blog](https://jaycode.tistory.com/)|
 
@@ -333,7 +333,7 @@ earth_us
 
 ### 4-2. 역할분담
 
-![역할분담](https://www.notion.so/image/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F0b472553-7db1-4825-8b79-bd33a5891d32%2F%25E1%2584%258B%25E1%2585%25A7%25E1%2586%25A8%25E1%2584%2592%25E1%2585%25A1%25E1%2586%25AF_%25E1%2584%2587%25E1%2585%25AE%25E1%2586%25AB%25E1%2584%2583%25E1%2585%25A1%25E1%2586%25B7.jpg?table=block&id=b71791e0-73e2-43fe-92fb-3cdb81314eb6&spaceId=a59ff032-eb41-4782-bcd9-6d0531e5d277&width=2000&userId=356d37e2-1f78-4a7c-9510-1056e62b4887&cache=v2)
+![역할분담](https://drive.google.com/uc?export=view&id=1SYrNoDkAAGekGyD5QSr-moKCC1_JBOC9)
 
 <br>
 <br>
